@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+        <RemoteEAVFramework>$(UseEAVFromNuget)</RemoteEAVFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Delegate.ExpressionEngine" Version="3.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    </ItemGroup>
+
+<!--    <ItemGroup Condition="$(RemoteEAVFramework) == 'false'">-->
+<!--        <ProjectReference Include="$(LocalEAVFrameworkPath)\src\DotNetDevOps.Extensions.EAVFramework.csproj" />-->
+<!--    </ItemGroup>-->
+
+<!--    <ItemGroup Condition="$(RemoteEAVFramework) != 'false'">-->
+<!--        <PackageReference Include="DotNetDevOps.Extensions.EAVFramework" Version="$(EAVFrameworkVersion)" />-->
+<!--    </ItemGroup>-->
+
+</Project>

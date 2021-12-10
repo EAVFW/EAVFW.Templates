@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Thyge Steffensen",
+  "classifications": [
+    "Common",
+    "Library"
+  ],
+  "tags": {
+    "language": "C#",
+    "type": "solution"
+  },
+  "identity": "EAVFW",
+  "name": "EAV Framework",
+  "shortName": "eavfw",
+  "symbols": {
+    "projectPrefix": {
+      "type": "parameter",
+      "datatype": "text",
+      "defaultValue": "EAVFW",
+      "replaces": "EAVFW",
+      "FileRename": "EAVFW"
+    },
+    "mainAppReplace": {
+      "type": "parameter",
+      "datatype": "text",
+      "defaultValue": "MainApp",
+      "replaces": "MainApp",
+      "FileRename": "MainApp"
+    },
+    "databaseName": {
+      "type": "parameter",
+      "datatype": "text",
+      "defaultValue": "databaseName",
+      "replaces": "databaseName"
+    }
+  },
+  "sources": [
+    {
+      "source": "./",
+      "target": "./",
+      "exclude": [
+        "**/[Bb]in/**",
+        "**/[Oo]bj/**",
+        ".template.config/**/*",
+        "**/*.filelist",
+        "**/*.user",
+        "**/*.lock.json",
+        "**/.vs/**",
+        "**/.idea/**",
+        "**/node_modules/**",
+        "**/.git/**"
+      ]
+    }
+  ]
+}

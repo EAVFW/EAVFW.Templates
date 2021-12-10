@@ -1,0 +1,82 @@
+{
+  "name": "phcms-template",
+  "description": "PHCMS",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Poul Kjeldager Sørensen <pks@delegate.dk> (delegate.dk)",
+  "license": "MIT",
+  "keywords": [
+    "phcms"
+  ],
+  "scripts": {
+    "dev": "next",
+    "build": "dotnet msbuild /target:generateManifest && next build && next export -o wwwroot",
+    "build-only": "next build && next export -o wwwroot",
+    "start": "node server.js",
+    "type-check": "tsc",
+    "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
+    "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
+    "manifest": "json2ts manifest.schema.json src/manifest.d.ts"
+  },
+  "lint-staged": {
+    "./src/**/*.{ts,js,jsx,tsx}": [
+      "yarn lint --fix",
+      "yarn format"
+    ]
+  },
+  "dependencies": {
+    "@fluentui/font-icons-mdl2": "8.1.11",
+    "@fluentui/merge-styles": "8.1.5",
+    "@fluentui/react": "8.34.2",
+    "@fluentui/theme": "2.3.2",
+    "@fluentui/utilities": "8.3.2",
+    "@rjsf/core": "3.1.0",
+    "@rjsf/fluent-ui": "3.1.0",
+    "@types/blazor__javascript-interop": "3.1.2",
+    "jsonpath": "1.1.1",
+    "next": "11.1.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-dropzone": "11.4.0",
+    "react-flow-renderer": "9.6.7",
+    "sass": "1.41.1",
+    "swr": "1.0.1",
+    "powerbi-client-react": "1.3.3"
+  },
+  "devDependencies": {
+    "@types/jsonpath": "0.2.0",
+    "@types/node": "15.0.2",
+    "@types/react": "17.0.5",
+    "@types/react-dom": "17.0.3",
+    "@typescript-eslint/eslint-plugin": "4.22.1",
+    "@typescript-eslint/parser": "4.22.1",
+    "commitizen": "4.2.4",
+    "cz-conventional-changelog": "3.3.0",
+    "eslint": "7.25.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-import-resolver-typescript": "2.4.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-prettier": "3.4.0",
+    "eslint-plugin-react": "7.23.2",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "lint-staged": "11.0.0",
+    "prettier": "2.2.1",
+    "typescript": "4.3.5",
+    "react-fast-compare": "3.2.0",
+    "webpack-preprocessor-loader": "1.1.4",
+    "styled-components": "5.3.0",
+    "@types/styled-components": "5.1.12",
+    "react-draft-wysiwyg": "1.14.7",
+    "draft-js": "0.11.7",
+    "draftjs-to-html": "0.9.1",
+    "@types/react-draft-wysiwyg": "1.13.3",
+    "@types/draftjs-to-html": "0.8.1",
+    "@svgr/webpack": "5.5.0",
+    "tailwindcss": "2.2.7",
+    "postcss": "8.3.6",
+    "autoprefixer": "10.3.1",
+    "next-transpile-modules": "8.0.0"
+  }
+}

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageType>Template</PackageType>
+    <PackageVersion>0.1.1</PackageVersion>
+    <PackageId>EAVFW.Templates</PackageId>
+    <Title>EAV Framework templates</Title>
+    <Authors>Thyge Steffensen</Authors>
+    <Description>Cool description.</Description>
+    <PackageTags>dotnet-new;templates;eavfw</PackageTags>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
+    <Compile Remove="**\*" />
+  </ItemGroup>
+
+</Project>

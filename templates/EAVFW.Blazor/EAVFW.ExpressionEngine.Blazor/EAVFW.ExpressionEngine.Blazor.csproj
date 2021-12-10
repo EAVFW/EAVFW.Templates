@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <LocalExprresionEngineVersion>false</LocalExprresionEngineVersion>
+    </PropertyGroup>
+
+    <ItemGroup Condition="$(LocalExprresionEngineVersion) == 'true'">
+        <ProjectReference Include="..\..\..\..\delegate\ExpressionEngine\ExpressionEngine\ExpressionEngine.csproj" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(LocalExprresionEngineVersion) == 'false'">
+        <PackageReference Include="Delegate.ExpressionEngine" Version="3.0.0" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.7" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.7" PrivateAssets="all" />
+        <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Update="wwwroot\appsettings.development.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\EAVFW.ExpressionEngine\EAVFW.ExpressionEngine.csproj" />
+    </ItemGroup>
+    
+</Project>

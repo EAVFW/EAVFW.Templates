@@ -1,0 +1,27 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    
+    <Target Name="CopyWebAssemblyToDist"
+            AfterTargets="Build"
+            Condition="'$(ExpressionEngineBlazorPath)' != ''">
+
+        <MSBuild Projects="$(ExpressionEngineBlazorPath)\EAVFW.ExpressionEngine.Blazor.csproj"
+                 Targets="Restore;Build"
+                 Properties="Configuration=$(Configuration)"/>
+
+        <ItemGroup>
+            <AllOutput Include="$(ExpressionEngineBlazorPath)\bin\$(Configuration)\net5.0\wwwroot\_framework\**\*.*"/>
+        </ItemGroup>
+
+        <Copy SourceFiles="@(AllOutput)"
+              DestinationFolder="$(ExpressionEngineBlazorDestinationPath)\_framework\"
+              SkipUnchangedFiles="true"/>
+        
+        <Message Importance="high"
+                 Text="$(ExpressionEngineBlazorDestinationPath)\_framework\"/>
+        
+        <Message Importance="high"
+                 Text="Copying Framework $(ExpressionEngineBlazorPath)\bin\$(Configuration)\net5.0\wwwroot\_framework\**\*.* to $(ExpressionEngineBlazorDestinationPath)\_framework\"/>
+
+    </Target>
+
+</Project>

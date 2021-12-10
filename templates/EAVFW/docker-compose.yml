@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+    management_portal:
+        build: apps/EAVFW.MainApp
+        container_name: MainApp
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=Bigs3cRet
+            - MSSQL_PID=Express
+            - connectionStrings__applicationdb=Server=host.docker.internal; Initial Catalog=databaseName; User Id=sa; Password=Bigs3cRet;
+            - ASPNETCORE_URLS=https://localhost:44363
+            - ASPNETCORE_ENVIRONMENT=local
+            - ASPNETCORE_URLS=https://+;http://+
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=Bigs3cRet
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+            - SENDGRID_HOST=host.docker.internal
+            - SENDGRID_PORT=2500
+        ports:
+            - "44363:443"
+        volumes:
+            - $USERPROFILE/.aspnet/https/:/https/:ro
+        depends_on:
+            - router
+
+    azurite:
+        container_name: storage_emulator
+        image: mcr.microsoft.com/azure-storage/azurite
+        command: "azurite --blobHost 0.0.0.0 --queueHost 0.0.0.0 --tableHost 0.0.0.0"
+        ports:
+            - "10000:10000"
+            - "10001:10001"
+            - "10002:10002"
+        volumes: # Persist emulator storage
+            - C:/azurite/:/data/
+
+    mailslurper:
+        container_name: mailslurper
+        image: 'cycloid/mailslurper:1.14.1'
+        volumes:
+            - ./.config/mailslurper:/mailslurper
+        ports:
+            - '4436:4436'
+            - '4437:4437'
+            - '2500:2500'
+        depends_on:
+            - azurite

@@ -1,0 +1,315 @@
+{
+  "$id": "https://example.com/arrays.schema.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "The schema definition for PPE manifest document",
+
+  "type": "object",
+  "properties": {
+    "entities": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "$ref": "#/definitions/EntityDefinition"
+      }
+    }
+  },
+  "definitions": {
+    "FormDefinition": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "name": { "type": "string" },
+        "events": {
+          "type": "object"
+        },
+        "columns": {
+          "type": "object",
+          "patternProperties": {
+            "^": {
+              "anyOf": [
+                { "type": "string" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "visible": { "type": "boolean" },
+                    "type": {
+                      "type": "object",
+                      "$ref": "#/definitions/AttributeTypeDefinition"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "object"
+
+              },
+              {
+                "type": "string",
+                "pattern": "[(.*)]"
+              }
+            ]
+          }
+        }
+      },
+      "required": [ "type", "name", "columns" ]
+    },
+    "ChoiseDefinition": {
+      "anyOf": [
+        {
+
+          "type": "object",
+          "properties": {
+            "value": { "type": "integer" },
+            "text": { "type": "string" },
+            "state": { "type": "integer" }
+          },
+          "required": [ "value" ]
+
+        },
+        {
+          "type": "integer"
+        }
+      ]
+
+    },
+    "AttributeTypeDefinition": {
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [ "Text", "MultilineText", "boolean", "integer", "DateTime", "decimal" ]
+
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [ "Text" ]
+            },
+            "format": {
+              "type": "string",
+              "enum": [ "Email", "Text", "TextArea", "Url", "TickerSymbol", "PhoneticGuide", "VersionNumber", "Phone" ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [ "lookup" ]
+            },
+            "referenceType": { "type": "string" },
+            "behavior": {
+              "type": "string",
+              "enum": [ "referential" ]
+            },
+            "cascade": {
+              "type": "object",
+              "properties": {
+                "delete": {
+                  "type": "string",
+                  "enum": [ "restrict" ]
+                }
+              }
+            },
+            "forms": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "form": { "type": "string" },
+                  "tab": { "type": "string" },
+                  "column": { "type": "string" },
+                  "visible": { "type": ["boolean", "string"]},
+                  "section": { "type": "string" },
+                  "sectionOrder": { "type": "integer" },
+                  "view": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [ "Choices", "Choice" ]
+            },
+            "name": { "type": "string" },
+            "options": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "$ref": "#/definitions/ChoiseDefinition"
+              }
+            }
+          },
+          "required": [ "name" ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [ "Text", "MultilineText", "status", "state" ]
+            },
+            "minLength": { "type": "number" },
+            "maxLength": { "type": "integer" }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "integer"
+              ]
+            },
+            "minimum": {
+              "type": "integer"
+            },
+            "exclusiveMinimum": {
+              "type": "integer"
+            },
+            "maximum": {
+              "type": "integer"
+            },
+            "exclusiveMaximum": {
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "decimal"
+              ]
+            },
+            "minimum": {
+              "type": "number"
+            },
+            "exclusiveMinimum": {
+              "type": "number"
+            },
+            "maximum": {
+              "type": "number"
+            },
+            "exclusiveMaximum": {
+              "type": "number"
+            },
+            "decimals": {
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "AttributeDefinition": {
+      "type": "object",
+      "title": "An entity definition",
+      "properties": {
+
+        "type": { "$ref": "#/definitions/AttributeTypeDefinition" },
+        "logicalName": { "type": "string" },
+        "system": { "type": "boolean" },
+        "description": { "type": "string" },
+        "default": {
+          "anyOf": [
+            { "type": "boolean" },
+            { "type": "string" },
+            { "type": "integer" }
+          ]
+        }
+
+      }
+    },
+    "PrimaryNameAttributeDefinition": {
+      "type": "object",
+      "properties": {
+        "isPrimaryField": { "type": "boolean" }
+      }
+    },
+    "EntityDefinition": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "[data(.*)]"
+        },
+        {
+          "type": "object",
+          "title": "An entity definition",
+          "required": [ "pluralName" ],
+          "properties": {
+            "pluralName": { "type": "string" },
+            "sitemap": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "[data(.*)]"
+                },
+                { "type": "object" }
+              ]
+            },
+            "description": { "type": "string" },
+            "forms": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "$ref": "#/definitions/FormDefinition"
+              }
+            },
+            "views": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+
+              }
+            },
+            "attributes": {
+              "type": "object",
+              "additionalProperties": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "$ref": "#/definitions/PrimaryNameAttributeDefinition"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "$ref": "#/definitions/AttributeDefinition"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+
+              }
+            }
+
+          }
+        }
+      ]
+    }
+
+  }
+}
