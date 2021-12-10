@@ -9,6 +9,9 @@
     <Description>Cool description.</Description>
     <PackageTags>dotnet-new;templates;eavfw</PackageTags>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/EAVFW/EAVFW.Templates</RepositoryUrl>
     
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
@@ -18,6 +21,7 @@
   <ItemGroup>
     <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
     <Compile Remove="**\*" />
+    <None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>
