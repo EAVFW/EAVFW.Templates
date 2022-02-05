@@ -61,8 +61,8 @@ namespace EAVFW.Framework
                 o.PublisherPrefix = "phcms";
                 o.EnableDynamicMigrations = true;
                 o.Namespace = "EAVFW.Model";
-                o.DTOAssembly = typeof(BaseOwnerEntity).Assembly;
-                o.DTOBaseClasses = new[] { typeof(BaseOwnerEntity), typeof(BaseIdEntity) };
+                o.DTOAssembly = typeof(EAVFW.Models.Constants).Assembly;
+            //  o.DTOBaseClasses = new[] { typeof(BaseOwnerEntity), typeof(BaseIdEntity) };
             });
 
             services.AddDbContext<DynamicContext>((sp, optionsBuilder) =>

@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using EAVFW.Models;
 using DotNetDevOps.Extensions.EAVFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -23,8 +22,8 @@ namespace EAVFW.Framework.Infrastructure
                 PublisherPrefix = "$(schema)",
                 EnableDynamicMigrations = true,
                 Namespace = "EAVFW.Models",
-                DTOAssembly = typeof(BaseOwnerEntity).Assembly,
-                DTOBaseClasses = new[] { typeof(BaseOwnerEntity), typeof(BaseIdEntity) }
+                DTOAssembly = typeof(EAVFW.Models.Constants).Assembly,
+                //DTOBaseClasses = new[] { typeof(BaseOwnerEntity), typeof(BaseIdEntity) }
             }), new MigrationManager(NullLogger<MigrationManager>.Instance), NullLogger< DynamicContext>.Instance);
         }          
     }

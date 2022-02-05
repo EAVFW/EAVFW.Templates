@@ -1,16 +1,38 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
         <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
         <CustomizationPrefix>EAVFW</CustomizationPrefix>
         <RemoteEAVFramework>$(UseEAVFromNuget)</RemoteEAVFramework>
         <LocalEAVFrameworkPath>..\..\..\DotNetDevOps.Extensions.EAVFramework</LocalEAVFrameworkPath>
         <EAVFrameworkSourceGenerator>True</EAVFrameworkSourceGenerator>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+        <RootNamespace>EAVFW.Models</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="DotNetDevOps.Extensions.PowerPlatform.MSBuild.Tools.win-x64" Version="1.0.90" GeneratePathProperty="true" Condition=" '$(OS)' == 'Windows_NT' " />
+        <PackageReference Include="DotNetDevOps.Extensions.PowerPlatform.MSBuild.Tools.linux-x64" Version="1.0.90" GeneratePathProperty="true" Condition=" '$(OS)' != 'Windows_NT' " />
+    </ItemGroup>
+
+
+
+    <Target Name="GenerateIfMissing" BeforeTargets="BeforeBuild" Condition="!Exists('$(MSBuildProjectDirectory)\obj\manifest.g.json')">
+        <Message Importance="high" Text="Generating Manifest" />
+        <CallTarget Targets="GenerateManifest" />
+    </Target>
+
+    <Target Name="BuildIfChanged" Outputs="$(MSBuildProjectDirectory)\obj\manifest.g.json" BeforeTargets="BeforeBuild" Inputs="$(MSBuildProjectDirectory)\manifest.json" Condition="Exists('$(MSBuildProjectDirectory)\manifest.json')">
+        <Message Importance="high" Text="Generating Manifest" />
+        <CallTarget Targets="GenerateManifest" />
+    </Target>
+
+    <Target Name="GenerateManifestOnRebuild" BeforeTargets="Rebuild">
+        <Message Importance="high" Text="Generating Manifest" />
+        <CallTarget Targets="GenerateManifest" />
+    </Target>
+    
     <ItemGroup>
         <CompilerVisibleProperty Include="CustomizationPrefix" />
         <CompilerVisibleProperty Include="RootNamespace" />
@@ -37,16 +59,18 @@
         <ProjectReference Include="..\EAVFW.Common\EAVFW.Common.csproj" />
     </ItemGroup>
 
+
+
+    <ItemGroup>
+        <AdditionalFiles Include="obj/manifest.g.json" Condition="Exists('obj/manifest.g.json')">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </AdditionalFiles>
+    </ItemGroup>
+
     <ItemGroup Condition="$(EmitCompilerGeneratedFiles) == 'true'">
         <Folder Include="Generated" />
     </ItemGroup>
-
-    <ItemGroup>
-      <AdditionalFiles Include="..\..\apps\EAVFW.MainApp\obj\manifest.g.json">
-        <Link>manifest.g.json</Link>
-      </AdditionalFiles>
-    </ItemGroup>
-
+    
     <Target Name="AddSourceGeneratedFiles" AfterTargets="CoreCompile" Condition="$(EmitCompilerGeneratedFiles) == 'true'">
         <ItemGroup>
             <Compile Include="Generated\**" />

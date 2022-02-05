@@ -19,22 +19,4 @@
         <ProjectReference Include="..\..\apps\EAVFW.MainApp\EAVFW.MainApp.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <None Update="specs\CarsAndTrucksModel_AddAttribute.sql">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Update="specs\CarsAndTrucksModel_AddEntity.sql">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Update="specs\CarsAndTrucksModel.sql">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Update="specs\DynamicFormManifest001.sql">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Update="specs\DynamicFormManifest001.json">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-
 </Project>

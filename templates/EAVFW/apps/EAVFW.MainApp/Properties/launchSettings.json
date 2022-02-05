@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:65106/",
-      "sslPort": 44348
+      "applicationUrl": "http://localhost:57293/",
+      "sslPort": 44390
     }
   },
   "profiles": {
@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "EAVFW.Framework": {
+    "EAVFW.MainApp": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
