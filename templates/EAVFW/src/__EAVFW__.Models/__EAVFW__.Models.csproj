@@ -1,0 +1,96 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+        <CustomizationPrefix>EAVFW</CustomizationPrefix>
+        <RemoteEAVFramework>$(UseEAVFromNuget)</RemoteEAVFramework>
+        <LocalEAVFrameworkPath>..\..\..\DotNetDevOps.Extensions.EAVFramework</LocalEAVFrameworkPath>
+        <EAVFrameworkSourceGenerator>True</EAVFrameworkSourceGenerator>
+        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+        <RootNamespace>EAVFW.Models</RootNamespace>
+        <ManifestPath Condition="$(ManifestPath) == ''">manifest.json</ManifestPath>
+    </PropertyGroup>
+
+    <ProjectExtensions>
+        <VisualStudio>
+            <UserProperties manifest_1json__JsonSchema="manifest.schema.json" />
+        </VisualStudio>
+    </ProjectExtensions>
+
+    <!--Will transform the manifest.json file to manifest.g.json-->
+    <Target Name="GenerateManifest">
+
+        <Message Importance="high" Text="Generating Manifest" />
+        <Exec WorkingDirectory="$(MSBuildProjectDirectory)" Command="dotnet tool run eavfw-manifest --customizationprefix $(CustomizationPrefix) --path &quot;$(MSBuildProjectDirectory)/$(ManifestPath)&quot;" />
+    </Target>
+
+    <Target Name="GenerateIfMissing" BeforeTargets="BeforeBuild" Condition="!Exists('$(MSBuildProjectDirectory)\obj\manifest.g.json')">         
+        <Message Importance="high" Text="manifest.g.json does not exists" />
+        <CallTarget Targets="GenerateManifest" />
+    </Target>
+
+    <Target Name="BuildIfChanged" Outputs="$(MSBuildProjectDirectory)\obj\manifest.g.json" BeforeTargets="BeforeBuild" Inputs="$(MSBuildProjectDirectory)\manifest.json" Condition="Exists('$(MSBuildProjectDirectory)\manifest.json')">
+        <CallTarget Targets="GenerateManifest" />
+    </Target>
+
+    <Target Name="GenerateManifestOnRebuild" BeforeTargets="Rebuild">
+        <CallTarget Targets="GenerateManifest" />
+    </Target>
+
+    <!--Source Generators for creating typed classes for all the manifest entities-->
+    <ItemGroup>
+        <CompilerVisibleProperty Include="CustomizationPrefix" />
+        <CompilerVisibleProperty Include="RootNamespace" />
+        <CompilerVisibleProperty Include="EAVFrameworkSourceGenerator" />
+
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+
+    <!--USE EAVFW from Nuget or Locally-->
+    <ItemGroup Condition="$(RemoteEAVFramework) == 'false'">
+        <ProjectReference OutputItemType="Analyzer" ReferenceOutputAssembly="false" Include="$(LocalEAVFrameworkPath)\generators\DotNetDevOps.Extensions.EAVFramework.SourceGenerator\DotNetDevOps.Extensions.EAVFramework.SourceGenerator.csproj" />
+        <ProjectReference Include="$(LocalEAVFrameworkPath)\src\DotNetDevOps.Extensions.EAVFramework.csproj" />
+
+    </ItemGroup>
+
+    <ItemGroup Condition="$(RemoteEAVFramework) != 'false'">
+        <PackageReference Include="DotNetDevOps.Extensions.EAVFramework" Version="$(EAVFrameworkVersion)" />
+        <PackageReference OutputItemType="Analyzer" ReferenceOutputAssembly="false" Include="DotNetDevOps.Extensions.EAVFramework.SourceGenerator" Version="$(EAVFrameworkVersion)" />
+    </ItemGroup>
+
+
+    <!--Include the common project-->
+    <ItemGroup>
+        <ProjectReference Include="..\__EAVFW__.Common\__EAVFW__.Common.csproj" />
+    </ItemGroup>
+
+
+    <!--Copy the generated manifest to output-->
+    <ItemGroup>
+        <AdditionalFiles Include="obj/manifest.g.json" Condition="Exists('obj/manifest.g.json')">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </AdditionalFiles>
+    </ItemGroup>
+
+
+    <!--Create the generated Files such its easier to work with-->
+    <ItemGroup Condition="$(EmitCompilerGeneratedFiles) == 'true'">
+        <Folder Include="Generated" />
+    </ItemGroup>
+    
+    <Target Name="AddSourceGeneratedFiles" AfterTargets="CoreCompile" Condition="$(EmitCompilerGeneratedFiles) == 'true'">
+        <ItemGroup>
+            <Compile Include="Generated\**" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="CleanSourceGeneratedFiles" AfterTargets="Clean" Condition="$(EmitCompilerGeneratedFiles) == 'true'">
+        <RemoveDir Directories="Generated" />
+    </Target>
+    
+</Project>

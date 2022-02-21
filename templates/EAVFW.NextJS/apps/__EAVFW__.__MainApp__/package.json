@@ -1,0 +1,31 @@
+{
+  "name": "__eavfw__-__MainApp__",
+  "description": "Management Portal",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Poul Kjeldager Sørensen <pks@delegate.dk> (delegate.dk)",
+  "license": "MIT",
+  "keywords": [
+    "eavfw"
+  ],
+  "scripts": {
+    "dev": "next",
+    "build": "next build && next export -o wwwroot",
+    "start": "node server.js",
+    "type-check": "tsc",
+    "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
+    "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write"
+  },
+  "lint-staged": {
+    "./src/**/*.{ts,js,jsx,tsx}": [
+      "yarn lint --fix",
+      "yarn format"
+    ]
+  },
+  "dependencies": {
+   
+  },
+  "devDependencies": {
+   
+  }
+}

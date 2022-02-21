@@ -2,33 +2,15 @@
   "name": "monorepo-typescript-next-the-sane-way",
   "private": true,
   "workspaces": [
-    "apps/EAVFW.MainApp"
+    "apps/__EAVFW__.__MainApp__"
   ],
   "dependencies": {
-    "@fluentui/react": "8.34.2"
+
   },
   "devDependencies": {
-    "@playwright/test": "^1.15.2",
-    "mocha": "^9.1.3"
+  
   },
   "scripts": {
-    "gm": "dotnet msbuild ./apps/EAVFW.MainApp/EAVFW.MainApp.csproj /target:GenerateManifest",
-    "build": "concurrently --kill-others \"npm:build-*\"",
-    "dev": "concurrently --kill-others \"npm:dev-*\"",
-    "run": "concurrently --kill-others \"npm:run-*\"",
-    "start-sql": "docker start databaseName",
-    "start-mail": "docker run -v ${PWD}/.config/mailslurper:/mailslurper -p 4436:4436 -p 4437:4437 -p 2500:2500 cycloid/mailslurper:1.14.1",
-    "start": "concurrently \"npm:start-*\"",
-
-    "db-connection-string": "dotnet user-secrets set \"ConnectionString\" \"Server=127.0.0.1; Initial Catalog=DatabaseName; User ID=sa; Password=Bigs3cRet\"",
-    "db-recreate": "docker stop databaseName && docker rm databaseName && npm run db-create",
-    "db-start": "docker start databaseName",
-    "db-stop": "docker stop databaseName",
-    "db-rm": "docker rm databaseName",
-    "db-docker": "docker run -v %cd%/scripts/EAVFW.HelperScripts/bin/Debug/netcoreapp3.1/dbinit/:/opt/dbinit/ -e \"ACCEPT_EULA=Y\" -e \"SA_PASSWORD=Bigs3cRet\" -e \"MSSQL_PID=Express\" -p 1433:1433 --name databaseName -d mcr.microsoft.com/mssql/server:2017-latest-ubuntu",
-    "db-generate-init-scripts": "dotnet test --filter \"ClassName=EAVFW.HelperScripts.DBDevSetup\" scripts/EAVFW.HelperScripts/EAVFW.HelperScripts.csproj",
-    "db-initialize": "docker exec -it databaseName /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q \"CREATE DATABASE DatabaseName\"",
-    "db-run-script": "docker exec -i databaseName /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d DatabaseName -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=DATABASENAME -v DBSchema=PHCMS -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName=\"Poul Kjeldager\" -v UserEmail=pks@delegate.dk -v UserPrincipalName=PoulKjeldagerSørensen",
-    "db-create": "npm run db-docker && npm run db-generate-init-scripts && npm run db-initialize && npm run db-run-script"
+  
   }
 } 

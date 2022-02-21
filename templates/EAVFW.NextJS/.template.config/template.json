@@ -9,32 +9,29 @@
     "language": "C#",
     "type": "solution"
   },
-  "identity": "EAVFW",
+  "identity": "EAVFW-NextJS",
   "name": "EAV Framework",
-  "shortName": "eavfw",
+  "shortName": "eavfw-nextjs",
   "symbols": {
     "projectPrefix": {
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "EAVFW",
-      "replaces": "__EAVFW__",
-      "FileRename": "__EAVFW__",
-      "isRequired": true
+      "replaces": "EAVFW",
+      "FileRename": "EAVFW"
     },
     "mainAppReplace": {
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "MainApp",
-      "replaces": "__MainApp__",
-      "FileRename": "__MainApp__",
-      "isRequired": true
+      "replaces": "MainApp",
+      "FileRename": "MainApp"
     },
     "databaseName": {
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "databaseName",
-      "replaces": "databaseName",
-      "isRequired": true
+      "replaces": "databaseName"
     }
   },
   "sources": [
@@ -51,8 +48,7 @@
         "**/.vs/**",
         "**/.idea/**",
         "**/node_modules/**",
-        "**/.git/**",
-        ".vs/**"
+        "**/.git/**"
       ]
     }
   ],
@@ -84,7 +80,7 @@
       "continueOnError": true,
       "description ": "Restoring tools"
     },
-    {
+      {
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
         "executable": "dotnet",
@@ -99,38 +95,6 @@
       ],
       "continueOnError": true,
       "description ": "Installing EAVFW.Extensions.SecurityModel"
-    },
-    {
-      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-      "args": {
-        "executable": "dotnet",
-        "args": "tool run eavfw-manifest install EAVFW.Extensions.Documents",
-        "redirectStandardOutput": false,
-        "redirectStandardError": false
-      },
-      "manualInstructions": [
-        {
-          "text": "Should EAVFW.Extensions.Documents be installed?"
-        }
-      ],
-      "continueOnError": true,
-      "description ": "Installing EAVFW.Extensions.Documents"
-    },
-    {
-      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-      "args": {
-        "executable": "dotnet",
-        "args": "tool run eavfw-manifest install EAVFW.Extensions.Configuration",
-        "redirectStandardOutput": false,
-        "redirectStandardError": false
-      },
-      "manualInstructions": [
-        {
-          "text": "Should EAVFW.Extensions.Configuration be installed?"
-        }
-      ],
-      "continueOnError": true,
-      "description ": "Installing EAVFW.Extensions.Configuration"
     }
   ]
 }
