@@ -3,12 +3,12 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
-        <CustomizationPrefix>EAVFW</CustomizationPrefix>
+        <CustomizationPrefix>__EAVFW__</CustomizationPrefix>
         <RemoteEAVFramework>$(UseEAVFromNuget)</RemoteEAVFramework>
         <LocalEAVFrameworkPath>..\..\..\DotNetDevOps.Extensions.EAVFramework</LocalEAVFrameworkPath>
         <EAVFrameworkSourceGenerator>True</EAVFrameworkSourceGenerator>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-        <RootNamespace>EAVFW.Models</RootNamespace>
+        <RootNamespace>__EAVFW__.Models</RootNamespace>
         <ManifestPath Condition="$(ManifestPath) == ''">manifest.json</ManifestPath>
     </PropertyGroup>
 

@@ -21,8 +21,8 @@ namespace __EAVFW__.__MainApp__.Infrastructure
                 Manifests = new[] { JToken.Parse(File.ReadAllText($"obj/manifest.g.json")) },
                 PublisherPrefix = "$(schema)",
                 EnableDynamicMigrations = true,
-                Namespace = "EAVFW.Models",
-                DTOAssembly = typeof(EAVFW.Models.Constants).Assembly,
+                Namespace = "__EAVFW__.Models",
+                DTOAssembly = typeof(__EAVFW__.Models.Constants).Assembly,
                 //DTOBaseClasses = new[] { typeof(BaseOwnerEntity), typeof(BaseIdEntity) }
             }), new MigrationManager(NullLogger<MigrationManager>.Instance,Options.Create(new MigrationManagerOptions {  })), NullLogger< DynamicContext>.Instance);
         }          
