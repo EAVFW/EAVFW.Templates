@@ -82,13 +82,17 @@
     <ItemGroup Condition="$(EmitCompilerGeneratedFiles) == 'true'">
         <Folder Include="Generated" />
     </ItemGroup>
-    
+
     <Target Name="AddSourceGeneratedFiles" AfterTargets="CoreCompile" Condition="$(EmitCompilerGeneratedFiles) == 'true'">
         <ItemGroup>
             <Compile Include="Generated\**" />
         </ItemGroup>
     </Target>
-
+    <Target Name="RemoveSourceGeneratedFiles" BeforeTargets="CoreCompile" Condition="$(EmitCompilerGeneratedFiles) == 'true'">
+        <ItemGroup>
+            <Compile Remove="Generated\**" />
+        </ItemGroup>
+    </Target>
     <Target Name="CleanSourceGeneratedFiles" AfterTargets="Clean" Condition="$(EmitCompilerGeneratedFiles) == 'true'">
         <RemoveDir Directories="Generated" />
     </Target>
