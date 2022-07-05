@@ -17,21 +17,24 @@
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "EAVFW",
-      "replaces": "EAVFW",
-      "FileRename": "EAVFW"
+      "replaces": "__EAVFW__",
+      "FileRename": "__EAVFW__",
+      "isRequired": true
     },
     "mainAppReplace": {
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "MainApp",
-      "replaces": "MainApp",
-      "FileRename": "MainApp"
+      "replaces": "__MainApp__",
+      "FileRename": "__MainApp__",
+      "isRequired": true
     },
     "databaseName": {
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "databaseName",
-      "replaces": "databaseName"
+      "replaces": "databaseName",
+      "isRequired": true
     }
   },
   "sources": [
