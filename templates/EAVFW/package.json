@@ -25,6 +25,7 @@
     "@fluentui/theme": "2.4.5",
     "@fluentui/utilities": "8.3.8",
     "@fluentui/react": "8.48.1",
+    "@fluentui/react-hooks": "8.6.0",
 
     "@svgr/webpack": "^6.1.1",
 
