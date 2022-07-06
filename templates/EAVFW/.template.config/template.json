@@ -33,7 +33,8 @@
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "databaseName",
-      "replaces": "databaseName",
+      "replaces": "__databaseName__",
+      "FileRename": "__databaseName__",
       "isRequired": true
     }
   },
