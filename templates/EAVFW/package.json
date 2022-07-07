@@ -5,7 +5,7 @@
     "apps/__EAVFW__.__MainApp__"
   ],
   "scripts": {
-    "gm": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:GenerateManifest",
+    "gm": "dotnet msbuild ./src/__EAVFW__.Models/__EAVFW__.Models.csproj /target:GenerateManifest",
     "build-portal": "npm run build --prefix apps/__EAVFW__.__MainApp__",
     "buildforrun": "npm run build --prefix apps/__EAVFW__.__MainApp__",
     "localdev": "npm run start --prefix apps/__EAVFW__.__MainApp__",
