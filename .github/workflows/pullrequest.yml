@@ -28,8 +28,7 @@ jobs:
         run: dotnet new --install .\templates\EAVFW.NextJS\
 
       - name: create directory for test project
-        run: mkdir EAV001
-        working-directory: "./../"
+        run: mkdir ./../EAV001
 
       - name: create test project from template with no extensions
         run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB" --skipExtensions "true" --skipRestore "true" --skipRestoreNoCache "true" --withManifestGeneration "false")
