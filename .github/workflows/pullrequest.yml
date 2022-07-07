@@ -1,0 +1,70 @@
+name: pullrequest
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  test:
+    runs-on: windows-latest
+    name: Testing
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: install EAVFW template
+        run: dotnet new --install .\templates\EAVFW\
+
+      - name: install EAVFW NextJS template
+        run: dotnet new --install .\templates\EAVFW.NextJS\
+
+      - name: create directory for test project
+        run: mkdir EAV001
+        working-directory: "./../"
+
+      - name: create test project from template
+        run: dotnet new eavfw --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB"
+        working-directory: "./../EAV001"
+        
+      - name: create test web portal from template
+        run: npm run eav-nextjs
+        working-directory: "./../EAV001"
+
+      - name: run npm install --force
+        run: npm install --force
+        working-directory: "./../EAV001"
+
+      - name: generate manifest
+        run: npm run gm
+        working-directory: "./../EAV001"
+
+      - name: build and export web portal
+        run: npm run build
+        working-directory: "./../EAV001/apps/GithubTestOrg.GithubTestApp"
+
+
+        # TODO: 
+        #-Add testing with msbuild
+        # STEPS:
+        # -Run ```dotnet new --install .\templates\EAVFW\```
+        # -Run ```dotnet new --install .\templates\EAVFW.NextJS\```
+        # -Create test directory
+        # -Run ```dotnet new eavfw --projectPrefix "MyOrg001" --mainAppReplace "MyEAVTestApp001" --databaseName "MyEAVTestAppDatabase001"```
+        # -Rebuild solution twice
+        # -Build solution twice
+        # -Run ```npm install --force```
+        # -From app project as WD, Run ```npm run build```
+
+
+
+
+    
