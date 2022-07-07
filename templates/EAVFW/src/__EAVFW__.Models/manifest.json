@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "config": {
+    "SVG_LOGO_PATH": "/logo.svg"
+  },
+  "apps": {
+    "EAVFW": {}
+  },
+  "errorMessages": {
+    
+  },
+  "variables": {
+     
+  },
+  "entities": {
+    
+  }
+}

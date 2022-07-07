@@ -243,3 +243,5 @@ _Pvt_Extensions
 /build/sit/WinSCP-5.19.2-Automation
 test1.txt
 logs/
+
+**/Generated/**/*

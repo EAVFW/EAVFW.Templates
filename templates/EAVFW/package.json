@@ -2,33 +2,53 @@
   "name": "monorepo-typescript-next-the-sane-way",
   "private": true,
   "workspaces": [
-    "apps/EAVFW.MainApp"
+    "apps/__EAVFW__.__MainApp__"
   ],
+  "scripts": {
+    "gm": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:GenerateManifest",
+    "build-portal": "npm run build --prefix apps/__EAVFW__.__MainApp__",
+    "buildforrun": "npm run build --prefix apps/__EAVFW__.__MainApp__",
+    "localdev": "npm run start --prefix apps/__EAVFW__.__MainApp__",
+    "linkEAV": "npm link @eavfw/apps @eavfw/next @eavfw/expressions @eavfw/manifest @eavfw/hooks @eavfw/forms @eavfw/utils",
+    "eav-migrate-latest": "dotnet msbuild /target:GenerateManifest ./apps/__EAVFW__.__MainApp__ && dotnet test --filter \"ClassName=__EAVFW__.ArbejdstidsRegistrering.Scripts.DBDevSetup\" scripts/__EAVFW__.ArbejdstidsRegistrering.Scripts/__EAVFW__.ArbejdstidsRegistrering.Scripts.csproj && docker exec -i __EAVFW__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __EAVFW__ -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=__EAVFW__ -v DBSchema=__EAVFW__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName=\"Poul Kjeldager\" -v UserEmail=pks@delegate.dk -v UserPrincipalName=PoulKjeldagerSørense",
+    "eav-generate-latest": "dotnet msbuild /target:GenerateManifest ./apps/__EAVFW__.__MainApp__ && dotnet test --filter \"ClassName=__EAVFW__.ArbejdstidsRegistrering.Scripts.DBDevSetup\" scripts/__EAVFW__.ArbejdstidsRegistrering.Scripts/__EAVFW__.ArbejdstidsRegistrering.Scripts.csproj",
+    "blazor": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:CopyWebAssemblyToDist",
+    "eav-nextjs": "dotnet new eavfw-nextjs --projectPrefix \"__EAVFW__\" --mainAppReplace \"__MainApp__\" --databaseName \"__databaseName__\""
+  },
   "dependencies": {
-    "@fluentui/react": "8.34.2"
+    "next": "^12.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+
+    "@fluentui/font-icons-mdl2": "8.1.19",
+    "@fluentui/merge-styles": "8.2.2",
+    "@fluentui/theme": "2.4.5",
+    "@fluentui/utilities": "8.3.8",
+    "@fluentui/react": "8.48.1",
+    "@fluentui/react-hooks": "8.6.0",
+
+    "@svgr/webpack": "^6.1.1",
+
+    "@eavfw/manifest": "1.2.0-dev.7",
+    "@eavfw/expressions": "1.0.0",
+    "@eavfw/hooks": "1.0.2-dev.1",
+    "@eavfw/forms": "1.0.2-dev.5",
+    "@eavfw/apps": "1.1.0-dev.19",
+    "@eavfw/next": "1.0.1",
+    "@eavfw/utils": "1.0.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.15.2",
-    "mocha": "^9.1.3"
-  },
-  "scripts": {
-    "gm": "dotnet msbuild ./apps/EAVFW.MainApp/EAVFW.MainApp.csproj /target:GenerateManifest",
-    "build": "concurrently --kill-others \"npm:build-*\"",
-    "dev": "concurrently --kill-others \"npm:dev-*\"",
-    "run": "concurrently --kill-others \"npm:run-*\"",
-    "start-sql": "docker start databaseName",
-    "start-mail": "docker run -v ${PWD}/.config/mailslurper:/mailslurper -p 4436:4436 -p 4437:4437 -p 2500:2500 cycloid/mailslurper:1.14.1",
-    "start": "concurrently \"npm:start-*\"",
-
-    "db-connection-string": "dotnet user-secrets set \"ConnectionString\" \"Server=127.0.0.1; Initial Catalog=DatabaseName; User ID=sa; Password=Bigs3cRet\"",
-    "db-recreate": "docker stop databaseName && docker rm databaseName && npm run db-create",
-    "db-start": "docker start databaseName",
-    "db-stop": "docker stop databaseName",
-    "db-rm": "docker rm databaseName",
-    "db-docker": "docker run -v %cd%/scripts/EAVFW.HelperScripts/bin/Debug/netcoreapp3.1/dbinit/:/opt/dbinit/ -e \"ACCEPT_EULA=Y\" -e \"SA_PASSWORD=Bigs3cRet\" -e \"MSSQL_PID=Express\" -p 1433:1433 --name databaseName -d mcr.microsoft.com/mssql/server:2017-latest-ubuntu",
-    "db-generate-init-scripts": "dotnet test --filter \"ClassName=EAVFW.HelperScripts.DBDevSetup\" scripts/EAVFW.HelperScripts/EAVFW.HelperScripts.csproj",
-    "db-initialize": "docker exec -it databaseName /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q \"CREATE DATABASE DatabaseName\"",
-    "db-run-script": "docker exec -i databaseName /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d DatabaseName -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=DATABASENAME -v DBSchema=PHCMS -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName=\"Poul Kjeldager\" -v UserEmail=pks@delegate.dk -v UserPrincipalName=PoulKjeldagerSørensen",
-    "db-create": "npm run db-docker && npm run db-generate-init-scripts && npm run db-initialize && npm run db-run-script"
+    "@types/pako": "1.0.3",
+    "@types/blazor__javascript-interop": "3.1.2",
+    "@types/node": "17.0.5",
+    "@types/react": "17.0.38",
+    "@types/react-dom": "17.0.11",
+    "@typescript-eslint/eslint-plugin": "4.30.0",
+    "@typescript-eslint/parser": "4.30.0",
+    "next-transpile-modules": "8.0.0",
+    "prettier": "2.3.2",
+    "react-fast-compare": "3.2.0",
+    "typescript": "4.5.4",
+    "webpack-preprocessor-loader": "1.1.4"
   }
 } 
