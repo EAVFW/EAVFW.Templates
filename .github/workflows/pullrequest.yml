@@ -44,7 +44,7 @@ jobs:
         working-directory: "./../EAV001"
         
       - name: create test web portal from template
-        run: npm run eav-nextjs
+        run: dotnet new eavfw-nextjs --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB"
         working-directory: "./../EAV001"
 
       - name: run npm install --force
