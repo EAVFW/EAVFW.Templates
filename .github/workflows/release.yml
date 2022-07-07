@@ -33,7 +33,7 @@ jobs:
         working-directory: "./../"
 
       - name: create test project from template
-        run: dotnet new eavfw --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB"
+        run: dotnet new eavfw --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB  --skipExtensions "true" --skipRestore "true" --skipRestoreNoCache "true" --withManifestGeneration "false""
         working-directory: "./../EAV001"
         
       - name: create test web portal from template

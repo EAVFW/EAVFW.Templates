@@ -44,11 +44,45 @@
       "defaultValue": "true",
       "isRequired": false
     },
+    "withDocuments": {
+      "type": "parameter",
+      "description": "Wether to install EAVFW.Extensions.Documents to the project",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "isRequired": false
+    },
+    "withConfiguration": {
+      "type": "parameter",
+      "description": "Wether to install EAVFW.Extensions.Configuration to the project",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "isRequired": false
+    },
     "skipRestore": {
       "type": "parameter",
       "datatype": "bool",
       "description": "If specified, skips the automatic restore of the project on create.",
       "defaultValue": "false"
+    },
+    "skipExtensions": {
+      "type": "parameter",
+      "description": "Wether to install all extensions to the project",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "isRequired": false
+    },
+    "skipRestoreNoCache": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips the automatic restore of the project on create.",
+      "defaultValue": "false"
+    },
+    "withManifestGeneration": {
+      "type": "parameter",
+      "description": "Wether to install EAVFW.Extensions.Configuration to the project",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "isRequired": false
     }
   },
   "sources": [
@@ -83,6 +117,7 @@
       "continueOnError": true
     },
     {
+      "condition": "(!skipRestoreNoCache)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
         "executable": "dotnet",
@@ -99,7 +134,7 @@
       "description ": "Restoring tools"
     },
     {
-      "condition": "(withSecurityModel)",
+      "condition": "(withSecurityModel && runAllExtensions)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
         "executable": "dotnet",
@@ -116,6 +151,7 @@
       "description ": "Installing EAVFW.Extensions.SecurityModel"
     },
     {
+      "condition": "(withDocuments && runAllExtensions)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
         "executable": "dotnet",
@@ -131,7 +167,9 @@
       "continueOnError": true,
       "description ": "Installing EAVFW.Extensions.Documents"
     },
+
     {
+      "condition": "(withConfiguration && runAllExtensions)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
         "executable": "dotnet",
@@ -148,6 +186,7 @@
       "description ": "Installing EAVFW.Extensions.Configuration"
     },
     {
+      "condition": "(withManifestGeneration)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
         "executable": "node",
@@ -161,7 +200,7 @@
         }
       ],
       "continueOnError": true,
-      "description ": "Generating the manifest"
+      "description ": "Generating the manifest1234"
     }
   ]
 }
