@@ -56,8 +56,8 @@ jobs:
         id: package
         uses: juliangruber/read-file-action@v1
         with:
-          path: ./apps/GithubTestOrg.GithubTestApp/tsconfig.json
-      - name: Echo tsconfig.json
+          path: ./apps/GithubTestOrg.GithubTestApp/appsettings.json
+      - name: Echo appsettings.json
         run: echo "${{ steps.package.outputs.content }}"
 
 
