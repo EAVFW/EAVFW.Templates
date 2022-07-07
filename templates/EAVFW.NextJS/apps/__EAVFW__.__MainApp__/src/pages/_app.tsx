@@ -1,7 +1,6 @@
 import "../styles/global.css";
 import '../styles/craftjs.css';
 import "@eavfw/apps/src/Layouts/RootLayout.scss";
-import "../components";
 import React, { Component, createContext } from 'react';
 import { initializeIcons } from "@fluentui/font-icons-mdl2";
 import { RouterBasedAppContextProvider } from "@eavfw/next";
