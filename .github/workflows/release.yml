@@ -33,11 +33,7 @@ jobs:
         working-directory: "./../"
 
       - name: create test project from template
-        run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --projectPrefix "MyOrg001" --mainAppReplace "MyEAVTestApp001" --databaseName "MyEAVTestAppDatabase001" --skipExtensions "true" --skipRestore "true" --skipRestoreNoCache "true" --withManifestGeneration "false")
-        working-directory: "./../EAV001"
-
-      - name: dotnet tool restore
-        run: dotnet tool restore
+        run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB" --skipExtensions "true" --skipRestore "true" --skipRestoreNoCache "true" --withManifestGeneration "false")
         working-directory: "./../EAV001"
 
       - name: generate manifest
