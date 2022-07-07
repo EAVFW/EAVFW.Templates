@@ -64,9 +64,12 @@ jobs:
         id: package
         uses: juliangruber/read-file-action@v1
         with:
-          path: ./../EAV001/package.json
+          path: ./package.json
+          working-directory: "./../EAV001"
+
       - name: Echo package.json
         run: echo "${{ steps.package.outputs.content }}"
+        working-directory: "./../EAV001"
 
 
       - name: build and export web portal
