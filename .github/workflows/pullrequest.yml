@@ -35,6 +35,10 @@ jobs:
         run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB" --skipExtensions "true" --skipRestore "true" --skipRestoreNoCache "true" --withManifestGeneration "false")
         working-directory: "./../EAV001"
 
+      - name: dotnet tool restore
+        run: dotnet tool restore
+        working-directory: "./../EAV001"
+
       - name: generate manifest
         run: npm run gm
         working-directory: "./../EAV001"
@@ -46,6 +50,16 @@ jobs:
       - name: run npm install --force
         run: npm install --force
         working-directory: "./../EAV001"
+
+
+      - name: Read tsconfig.json
+        id: package
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./apps/GithubTestOrg.GithubTestApp/tsconfig.json
+      - name: Echo tsconfig.json
+        run: echo "${{ steps.package.outputs.content }}"
+
 
       - name: build and export web portal
         run: npm run build
