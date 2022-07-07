@@ -60,16 +60,13 @@ jobs:
       #- name: Echo appsettings.json
       #  run: echo "${{ steps.package.outputs.content }}"
 
-      - name: Read package.json
-        id: package
+      - name: Read tsconfig.json
+        id: tsconfig
         uses: juliangruber/read-file-action@v1
         with:
-          path: ./package.json
-          working-directory: "./../EAV001"
-
-      - name: Echo package.json
-        run: echo "${{ steps.package.outputs.content }}"
-        working-directory: "./../EAV001"
+          path: ./../EAV001/app/GithubTestOrg.GithubTestApp/tsconfig.json
+      - name: Echo tsconfig.json
+        run: echo "${{ steps.tsconfig.outputs.content }}"
 
 
       - name: build and export web portal
