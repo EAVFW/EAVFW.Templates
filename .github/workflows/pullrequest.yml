@@ -35,12 +35,12 @@ jobs:
         working-directory: "./../EAV001"
 
 
-      - name: Read tsconfig.json
+      - name: Read tsconfig.json1
         id: tsconfig
         uses: juliangruber/read-file-action@v1
         with:
           path: ./../../EAV001/app/GithubTestOrg.GithubTestApp/tsconfig.json
-      - name: Echo tsconfig.json
+      - name: Echo tsconfig.json1
         run: echo "${{ steps.tsconfig.outputs.content }}"
 
 
