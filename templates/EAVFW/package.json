@@ -35,7 +35,9 @@
     "@eavfw/forms": "1.0.2-dev.5",
     "@eavfw/apps": "1.1.0-dev.19",
     "@eavfw/next": "1.0.1",
-    "@eavfw/utils": "1.0.1"
+    "@eavfw/utils": "1.0.1",
+
+    "clone-deep": "4.0.1"
   },
   "devDependencies": {
     "@types/pako": "1.0.3",
