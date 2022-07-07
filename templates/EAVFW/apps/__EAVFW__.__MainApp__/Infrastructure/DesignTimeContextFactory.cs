@@ -22,7 +22,7 @@ namespace __EAVFW__.__MainApp__.Infrastructure
                 PublisherPrefix = "$(schema)",
                 EnableDynamicMigrations = true,
                 Namespace = "EAVFW.Models",
-                DTOAssembly = typeof(EAVFW.Models.Constants).Assembly,
+                DTOAssembly = typeof(__EAVFW__.Models.Constants).Assembly,
                 //DTOBaseClasses = new[] { typeof(BaseOwnerEntity), typeof(BaseIdEntity) }
             }), new MigrationManager(NullLogger<MigrationManager>.Instance,Options.Create(new MigrationManagerOptions {  })), NullLogger< DynamicContext>.Instance);
         }          

@@ -4,9 +4,9 @@
     ".NETCoreApp,Version=v3.1": {
       "DotNetDevOps.Extensions.EAVFramework": {
         "type": "Direct",
-        "requested": "[1.0.124, )",
-        "resolved": "1.0.124",
-        "contentHash": "8s7vHQGDzU1FSm3wHVkBt9gyHzUdEsumEgwxzc6bxTxQnBQvi0h+A5+Pw7TjRCUzXhAa0U+oa01PX/Z5nkgHqQ==",
+        "requested": "[1.0.134, )",
+        "resolved": "1.0.134",
+        "contentHash": "NoJWhd7BBG+CamJddaAEMAG7UvvOMpggvkx/tbfdsPgwRHeP1Hlr8OFooZNgu2Wwf6JRM4t8WzDSG12ZlWVbHg==",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "2.2.5",
           "Microsoft.AspNetCore.OData": "8.0.7",
@@ -18,9 +18,9 @@
       },
       "DotNetDevOps.Extensions.EAVFramework.SourceGenerator": {
         "type": "Direct",
-        "requested": "[1.0.124, )",
-        "resolved": "1.0.124",
-        "contentHash": "UBM34wlMHlyRzByO82VBXppYL0REx8+ZTxtEQzsoRHKThTeeS0+eOLR+VnMb7fQnWYz7O4ZP9DQ3rBxN1i0xYQ=="
+        "requested": "[1.0.134, )",
+        "resolved": "1.0.134",
+        "contentHash": "J9q5dUaFpHBXlSSb9cpxUHoLIwfdcjDLVHNiPMxepjRxI20CGcPo0r8ud4BvDzlJ1BUw3RSARRVSLY86nljK4g=="
       },
       "Microsoft.EntityFrameworkCore.Design": {
         "type": "Direct",
@@ -795,7 +795,7 @@
       "runtime.native.System.IO.Compression": {
         "type": "Transitive",
         "resolved": "4.3.0",
-        "contentHash": "b+V9JC/Ii3sR659flBeaBJww111425tgjcDS1k+hqV4sGh9FALRDBvJnDtQ895gAzpPTUOFDHdqaZ2Et7BpZMg==",
+        "contentHash": "INBPonS5QPEgn7naufQFXJEp3zX6L4bwHgJ/ZH78aBTpeNfQMtf7C6VrAFhlq2xxWBveIOWyFzQjJ8XzHMhdOQ==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
           "Microsoft.NETCore.Targets": "1.1.0"
@@ -1034,7 +1034,7 @@
       "System.Collections.NonGeneric": {
         "type": "Transitive",
         "resolved": "4.3.0",
-        "contentHash": "LE/oChpRvkSi3U25u0KnJcI44JeDZ1QJCyN4qFDx2uusEypdqR24w7lKYw21eYe5esuCBuc862wRmpF63Yy1KQ==",
+        "contentHash": "prtjIEMhGUnQq6RnPEYLpFt8AtLbp9yq2zxOSrY7KJJZrw25Fi97IzBqY7iqssbM61Ek5b8f3MG/sG1N2sN5KA==",
         "dependencies": {
           "System.Diagnostics.Debug": "4.3.0",
           "System.Globalization": "4.3.0",
@@ -1084,7 +1084,7 @@
       "System.ComponentModel.TypeConverter": {
         "type": "Transitive",
         "resolved": "4.3.0",
-        "contentHash": "HZiP0DwTHJ+C+rdFqP47nBYUh5283kcwXIGY2zOVVhsJmVI/2tYiX2zNRdjRQRHsTox58Ydkec6h0pWSh8wAsw==",
+        "contentHash": "16pQ6P+EdhcXzPiEK4kbA953Fu0MNG2ovxTZU81/qsCd1zPRsKc3uif5NgvllCY598k6bI0KUyKW8fanlfaDQg==",
         "dependencies": {
           "System.Collections": "4.3.0",
           "System.Collections.NonGeneric": "4.3.0",
@@ -2147,7 +2147,7 @@
       "System.Threading.ThreadPool": {
         "type": "Transitive",
         "resolved": "4.3.0",
-        "contentHash": "SrCOmTvvOOCmJT4BBxdZcwhz6XEMsjBGZvGSVorOxdCznaUNeVotEjDfXGIZ8gcGo00qgPbTV6puHDgcFYl6Iw==",
+        "contentHash": "k/+g4b7vjdd4aix83sTgC9VG6oXYKAktSfNIJUNGxPEj7ryEOfzHHhfnmsZvjxawwcD9HyWXKCXmPjX8U4zeSw==",
         "dependencies": {
           "System.Runtime": "4.3.0",
           "System.Runtime.Handles": "4.3.0"
@@ -2256,7 +2256,7 @@
       "__eavfw__.common": {
         "type": "Project",
         "dependencies": {
-          "DotNetDevOps.Extensions.EAVFramework": "1.0.124",
+          "DotNetDevOps.Extensions.EAVFramework": "1.0.134",
           "Hangfire.AspNetCore": "1.7.28",
           "Hangfire.Core": "1.7.28",
           "Hangfire.SqlServer": "1.7.28",

@@ -35,6 +35,19 @@
       "defaultValue": "databaseName",
       "replaces": "databaseName",
       "isRequired": true
+    },
+    "withSecurityModel": {
+      "type": "parameter",
+      "description": "Wether to install EAVFW.Extensions.SecurityModel to the project",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "isRequired": false
+    },
+    "skipRestore": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips the automatic restore of the project on create.",
+      "defaultValue": "false"
     }
   },
   "sources": [
@@ -85,6 +98,7 @@
       "description ": "Restoring tools"
     },
     {
+      "condition": "(withSecurityModel)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
         "executable": "dotnet",
@@ -131,6 +145,22 @@
       ],
       "continueOnError": true,
       "description ": "Installing EAVFW.Extensions.Configuration"
+    },
+    {
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "node",
+        "args": "\"C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" run gm",
+        "redirectStandardOutput": false,
+        "redirectStandardError": false
+      },
+      "manualInstructions": [
+        {
+          "text": "Want to generate the first manifest?"
+        }
+      ],
+      "continueOnError": true,
+      "description ": "Generating the manifest"
     }
   ]
 }

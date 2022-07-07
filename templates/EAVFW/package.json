@@ -11,6 +11,13 @@
   
   },
   "scripts": {
-  
+    "gm": "dotnet msbuild ./src/__EAVFW__.Models/__EAVFW__.Models.csproj /target:GenerateManifest",
+    "db-connection-string": "dotnet user-secrets set \"ConnectionString\" \"Server=127.0.0.1; Initial Catalog=DatabaseName; User ID=sa; Password=Bigs3cRet\"",
+    "db-docker": "docker run -v %cd%/scripts/__EAVFW__.HelperScripts/bin/Debug/netcoreapp3.1/dbinit/:/opt/dbinit/ -e \"ACCEPT_EULA=Y\" -e \"SA_PASSWORD=Bigs3cRet\" -e \"MSSQL_PID=Express\" -p 1433:1433 --name databaseName -d mcr.microsoft.com/mssql/server:2019-latest",
+    "db-generate-init-scripts": "dotnet eavfw-manifest sql ./src/__EAVFW__.Models -o ./artifacts/dbinit/init.sql",
+    "db-initialize": "docker exec -it databaseName /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q \"CREATE DATABASE DatabaseName\"",
+    "db-run-script": "docker exec -i databaseName /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d DatabaseName -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=DATABASENAME -v DBSchema=__EAVFW__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName=\"Poul Kjeldager\" -v UserEmail=pks@delegate.dk -v UserPrincipalName=PoulKjeldagerSørensen",
+    "db-create": "npm run db-docker && npm run db-generate-init-scripts && npm run db-initialize && npm run db-run-script"
+
   }
 } 

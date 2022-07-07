@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{8EA5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "__EAVFW__.HelperScripts", "scripts\__EAVFW__.HelperScripts\__EAVFW__.HelperScripts.csproj", "{66BD9123-C25F-46FC-988F-9A0CFD158388}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "__EAVFW__.BusinessLogic", "src\__EAVFW__.BusinessLogic\__EAVFW__.BusinessLogic.csproj", "{89C94548-366F-4742-A3FD-24984C2D3538}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{66BD9123-C25F-46FC-988F-9A0CFD158388}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66BD9123-C25F-46FC-988F-9A0CFD158388}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66BD9123-C25F-46FC-988F-9A0CFD158388}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89C94548-366F-4742-A3FD-24984C2D3538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89C94548-366F-4742-A3FD-24984C2D3538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89C94548-366F-4742-A3FD-24984C2D3538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89C94548-366F-4742-A3FD-24984C2D3538}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{A9ADB405-1815-4D6F-8344-42F904303133} = {D4AF7AD3-5390-4AB3-8297-D362F6A94254}
 		{3E27267F-4846-4707-95A1-92882AAF080D} = {D4AF7AD3-5390-4AB3-8297-D362F6A94254}
 		{66BD9123-C25F-46FC-988F-9A0CFD158388} = {8EA5FFA2-C42B-4687-8A93-3DE838D4E793}
+		{89C94548-366F-4742-A3FD-24984C2D3538} = {D4AF7AD3-5390-4AB3-8297-D362F6A94254}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A5EEF8D0-15B2-4E58-BB2B-2A2C94F473F2}
