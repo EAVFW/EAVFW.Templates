@@ -34,6 +34,17 @@ jobs:
         run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB" --skipExtensions "true" --skipRestore "true" --skipRestoreNoCache "true" --withManifestGeneration "false")
         working-directory: "./../EAV001"
 
+
+      - name: Read tsconfig.json
+        id: tsconfig
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./../../EAV001/app/GithubTestOrg.GithubTestApp/tsconfig.json
+      - name: Echo tsconfig.json
+        run: echo "${{ steps.tsconfig.outputs.content }}"
+
+
+
       - name: dotnet tool restore
         run: dotnet tool restore
         working-directory: "./../EAV001"
@@ -63,7 +74,7 @@ jobs:
         id: tsconfig
         uses: juliangruber/read-file-action@v1
         with:
-          path: ./../EAV001/app/GithubTestOrg.GithubTestApp/tsconfig.json
+          path: ./../../EAV001/app/GithubTestOrg.GithubTestApp/tsconfig.json
       - name: Echo tsconfig.json
         run: echo "${{ steps.tsconfig.outputs.content }}"
 
