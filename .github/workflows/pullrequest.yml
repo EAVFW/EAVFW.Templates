@@ -47,6 +47,15 @@ jobs:
         working-directory: "./../EAV001"
 
 
+      - name: list files one level out
+        run: ls
+        working-directory: "./../"
+
+      - name: list files in EAV001 web proj
+        run: ls
+        working-directory: "./../EAV001/app/GithubTestOrg.GithubTestApp"
+
+
       - name: Read tsconfig.json1
         id: tsconfig
         uses: juliangruber/read-file-action@v1
