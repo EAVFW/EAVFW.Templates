@@ -21,6 +21,11 @@ using Newtonsoft.Json.Linq;
 using EAVFW.Extensions.Infrastructure;
 using Microsoft.Extensions.Hosting;
 using EAVFW.Extensions.Infrastructure.TypeHelpers;
+using DotNetDevOps.Extensions.EAVFramework.Configuration;
+using __EAVFW__.BusinessLogic;
+#if (withSecurityModel)
+using EAVFW.Extensions.SecurityModel;
+#endif
 
 namespace __EAVFW__.__MainApp__
 {
@@ -48,13 +53,28 @@ namespace __EAVFW__.__MainApp__
 
             services.AddOptions<DynamicContextOptions>().Configure<IWebHostEnvironment>((o, environment) =>
             {
-                o.Manifests = new[]
-                    { JToken.Parse(File.ReadAllText($"{environment.ContentRootPath}/obj/manifest.g.json")) };
+
+                o.Manifests = new[]{environment.IsLocal() &&
+                      File.Exists($"{environment.ContentRootPath}/../../src/__EAVFW__.Models/obj/manifest.g.json")
+                          ? JToken.Parse(File.ReadAllText(
+                              $"{environment.ContentRootPath}/../../src/__EAVFW__.Models/obj/manifest.g.json"))
+                          : JToken.Parse(File.ReadAllText($"{environment.ContentRootPath}/manifest.g.json"))
+                };
+
+
                 o.PublisherPrefix = "__EAVFW__";
                 o.EnableDynamicMigrations = true;
                 o.Namespace = "__EAVFW__.Models";
                 o.DTOAssembly = typeof(__EAVFW__.Models.Constants).Assembly;
-            //  o.DTOBaseClasses = new[] { typeof(BaseOwnerEntity), typeof(BaseIdEntity) };
+               
+                o.DTOBaseClasses = new Type[] {
+                #if(withSecurityModel)
+                     typeof(BaseOwnerEntity<Identity>), 
+                     typeof(BaseIdEntity<Identity>) 
+                #endif
+                };
+                
+             
             });
 
             services.AddDbContext<DynamicContext>((sp, optionsBuilder) =>
@@ -70,6 +90,11 @@ namespace __EAVFW__.__MainApp__
                 optionsBuilder.EnableSensitiveDataLogging();
                 optionsBuilder.EnableDetailedErrors();
             });
+
+                       
+            services.AddEAVFramework<DynamicContext>(o => { o.RoutePrefix = "/api"; })
+                .WithPluginsDiscovery<PluginConfiguration>()
+                .WithDatabaseHealthCheck<DynamicContext>(); 
 
             services.AddAuthorization(options =>
             {
@@ -122,9 +147,10 @@ namespace __EAVFW__.__MainApp__
             // Allow unauthaccess to /_next folder.
             // Because it is located before .UseAuthorization() 
             // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/static-files?view=aspnetcore-5.0#static-file-authorization
-            app.Map("/_next",
-                nested => nested.UseStaticFiles(new StaticFileOptions
-                    { FileProvider = new PhysicalFileProvider(env.WebRootPath + "/_next") }));
+            if(Directory.Exists("_next"))
+                app.Map("/_next",
+                    nested => nested.UseStaticFiles(new StaticFileOptions
+                        { FileProvider = new PhysicalFileProvider(env.WebRootPath + "/_next") }));
 
             //The remaining is behind auth
             app.UseAuthentication();
