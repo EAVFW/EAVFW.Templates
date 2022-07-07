@@ -6,6 +6,7 @@ import React, { Component, createContext } from 'react';
 import { initializeIcons } from "@fluentui/font-icons-mdl2";
 import { RouterBasedAppContextProvider } from "@eavfw/next";
 import defaultTheme from "../themes/default";
+import topBarTheme from "../themes/default";
 
 initializeIcons(/* optional base url */);
 
@@ -14,7 +15,7 @@ import { NextRouter } from "next/dist/shared/lib/router/router";
 
 import {
     EAVApp, ModelDrivenApp, useAppInfo, useModelDrivenApp, UserProvider,
-    PageLayoutProps, ResolveFeature, PageLayout
+    PageLayoutProps, ResolveFeature, PageLayout, RegisterFeature
 } from "@eavfw/apps";
 import manifest from "../manifest";
 import { ThemeProvider } from "@fluentui/react";
@@ -89,3 +90,7 @@ export default MyApp;
 //export default withModelDrivenApp(MyApp);
 
 //TODO does this make sense - https://vpilip.com/next-js-page-loading-indicator-improve-ux-of-next-js-app/
+
+
+RegisterFeature("defaultTheme", defaultTheme);
+RegisterFeature("topBarTheme", topBarTheme);
