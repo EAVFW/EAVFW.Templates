@@ -15,7 +15,7 @@ jobs:
 
       - uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '6.0.203'
 
       - uses: actions/setup-node@v2
         with:
@@ -31,7 +31,7 @@ jobs:
         run: mkdir EAV001
         working-directory: "./../"
 
-      - name: create test project from template
+      - name: create test project from template with no extensions
         run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB" --skipExtensions "true" --skipRestore "true" --skipRestoreNoCache "true" --withManifestGeneration "false")
         working-directory: "./../EAV001"
         
