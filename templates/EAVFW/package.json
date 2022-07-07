@@ -51,6 +51,7 @@
     "prettier": "2.3.2",
     "react-fast-compare": "3.2.0",
     "typescript": "4.5.4",
-    "webpack-preprocessor-loader": "1.1.4"
+    "webpack-preprocessor-loader": "1.1.4",
+    "@types/clone-deep": "4.0.1"
   }
 } 
