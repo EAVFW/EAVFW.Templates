@@ -34,6 +34,10 @@ jobs:
       - name: create test project from template with no extensions
         run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB" --skipExtensions "true" --skipRestore "true" --skipRestoreNoCache "true" --withManifestGeneration "false")
         working-directory: "./../EAV001"
+
+      - name: generate manifest
+        run: (dotnet tool restore) -and (npm run gm)
+        working-directory: "./../EAV001"
         
       - name: create test web portal from template
         run: npm run eav-nextjs
@@ -41,10 +45,6 @@ jobs:
 
       - name: run npm install --force
         run: npm install --force
-        working-directory: "./../EAV001"
-
-      - name: generate manifest
-        run: npm run gm
         working-directory: "./../EAV001"
 
       - name: build and export web portal
