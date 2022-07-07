@@ -36,8 +36,12 @@ jobs:
         run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --projectPrefix "MyOrg001" --mainAppReplace "MyEAVTestApp001" --databaseName "MyEAVTestAppDatabase001" --skipExtensions "true" --skipRestore "true" --skipRestoreNoCache "true" --withManifestGeneration "false")
         working-directory: "./../EAV001"
 
+      - name: dotnet tool restore
+        run: dotnet tool restore
+        working-directory: "./../EAV001"
+
       - name: generate manifest
-        run: (dotnet tool restore) -and (npm run gm)
+        run: npm run gm
         working-directory: "./../EAV001"
         
       - name: create test web portal from template
