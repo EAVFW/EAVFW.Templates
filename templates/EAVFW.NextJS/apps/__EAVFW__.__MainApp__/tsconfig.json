@@ -23,7 +23,7 @@
         "./*"
       ],
       "manifest/generated": [
-        "./../obj/manifest.g.json"
+        "./../../../src/MyOrg001.Models/obj/manifest.g.json"
       ],
       "manifest/types": [
         "./manifest.d.ts"
