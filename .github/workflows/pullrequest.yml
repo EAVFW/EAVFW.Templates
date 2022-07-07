@@ -71,12 +71,12 @@ jobs:
       #  run: echo "${{ steps.package.outputs.content }}"
 
       - name: Read tsconfig.json
-        id: tsconfig
+        id: tsconfig2
         uses: juliangruber/read-file-action@v1
         with:
           path: ./../../EAV001/app/GithubTestOrg.GithubTestApp/tsconfig.json
       - name: Echo tsconfig.json
-        run: echo "${{ steps.tsconfig.outputs.content }}"
+        run: echo "${{ steps.tsconfig2.outputs.content }}"
 
 
       - name: build and export web portal
