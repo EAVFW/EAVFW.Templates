@@ -32,9 +32,9 @@ dotnet new eavfw --projectPrefix "<customerAcronym>" --mainAppReplace "<myApp>" 
 ```
 
 where 
-- <customerAcronym> could be an acrynom for the customer organisation. 
-- <myApp> could be the name of the app. 
-- <mainDatabase1> could be the desired name for the database schema.
+- ```<customerAcronym>``` could be an acrynom for the customer organisation. 
+- ```<myApp>``` could be the name of the app. 
+- ```<mainDatabase1>``` could be the desired name for the database schema.
 
 Example:
 dotnet new eavfw --projectPrefix "MyOrg001" --mainAppReplace "MyEAVTestApp001" --databaseName "MyEAVTestAppDatabase001"

@@ -15,11 +15,11 @@ jobs:
 
       - uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.203'
+          dotnet-version: '5.0.x'
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '16.15.1'
+          node-version: '16'
 
       - name: install EAVFW template
         run: dotnet new --install .\templates\EAVFW\
@@ -28,62 +28,40 @@ jobs:
         run: dotnet new --install .\templates\EAVFW.NextJS\
 
       - name: create directory for test project
-        run: mkdir ./../EAV001
+        run: mkdir ./../GithubEAVTestDirectory
 
       - name: create test project from template with no extensions
         run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB" --skipExtensions "true" --skipRestore "true" --skipRestoreNoCache "true" --withManifestGeneration "false")
-        working-directory: "./../EAV001"
+        working-directory: "./../GithubEAVTestDirectory"
 
       - name: dotnet tool restore
         run: dotnet tool restore
-        working-directory: "./../EAV001"
+        working-directory: "./../GithubEAVTestDirectory"
 
       - name: generate manifest
         run: npm run gm
-        working-directory: "./../EAV001"
+        working-directory: "./../GithubEAVTestDirectory"
         
       - name: create test web portal from template
         run: dotnet new eavfw-nextjs --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB"
-        working-directory: "./../EAV001"
+        working-directory: "./../GithubEAVTestDirectory"
 
-
-      - name: list files one level out
+      - name: list files in GithubEAVTestDirectory 
         run: ls
-        working-directory: "./../"
+        working-directory: "./../GithubEAVTestDirectory"
 
-      - name: list files in EAV001 
+      - name: list files in GithubEAVTestDirectory web proj
         run: ls
-        working-directory: "./../EAV001"
-
-      - name: list files in EAV001/apps
-        run: ls
-        working-directory: "./../EAV001/apps"
-
-      - name: list files in EAV001 web proj
-        run: ls
-        working-directory: "./../EAV001/apps/GithubTestOrg.GithubTestApp"
+        working-directory: "./../GithubEAVTestDirectory/apps/GithubTestOrg.GithubTestApp"
 
 
       - name: run npm install --force
         run: npm install --force
-        working-directory: "./../EAV001"
+        working-directory: "./../GithubEAVTestDirectory"
 
       - name: build and export web portal
         run: npm run build
-        working-directory: "./../EAV001/apps/GithubTestOrg.GithubTestApp"
-
-
-        # TODO: 
-        #-Add testing with msbuild
-        # STEPS:
-        # -Run ```dotnet new --install .\templates\EAVFW\```
-        # -Run ```dotnet new --install .\templates\EAVFW.NextJS\```
-        # -Create test directory
-        # -Run ```dotnet new eavfw --projectPrefix "MyOrg001" --mainAppReplace "MyEAVTestApp001" --databaseName "MyEAVTestAppDatabase001"```
-        # -Rebuild solution twice
-        # -Build solution twice
-        # -Run ```npm install --force```
-        # -From app project as WD, Run ```npm run build```
+        working-directory: "./../GithubEAVTestDirectory/apps/GithubTestOrg.GithubTestApp"
 
 
 
