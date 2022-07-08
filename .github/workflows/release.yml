@@ -29,46 +29,41 @@ jobs:
         run: dotnet new --install .\templates\EAVFW.NextJS\
 
       - name: create directory for test project
-        run: mkdir EAV001
-        working-directory: "./../"
+        run: mkdir ./../GithubEAVTestDirectory
 
-      - name: create test project from template
+      - name: create test project from template with no extensions
         run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB" --skipExtensions "true" --skipRestore "true" --skipRestoreNoCache "true" --withManifestGeneration "false")
-        working-directory: "./../EAV001"
+        working-directory: "./../GithubEAVTestDirectory"
+
+      - name: dotnet tool restore
+        run: dotnet tool restore
+        working-directory: "./../GithubEAVTestDirectory"
 
       - name: generate manifest
         run: npm run gm
-        working-directory: "./../EAV001"
+        working-directory: "./../GithubEAVTestDirectory"
         
       - name: create test web portal from template
-        run: npm run eav-nextjs
-        working-directory: "./../EAV001"
+        run: dotnet new eavfw-nextjs --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB"
+        working-directory: "./../GithubEAVTestDirectory"
+
+      - name: list files in GithubEAVTestDirectory 
+        run: ls
+        working-directory: "./../GithubEAVTestDirectory"
+
+      - name: list files in GithubEAVTestDirectory web proj
+        run: ls
+        working-directory: "./../GithubEAVTestDirectory/apps/GithubTestOrg.GithubTestApp"
+
 
       - name: run npm install --force
         run: npm install --force
-        working-directory: "./../EAV001"
+        working-directory: "./../GithubEAVTestDirectory"
 
       - name: build and export web portal
         run: npm run build
-        working-directory: "./../EAV001/apps/GithubTestOrg.GithubTestApp"
+        working-directory: "./../GithubEAVTestDirectory/apps/GithubTestOrg.GithubTestApp"
 
-
-        # TODO: 
-        #-Add testing with msbuild
-        # STEPS:
-        # -Run ```dotnet new --install .\templates\EAVFW\```
-        # -Run ```dotnet new --install .\templates\EAVFW.NextJS\```
-        # -Create test directory
-        # -Run ```dotnet new eavfw --projectPrefix "MyOrg001" --mainAppReplace "MyEAVTestApp001" --databaseName "MyEAVTestAppDatabase001"```
-        # -Rebuild solution twice
-        # -Build solution twice
-        # -Run ```npm install --force```
-        # -From app project as WD, Run ```npm run build```
-
-
-
-
-    
 
   release:
     name: Releasing
