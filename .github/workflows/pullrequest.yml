@@ -55,7 +55,6 @@ jobs:
         run: ls
         working-directory: "./../EAV001"
 
-
       - name: list files in EAV001/apps
         run: ls
         working-directory: "./../EAV001/apps"
@@ -65,35 +64,9 @@ jobs:
         working-directory: "./../EAV001/apps/GithubTestOrg.GithubTestApp"
 
 
-      - name: Read tsconfig.json1
-        id: tsconfig
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./../../EAV001/apps/GithubTestOrg.GithubTestApp/tsconfig.json
-      - name: Echo tsconfig.json1
-        run: echo "${{ steps.tsconfig.outputs.content }}"
-
       - name: run npm install --force
         run: npm install --force
         working-directory: "./../EAV001"
-
-
-      #- name: Read tsconfig.json
-      #  id: package
-      #  uses: juliangruber/read-file-action@v1
-      #  with:
-      #    path: ./apps/GithubTestOrg.GithubTestApp/appsettings.json
-      #- name: Echo appsettings.json
-      #  run: echo "${{ steps.package.outputs.content }}"
-
-      #- name: Read tsconfig.json
-      #  id: tsconfig2
-      #  uses: juliangruber/read-file-action@v1
-      #  with:
-      #    path: ./../../EAV001/apps/GithubTestOrg.GithubTestApp/tsconfig.json
-      #- name: Echo tsconfig.json
-      #  run: echo "${{ steps.tsconfig2.outputs.content }}"
-
 
       - name: build and export web portal
         run: npm run build
