@@ -9,7 +9,7 @@ dotnet new --install .\templates\EAVFW\
 then also run:
 ```
 dotnet new --install .\templates\EAVFW.NextJS\
-```
+``` 
 ## Uninstall framework (to reinstall it)
 ```
 dotnet new --uninstall .\templates\EAVFW\
