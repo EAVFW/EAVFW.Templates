@@ -134,7 +134,7 @@
       "description ": "Restoring tools"
     },
     {
-      "condition": "(withSecurityModel && runAllExtensions)",
+      "condition": "(withSecurityModel && !skipExtensions)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
         "executable": "dotnet",
@@ -151,7 +151,7 @@
       "description ": "Installing EAVFW.Extensions.SecurityModel"
     },
     {
-      "condition": "(withDocuments && runAllExtensions)",
+      "condition": "(withDocuments && !skipExtensions)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
         "executable": "dotnet",
@@ -169,7 +169,7 @@
     },
 
     {
-      "condition": "(withConfiguration && runAllExtensions)",
+      "condition": "(withConfiguration && !skipExtensions)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
         "executable": "dotnet",
