@@ -46,8 +46,8 @@ namespace __EAVFW__.HelperScripts
            .AddUserSecrets(this.GetType().Assembly)
            .Build();
             Console.WriteLine("Test");
-            var model = JToken.Parse(File.ReadAllText(Path.Combine("../../../../../apps/__EAVFW__.__MainApp__/obj/", "manifest.g.json")));
-            var models = Directory.EnumerateFiles("../../../../../apps/__EAVFW__.__MainApp__/manifests/")
+            var model = JToken.Parse(File.ReadAllText(Path.Combine("../../../../../src/__EAVFW__.Models/obj/", "manifest.g.json")));
+            var models = Directory.EnumerateFiles("../../../../../src/__EAVFW__.Models/obj/manifests/")
                 .Select(file => JToken.Parse(File.ReadAllText(file)))
                 .OrderByDescending(k => Semver.SemVersion.Parse(k.SelectToken("$.version").ToString()))
                 .ToArray();
@@ -97,7 +97,7 @@ namespace __EAVFW__.HelperScripts
             }
 
 
-            var model = JToken.Parse(File.ReadAllText(Path.Combine("../../../../../apps/__EAVFW__.__MainApp__/obj/", "manifest.g.json")));
+            var model = JToken.Parse(File.ReadAllText(Path.Combine("../../../../../src/__EAVFW__.Models/obj/", "manifest.g.json")));
 
             var sb = new StringBuilder();
 
