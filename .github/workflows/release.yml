@@ -22,6 +22,9 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Build project with dotnet
+        run: dotnet build
+
       - name: install EAVFW template
         run: dotnet new --install .\templates\EAVFW\
 
