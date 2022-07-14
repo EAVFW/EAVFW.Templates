@@ -74,7 +74,6 @@ docker run -v ${PWD}/../../scripts/EAVFW.HelperScripts/bin/Debug/netcoreapp3.1/d
 docker exec -it databaseName /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q "CREATE DATABASE databaseName"
 docker exec -i databaseName /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d databaseName -i /opt/dbinit/init.sql -v DBSchema=PHCMS
 docker exec -i databaseName /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d databaseName -i /opt/dbinit/init-systemadmin.sql -v DBName=DATABASENAME -v DBSchema=PHCMS -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName="Poul Kjeldager" -v UserEmail=pks@delegate.dk
-
 ```
 
 You can then bring the database up and down with `docker start databaseName` and `docker stop databaseName` respectively.

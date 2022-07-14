@@ -38,6 +38,7 @@
 
     
     <ItemGroup>
+        <ProjectReference Include="..\..\src\__EAVFW__.BusinessLogic\__EAVFW__.BusinessLogic.csproj" />
         <ProjectReference Include="..\..\src\__EAVFW__.Common\__EAVFW__.Common.csproj" />
         <ProjectReference Include="..\..\src\__EAVFW__.Models\__EAVFW__.Models.csproj" />
     </ItemGroup>

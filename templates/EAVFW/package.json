@@ -5,7 +5,7 @@
     "apps/__EAVFW__.__MainApp__"
   ],
   "scripts": {
-    "gm": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:GenerateManifest",
+    "gm": "dotnet msbuild ./src/__EAVFW__.Models/__EAVFW__.Models.csproj /target:GenerateManifest",
     "build-portal": "npm run build --prefix apps/__EAVFW__.__MainApp__",
     "buildforrun": "npm run build --prefix apps/__EAVFW__.__MainApp__",
     "localdev": "npm run start --prefix apps/__EAVFW__.__MainApp__",
@@ -20,12 +20,12 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
 
-    "@fluentui/font-icons-mdl2": "8.1.19",
-    "@fluentui/merge-styles": "8.2.2",
-    "@fluentui/theme": "2.4.5",
-    "@fluentui/utilities": "8.3.8",
-    "@fluentui/react": "8.48.1",
-    "@fluentui/react-hooks": "8.6.0",
+    "@fluentui/font-icons-mdl2": "8.4.3",
+    "@fluentui/merge-styles": "8.5.2",
+    "@fluentui/theme": "2.6.7",
+    "@fluentui/utilities": "8.9.0",
+    "@fluentui/react": "8.80.0",
+    "@fluentui/react-hooks": "8.6.1",
 
     "@svgr/webpack": "^6.1.1",
 
@@ -35,7 +35,9 @@
     "@eavfw/forms": "1.0.2-dev.5",
     "@eavfw/apps": "1.1.0-dev.19",
     "@eavfw/next": "1.0.1",
-    "@eavfw/utils": "1.0.1"
+    "@eavfw/utils": "1.0.1",
+
+    "clone-deep": "4.0.1"
   },
   "devDependencies": {
     "@types/pako": "1.0.3",
@@ -49,6 +51,7 @@
     "prettier": "2.3.2",
     "react-fast-compare": "3.2.0",
     "typescript": "4.5.4",
-    "webpack-preprocessor-loader": "1.1.4"
+    "webpack-preprocessor-loader": "1.1.4",
+    "@types/clone-deep": "4.0.1"
   }
 } 

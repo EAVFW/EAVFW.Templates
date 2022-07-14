@@ -23,7 +23,7 @@
         "./*"
       ],
       "manifest/generated": [
-        "./../obj/manifest.g.json"
+        "./../../../src/__EAVFW__.Models/obj/manifest.g.json"
       ],
       "manifest/types": [
         "./manifest.d.ts"

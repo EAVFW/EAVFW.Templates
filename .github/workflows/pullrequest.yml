@@ -1,0 +1,60 @@
+name: pullrequest
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  test:
+    runs-on: windows-latest
+    name: Testing
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.203'
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: install EAVFW template
+        run: dotnet new --install .\templates\EAVFW\
+
+      - name: install EAVFW NextJS template
+        run: dotnet new --install .\templates\EAVFW.NextJS\
+
+      - name: create directory for test project
+        run: mkdir ./../GithubEAVTestDirectory
+
+      - name: create test project from template with no extensions
+        run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB" --skipExtensions "true" --skipRestore "true" --skipRestoreNoCache "true" --withManifestGeneration "false")
+        working-directory: "./../GithubEAVTestDirectory"
+
+      - name: dotnet tool restore
+        run: dotnet tool restore
+        working-directory: "./../GithubEAVTestDirectory"
+
+      - name: generate manifest
+        run: npm run gm
+        working-directory: "./../GithubEAVTestDirectory"
+        
+      - name: create test web portal from template
+        run: dotnet new eavfw-nextjs --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB"
+        working-directory: "./../GithubEAVTestDirectory"
+
+      - name: run npm install --force
+        run: npm install --force
+        working-directory: "./../GithubEAVTestDirectory"
+
+      - name: build and export web portal
+        run: npm run build
+        working-directory: "./../GithubEAVTestDirectory/apps/GithubTestOrg.GithubTestApp"
+
+
+
+
+    

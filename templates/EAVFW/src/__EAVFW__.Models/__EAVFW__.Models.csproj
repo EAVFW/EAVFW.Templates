@@ -19,7 +19,7 @@
     </ProjectExtensions>
 
     <!--Will transform the manifest.json file to manifest.g.json-->
-    <Target Name="GenerateManifest">
+    <Target Name="GenerateManifest"  >
 
         <Message Importance="high" Text="Generating Manifest" />
         <Exec WorkingDirectory="$(MSBuildProjectDirectory)" Command="dotnet tool run eavfw-manifest --customizationprefix $(CustomizationPrefix) --path &quot;$(MSBuildProjectDirectory)/$(ManifestPath)&quot;" />
@@ -28,6 +28,8 @@
     <Target Name="GenerateIfMissing" BeforeTargets="BeforeBuild" Condition="!Exists('$(MSBuildProjectDirectory)\obj\manifest.g.json')">         
         <Message Importance="high" Text="manifest.g.json does not exists" />
         <CallTarget Targets="GenerateManifest" />
+        <Message Importance="high" Text="A new build is needed" />
+        <Error   Text="Please build again, since the initial manifest.g.json has now been generated" />
     </Target>
 
     <Target Name="BuildIfChanged" Outputs="$(MSBuildProjectDirectory)\obj\manifest.g.json" BeforeTargets="BeforeBuild" Inputs="$(MSBuildProjectDirectory)\manifest.json" Condition="Exists('$(MSBuildProjectDirectory)\manifest.json')">
@@ -72,8 +74,7 @@
 
     <!--Copy the generated manifest to output-->
     <ItemGroup>
-        <AdditionalFiles Include="obj/manifest.g.json" Condition="Exists('obj/manifest.g.json')">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <AdditionalFiles Include="obj/manifest.g.json" Condition="Exists('obj/manifest.g.json')">            
         </AdditionalFiles>
     </ItemGroup>
 
