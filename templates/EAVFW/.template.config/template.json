@@ -12,6 +12,7 @@
   "identity": "EAVFW",
   "name": "EAV Framework",
   "shortName": "eavfw",
+  "placeholderFilename": ".placeholder",
   "symbols": {
     "projectPrefix": {
       "type": "parameter",
