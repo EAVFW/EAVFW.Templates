@@ -47,15 +47,6 @@ jobs:
         run: dotnet new eavfw-nextjs --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB"
         working-directory: "./../GithubEAVTestDirectory"
 
-      - name: list files in GithubEAVTestDirectory 
-        run: ls
-        working-directory: "./../GithubEAVTestDirectory"
-
-      - name: list files in GithubEAVTestDirectory web proj
-        run: ls
-        working-directory: "./../GithubEAVTestDirectory/apps/GithubTestOrg.GithubTestApp"
-
-
       - name: run npm install --force
         run: npm install --force
         working-directory: "./../GithubEAVTestDirectory"
