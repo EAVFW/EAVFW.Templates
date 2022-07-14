@@ -37,6 +37,15 @@
       "FileRename": "__databaseName__",
       "isRequired": true
     },
+    "DATABASENAME": {
+      "type": "generated",
+      "generator": "casing",
+      "replaces": "__DATABASENAME__",
+      "parameters": {
+        "source": "databaseName",
+        "toLower": false
+      }
+    },
     "withSecurityModel": {
       "type": "parameter",
       "description": "Wether to install EAVFW.Extensions.SecurityModel to the project",
@@ -83,6 +92,11 @@
       "datatype": "bool",
       "defaultValue": "true",
       "isRequired": false
+    }
+  },
+  "Forms": {
+    "ToLower": {
+      "identifier": "lowerCase"
     }
   },
   "sources": [
