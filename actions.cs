@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using Microsoft.TemplateEngine.Abstractions;
 using Microsoft.TemplateEngine.Cli.PostActionProcessors;
 
@@ -20,4 +20,4 @@ namespace PostActions
             // return true;
         }
     }
-}
+}*/
