@@ -8,6 +8,7 @@
         <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>        
         <ExpressionEngineBlazorDestinationPath>$(MSBuildProjectDirectory)\public</ExpressionEngineBlazorDestinationPath>
         <RootNamespace>__EAVFW__.__MainApp__</RootNamespace>
+        <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     </PropertyGroup>
 
     <ItemGroup>
