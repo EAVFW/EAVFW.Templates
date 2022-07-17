@@ -1,3 +1,4 @@
+using DotNetDevOps.Extensions.EAVFramework.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace __EAVFW__.__MainApp__
@@ -10,6 +11,16 @@ namespace __EAVFW__.__MainApp__
     {
         public void CustomConfigureServices(IServiceCollection services)
         {
+
+            services.AddEmailClient();
+        }
+
+        private IEAVFrameworkBuilder ConfigureEAVFW(IEAVFrameworkBuilder builder)
+        {
+            builder.AddAuthentication()
+                .AddPasswordless();
+
+            return builder;
         }
     }
 }
