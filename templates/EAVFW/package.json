@@ -24,7 +24,7 @@
     "db-generate-init-scripts": "dotnet tool run eavfw-manifest sql ./src/__EAVFW__.Models",
     "db-initialize": "docker exec -it __EAVFW__ /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q \"CREATE DATABASE __databaseName__\"",
     "db-run-script": "docker exec -i __EAVFW__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=__databaseName__ -v DBSchema=__EAVFW__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName=\"Poul Kjeldager\" -v UserEmail=poul@kjeldager.com -v UserPrincipalName=PoulKjeldagerSørensen",
-    "db-create": "npm run db-docker && npm run db-generate-init-scripts && npm run db-initialize && npm run db-run-script"
+    "db-create": "npm run db-docker && npm run db-generate-init-scripts && npm run db-initialize && npm run db-run-script && npm run db-connection-string"
   },
   "dependencies": {
     "next": "^12.2.0",

@@ -1,6 +1,6 @@
 using DotNetDevOps.Extensions.EAVFramework.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using __EAVFW__.__MainApp__.Infrastructure;
 namespace __EAVFW__.__MainApp__
 {
     /// <summary>

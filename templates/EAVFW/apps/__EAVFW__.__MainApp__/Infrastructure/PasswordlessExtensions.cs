@@ -2,7 +2,7 @@ using DotNetDevOps.Extensions.EAVFramework;
 using DotNetDevOps.Extensions.EAVFramework.Authentication.Passwordless;
 using DotNetDevOps.Extensions.EAVFramework.Configuration;
 using DotNetDevOps.Extensions.EAVFramework.Endpoints;
-using EAVFW.Models;
+using __EAVFW__.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -90,7 +90,7 @@ namespace __EAVFW__.__MainApp__.Infrastructure
                 options.TemplateMailMessageContents = url => $"<html><div>Klik på nedenstående link, for at komme ind på selve support portalen.</div><br/><a href=\"{url}\">Support Portal/a><br/><br/>Venlig hilsen<br/><br/><b>EAVFW Teamet</b></br><a href=\"https://www.eavfw.com/\">https://www.eavfw.com/</a></html>";
                 options.FetchUserIdByEmailAsync = async (ctx, sp, s) =>
                 {
-                    return await sp.GetRequiredService<DynamicContext>().Set<SystemUsers>().Where(e => e.Email == s).Select(c => c.Id.ToString()).FirstOrDefaultAsync();
+                    return await sp.GetRequiredService<DynamicContext>().Set<SystemUser>().Where(e => e.Email == s).Select(c => c.Id.ToString()).FirstOrDefaultAsync();
                 };
             });
         }
