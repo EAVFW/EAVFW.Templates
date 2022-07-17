@@ -4,9 +4,9 @@ import "@eavfw/apps/src/Layouts/RootLayout.scss";
 import React, { Component, createContext } from 'react';
 import { initializeIcons } from "@fluentui/font-icons-mdl2";
 import { RouterBasedAppContextProvider } from "@eavfw/next";
-import defaultTheme from "../themes/default";
-import topBarTheme from "../themes/default";
 
+import "../themes/default";
+ 
 initializeIcons(/* optional base url */);
 
 import { NextComponentType, NextPageContext } from "next";
@@ -18,6 +18,8 @@ import {
 } from "@eavfw/apps";
 import manifest from "../manifest";
 import { ThemeProvider } from "@fluentui/react";
+
+import "../components";
 
 type AppProps = {
     pageProps: any;
@@ -89,7 +91,3 @@ export default MyApp;
 //export default withModelDrivenApp(MyApp);
 
 //TODO does this make sense - https://vpilip.com/next-js-page-loading-indicator-improve-ux-of-next-js-app/
-
-
-RegisterFeature("defaultTheme", defaultTheme);
-RegisterFeature("topBarTheme", topBarTheme);
