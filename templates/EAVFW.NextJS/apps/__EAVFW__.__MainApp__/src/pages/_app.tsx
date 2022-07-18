@@ -66,7 +66,7 @@ const MyAppLayout: React.FC<AppProps> = ({ Component, pageProps, err, router, la
     const RootLayout = ResolveFeature("RootLayout");
 
     return (
-        <RootLayout {...pageProps} theme={defaultTheme} key="AppLayout" id="AppLayoutId">
+        <RootLayout {...pageProps}  key="AppLayout" id="AppLayoutId">
             <Layout id="PageLayout" {...app._data} key="PageLayout" title={appInfo.title}>
                 <Component {...pageProps} app={app} key="PageComponent" id="PageComponentId" />
             </Layout>

@@ -15,7 +15,7 @@
     "blazor": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:CopyWebAssemblyToDist",
     "eav-nextjs": "dotnet new eavfw-nextjs --projectPrefix \"__EAVFW__\" --mainAppReplace \"__MainApp__\" --databaseName \"__databaseName__\"",
 
-    "db-connection-string": "dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"ConnectionStrings:ApplicationDB\" \"Server=127.0.0.1; Initial Catalog=EAVFW; User ID=sa; Password=Bigs3cRet; TrustServerCertificate=true\"",
+    "db-connection-string": "dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"ConnectionStrings:ApplicationDB\" \"Server=127.0.0.1; Initial Catalog=__databaseName__; User ID=sa; Password=Bigs3cRet; TrustServerCertificate=true\"",
     "db-recreate": "npm run db-rm && npm run db-create",
     "db-start": "docker start __EAVFW__",
     "db-stop": "docker stop __EAVFW__",

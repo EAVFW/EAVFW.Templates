@@ -136,6 +136,11 @@ namespace __EAVFW__.__MainApp__
                         pb.RequireClaim("role", "System Administrator");
                     }
                 });
+
+
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                 .AddAuthenticationSchemes("eavfw")
+                 .RequireAuthenticatedUser().Build();
             });
 
             services.AddAuthentication();
