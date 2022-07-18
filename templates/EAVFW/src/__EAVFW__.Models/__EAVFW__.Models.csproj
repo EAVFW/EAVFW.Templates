@@ -17,7 +17,9 @@
             <UserProperties manifest_1json__JsonSchema="manifest.schema.json" />
         </VisualStudio>
     </ProjectExtensions>
-
+    <ItemGroup>
+        <UpToDateCheckInput Include="manifest.json" />
+    </ItemGroup>
     <!--Will transform the manifest.json file to manifest.g.json-->
     <Target Name="GenerateManifest"  >
 

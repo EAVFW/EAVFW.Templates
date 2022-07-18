@@ -23,6 +23,12 @@ using Microsoft.Extensions.Hosting;
 using EAVFW.Extensions.Infrastructure.TypeHelpers;
 using DotNetDevOps.Extensions.EAVFramework.Configuration;
 using __EAVFW__.BusinessLogic;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.OData;
+using Microsoft.Extensions.Options;
+using Microsoft.OData.UriParser;
+
 #if (withSecurityModel)
 using EAVFW.Extensions.SecurityModel;
 #endif
@@ -50,6 +56,12 @@ namespace __EAVFW__.__MainApp__
 
             CustomConfigureServices(services);
 
+            services.AddScoped(sp =>
+            {
+                var o = new ODataOptions();
+                o.AddRouteComponents("/api/", sp.GetRequiredService<IMigrationManager>().Model, services => services.AddSingleton<ODataUriResolver>());
+                return Options.Create(o);
+            });
 
             services.AddOptions<DynamicContextOptions>().Configure<IWebHostEnvironment>((o, environment) =>
             {
@@ -91,16 +103,23 @@ namespace __EAVFW__.__MainApp__
                 optionsBuilder.EnableDetailedErrors();
             });
 
-                       
-            services.AddEAVFramework<DynamicContext>(o => { o.RoutePrefix = "/api"; })
+
+            var eav = ConfigureEAVFW(services.AddEAVFramework<DynamicContext>(o => {
+                o.RoutePrefix = "/api"; 
+            }) 
                 .WithPluginsDiscovery<PluginConfiguration>()
-                .WithDatabaseHealthCheck<DynamicContext>(); 
+                .WithDatabaseHealthCheck<DynamicContext>());
+
+#if (withSecurityModel)
+            eav.WithAuditFieldsPlugins<DynamicContext, Identity>()
+                .WithPermissionBasedAuthorization<DynamicContext, Identity, Permission, SecurityRole, SecurityRolePermission, SecurityRoleAssignment, SecurityGroup, SecurityGroupMember, RecordShare>();
+#endif
 
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("EAVAuthorizationPolicy", pb =>
                 {
-                    pb.AddAuthenticationSchemes("EasyAuth");
+                    pb.AddAuthenticationSchemes("eavfw");
                     pb.RequireAuthenticatedUser();
                 });
 
@@ -117,6 +136,11 @@ namespace __EAVFW__.__MainApp__
                         pb.RequireClaim("role", "System Administrator");
                     }
                 });
+
+
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                 .AddAuthenticationSchemes("eavfw")
+                 .RequireAuthenticatedUser().Build();
             });
 
             services.AddAuthentication();
@@ -147,10 +171,10 @@ namespace __EAVFW__.__MainApp__
             // Allow unauthaccess to /_next folder.
             // Because it is located before .UseAuthorization() 
             // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/static-files?view=aspnetcore-5.0#static-file-authorization
-            if(Directory.Exists("_next"))
+            if (Directory.Exists(env.WebRootPath + "/_next"))
                 app.Map("/_next",
                     nested => nested.UseStaticFiles(new StaticFileOptions
-                        { FileProvider = new PhysicalFileProvider(env.WebRootPath + "/_next") }));
+                    { FileProvider = new PhysicalFileProvider(env.WebRootPath + "/_next") }));
 
             //The remaining is behind auth
             app.UseAuthentication();
