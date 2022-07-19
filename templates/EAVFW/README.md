@@ -11,13 +11,6 @@ Run it.
 
 ### Environment variables
 
-```
-# set the configuration for SMTP while we're at it
-dotnet user-secrets set "Smtp:Port" "2500"
-dotnet user-secrets set "Smtp:Host" "127.0.0.1"
-dotnet user-secrets set "Smtp:EnableEmails" "true"
-```
-
 ## Explained
 
 ### Scripts
