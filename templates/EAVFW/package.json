@@ -15,9 +15,9 @@
     "blazor": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:CopyWebAssemblyToDist",
     "eav-nextjs": "dotnet new eavfw-nextjs --projectPrefix \"__EAVFW__\" --mainAppReplace \"__MainApp__\" --databaseName \"__databaseName__\"",
 
-    "mail-server-config": "dotnet user-secrets set --project ./apps/MyOrg008.MyEAVTestApp008 \"Smtp:Port\" \"2500\" &&  dotnet user-secrets set --project ./apps/MyOrg008.MyEAVTestApp008 \"Smtp:Host\" \"127.0.0.1\" && dotnet user-secrets set --project ./apps/MyOrg008.MyEAVTestApp008 \"Smtp:EnableEmails\" \"true\"",
+    "mail-server-config": "dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__\"Smtp:Port\" \"2500\" &&  dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__\"Smtp:Host\" \"127.0.0.1\" && dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"Smtp:EnableEmails\" \"true\"",
 
-    "db-connection-string": "dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"ConnectionStrings:ApplicationDB\" \"Server=127.0.0.1; Initial Catalog=__databaseName__; User ID=sa; Password=Bigs3cRet; TrustServerCertificate=true\"",
+    "db-connection-string": "dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"ConnectionStrings:ApplicationDB\" \"Server=127.0.0.1,1444; Initial Catalog=__databaseName__; User ID=sa; Password=Bigs3cRet; TrustServerCertificate=true\"",
     "db-recreate": "npm run db-rm && npm run db-create",
     "db-start": "docker start __EAVFW__",
     "db-stop": "docker stop __EAVFW__",
@@ -25,7 +25,7 @@
     "db-docker": "docker run -v %cd%/obj/dbinit/:/opt/dbinit/ -e \"ACCEPT_EULA=Y\" -e \"SA_PASSWORD=Bigs3cRet\" -e \"MSSQL_PID=Express\" -p 1444:1433 --name __EAVFW__ -d mcr.microsoft.com/mssql/server:2019-latest",
     "db-generate-init-scripts": "dotnet tool run eavfw-manifest sql ./src/__EAVFW__.Models",
     "db-initialize": "docker exec -it __EAVFW__ /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q \"CREATE DATABASE __databaseName__\"",
-    "db-run-script": "docker exec -i __EAVFW__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=__databaseName__ -v DBSchema=__EAVFW__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName=\"__userName__\" -v UserEmail=__userEmail__ -v UserPrincipalName=__userPrincipalName__",
+    "db-run-script": "docker exec -i __EAVFW__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=__databaseName__ -v DBSchema=__EAVFW__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=__userGuid__ -v UserName=\"__userName__\" -v UserEmail=__userEmail__ -v UserPrincipalName=__userPrincipalName__",
     "db-setup": "npm run db-docker && npm run db-generate-init-scripts",
     "db-apply-setup": "npm run db-initialize && npm run db-run-script && npm run db-connection-string",
     "db-create": "npm run db-setup && npm run db-apply-setup"

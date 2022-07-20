@@ -120,6 +120,14 @@
       "replaces": "__userPrincipalName__",
       "FileRename": "__userPrincipalName__",
       "isRequired": false
+    },
+    "userGuid": {
+      "type": "generated",
+      "generator": "guid",
+      "replaces": "__userGuid__",
+      "parameters": {
+        "format": "D"
+      }
     }
   },
   "Forms": {
