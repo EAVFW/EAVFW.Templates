@@ -30,6 +30,36 @@ const defaultTheme = createTheme({
         white: '#f8f3f0',
     }
 });
+
+export const topBarTheme = createTheme({
+    palette: {
+        themePrimary: '#ffffff',
+        themeLighterAlt: '#767676',
+        themeLighter: '#a6a6a6',
+        themeLight: '#c8c8c8',
+        themeTertiary: '#d0d0d0',
+        themeSecondary: '#dadada',
+        themeDarkAlt: '#eaeaea',
+        themeDark: '#f4f4f4',
+        themeDarker: '#f8f8f8',
+        neutralLighterAlt: '#203157',
+        neutralLighter: '#25375d',
+        neutralLight: '#2e4069',
+        neutralQuaternaryAlt: '#33466f',
+        neutralQuaternary: '#384c75',
+        neutralTertiaryAlt: '#50638c',
+        neutralTertiary: '#c8c8c8',
+        neutralSecondary: '#d0d0d0',
+        neutralPrimaryAlt: '#dadada',
+        neutralPrimary: '#ffffff',
+        neutralDark: '#f4f4f4',
+        black: '#f8f8f8',
+        white: '#1b2c50',
+    }
+});
+
+
+
  
 
 export default defaultTheme;
