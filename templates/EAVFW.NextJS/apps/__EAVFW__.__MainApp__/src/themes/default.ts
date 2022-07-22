@@ -3,7 +3,7 @@ import { RegisterFeature } from "@eavfw/apps";
 
 const defaultTheme = createTheme({
     semanticColors: {
-        actionLink:'#4a9c35'
+        actionLink: '#4a9c35'
     },
     palette: {
         themePrimary: '#4a9c35',
@@ -24,14 +24,15 @@ const defaultTheme = createTheme({
         neutralTertiary: '#a2afca',
         neutralSecondary: '#5a6d95',
         neutralPrimaryAlt: '#2a3c64',
-        neutralPrimary: '#1b2c50',
+        neutralPrimary: '#094080',
         neutralDark: '#14213c',
         black: '#0f182c',
         white: '#f8f3f0',
     }
 });
 
-export const topBarTheme = createTheme({
+
+const topBarTheme = createTheme({
     palette: {
         themePrimary: '#ffffff',
         themeLighterAlt: '#767676',
@@ -54,17 +55,12 @@ export const topBarTheme = createTheme({
         neutralPrimary: '#ffffff',
         neutralDark: '#f4f4f4',
         black: '#f8f8f8',
-        white: '#1b2c50',
+        white: '#094080',
     }
 });
 
 
-
- 
-
 export default defaultTheme;
 
-
-
 RegisterFeature("defaultTheme", defaultTheme);
-RegisterFeature("topBarTheme", defaultTheme);
+RegisterFeature("topBarTheme", topBarTheme);
