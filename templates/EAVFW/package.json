@@ -10,8 +10,6 @@
     "buildforrun": "npm run build --prefix apps/__EAVFW__.__MainApp__",
     "localdev": "npm run start --prefix apps/__EAVFW__.__MainApp__",
     "linkEAV": "npm link @eavfw/apps @eavfw/next @eavfw/expressions @eavfw/manifest @eavfw/hooks @eavfw/forms @eavfw/utils",
-    "eav-migrate-latest": "dotnet msbuild /target:GenerateManifest ./apps/__EAVFW__.__MainApp__ && dotnet test --filter \"ClassName=__EAVFW__.ArbejdstidsRegistrering.Scripts.DBDevSetup\" scripts/__EAVFW__.ArbejdstidsRegistrering.Scripts/__EAVFW__.ArbejdstidsRegistrering.Scripts.csproj && docker exec -i __EAVFW__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __EAVFW__ -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=__EAVFW__ -v DBSchema=__EAVFW__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName=\"Poul Kjeldager\" -v UserEmail=pks@delegate.dk -v UserPrincipalName=PoulKjeldagerSørense",
-    "eav-generate-latest": "dotnet msbuild /target:GenerateManifest ./apps/__EAVFW__.__MainApp__ && dotnet test --filter \"ClassName=__EAVFW__.ArbejdstidsRegistrering.Scripts.DBDevSetup\" scripts/__EAVFW__.ArbejdstidsRegistrering.Scripts/__EAVFW__.ArbejdstidsRegistrering.Scripts.csproj",
     "blazor": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:CopyWebAssemblyToDist",
     "eav-nextjs": "dotnet new eavfw-nextjs --projectPrefix \"__EAVFW__\" --mainAppReplace \"__MainApp__\" --databaseName \"__databaseName__\"",
     "open-sln": "start __EAVFW__.sln",
