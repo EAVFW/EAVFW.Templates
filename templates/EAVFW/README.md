@@ -1,6 +1,8 @@
 
 # EAV Framework MainApp
 
+For a more in-depth guide and additional information see this wiki https://github.com/EAVFW/EAVFW/wiki
+
 ## Quick start - with choker
 
 1. `npm run gm`
