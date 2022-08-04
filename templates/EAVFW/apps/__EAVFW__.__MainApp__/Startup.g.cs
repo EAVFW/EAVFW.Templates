@@ -49,7 +49,7 @@ namespace __EAVFW__.__MainApp__
                 DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
                 DateParseHandling = Newtonsoft.Json.DateParseHandling.DateTimeOffset,
             };
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+          //  JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
