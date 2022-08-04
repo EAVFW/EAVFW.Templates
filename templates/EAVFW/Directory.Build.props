@@ -1,8 +1,9 @@
 <Project>
  <PropertyGroup>
    <LangVersion>9.0</LangVersion>
-   <EAVFrameworkVersion>1.0.97</EAVFrameworkVersion>
+    <EAVFrameworkVersion>1.0.155</EAVFrameworkVersion>
    <UseEAVFromNuget>true</UseEAVFromNuget>
    <LocalEAVFrameworkPath>..\..\..\DotNetDevOps.Extensions.EAVFramework</LocalEAVFrameworkPath>
+   <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
  </PropertyGroup>
 </Project>

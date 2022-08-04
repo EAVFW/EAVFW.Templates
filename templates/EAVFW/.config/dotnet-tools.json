@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "eavfw.extensions.manifest.manifestenrichertool": {
+      "version": "1.3.0-dev.5",
+      "commands": [
+        "eavfw-manifest"
+      ]
+    }
+  }
+}

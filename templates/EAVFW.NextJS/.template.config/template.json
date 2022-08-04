@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Thyge Steffensen",
+  "classifications": [
+    "Common",
+    "Library"
+  ],
+  "tags": {
+    "language": "C#",
+    "type": "solution"
+  },
+  "identity": "EAVFW-NextJS",
+  "name": "EAV Framework",
+  "shortName": "eavfw-nextjs",
+  "symbols": {
+    "projectPrefix": {
+      "type": "parameter",
+      "datatype": "text",
+      "defaultValue": "EAVFW",
+      "replaces": "__EAVFW__",
+      "FileRename": "__EAVFW__",
+      "isRequired": true
+    },
+    "mainAppReplace": {
+      "type": "parameter",
+      "datatype": "text",
+      "defaultValue": "MainApp",
+      "replaces": "__MainApp__",
+      "FileRename": "__MainApp__",
+      "isRequired": true
+    },
+    "databaseName": {
+      "type": "parameter",
+      "datatype": "text",
+      "defaultValue": "databaseName",
+      "replaces": "__databaseName__",
+      "FileRename": "__databaseName__",
+      "isRequired": true
+    },
+    "skipNpmInstall": {
+      "type": "parameter",
+      "description": "Wether to run NPM install",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "isRequired": false
+    }
+  },
+  "sources": [
+    {
+      "source": "./",
+      "target": "./",
+      "exclude": [
+        "**/[Bb]in/**",
+        "**/[Oo]bj/**",
+        ".template.config/**/*",
+        "**/*.filelist",
+        "**/*.user",
+        "**/*.lock.json",
+        "**/.vs/**",
+        "**/.idea/**",
+        "**/node_modules/**",
+        "**/.git/**"
+      ]
+    }
+  ],
+  "postActions": [
+    {
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "condition": "(!skipNpmInstall)",
+      "args": {
+        "executable": "node",
+        "args": "\"C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" install --force",
+        "redirectStandardOutput": false,
+        "redirectStandardError": false
+      },
+      "manualInstructions": [
+        {
+          "text": "Want to install npm packages"
+        }
+      ],
+      "continueOnError": true,
+      "description ": "Want to install npm packages"
+    }
+  ]
+}
