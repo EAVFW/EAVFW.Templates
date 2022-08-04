@@ -54,8 +54,8 @@ jobs:
         working-directory: "./../GithubEAVTestDirectory"
 
       - name: build and export web portal
-        run: npm run build
-        working-directory: "./../GithubEAVTestDirectory/apps/GithubTestOrg.GithubTestApp"
+        run: npm run buildforrun
+        working-directory: "./../GithubEAVTestDirectory"
 
 
 
