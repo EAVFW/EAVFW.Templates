@@ -6,7 +6,8 @@ import { initializeIcons } from "@fluentui/font-icons-mdl2";
 import { RouterBasedAppContextProvider } from "@eavfw/next";
 
 import "../themes/default";
- 
+import "../components";
+
 initializeIcons(/* optional base url */);
 
 import { NextComponentType, NextPageContext } from "next";
@@ -17,9 +18,10 @@ import {
     PageLayoutProps, ResolveFeature, PageLayout, RegisterFeature
 } from "@eavfw/apps";
 import manifest from "../manifest";
-import { ThemeProvider } from "@fluentui/react";
 
-import "../components";
+
+import { useContext } from "react";
+import { useAppInsight } from "../components/AppInsights";
 
 type AppProps = {
     pageProps: any;
@@ -41,47 +43,73 @@ function getLayout(pageProps: any) {
 
 }
 
-//export const RootLayout: React.FC = (props: any) => {
-//    console.log(props);
 
+function replaceLiteral(body: string, obj: any) {
+    var iterLiteral = "\\[(.*?)\\]";
+    let i = 0;
+    var re = new RegExp(iterLiteral, "g");
+    return body.replace(re, (s) => obj[s.substring(1, s.length - 1)]);
+}
 
-//    if (props.layout === "EmptyLayout")
-//        return props.children;
+const MyAppLayout: React.FC<AppProps> = ({ Component: PageLayout, pageProps, err, router, layoutProps }) => {
 
-    
+    const rootKey = router.pathname + pageProps.layout;
+    const pageKey = replaceLiteral(router.pathname, router.query);
+    const ai = useAppInsight();
 
-//    return <ThemeProvider theme={defaultTheme} {...props} id="web-container" />
-//}
-
-
-
-const MyAppLayout: React.FC<AppProps> = ({ Component, pageProps, err, router, layoutProps }) => {
-    console.log("App " + router.pathname + " " + pageProps.layout);
-
+    ai.log("AppLayout Render: Path={Path} PathName={PathName}, RootKey={RootKey}, PageKey={PageKey} PageProps={@PageProps}",
+        router.asPath, router.pathname, rootKey, pageKey, pageProps);
 
     const app = useModelDrivenApp();
+
+    /**
+     * App Info contains current App,Area, Entity, Record
+     * */
     const appInfo = useAppInfo();
 
+    /**
+     * The EAVFW Layouts:
+     *   - FormLayout : 
+     *      Model Driven Grid Selected Provider, Ribbon Provider, Message Provider, 
+     *      Progress Provider, TopBar, RibbonBar, MessageArea, Scrollable Pane, ProgressBar
+     * */
     const Layout = getLayout(pageProps);
+
+    /** 
+     * <ThemeProvider theme={defaultTheme} {...props} id="web-container" />
+     * @eavfw/apps/Layouts/RootLayout
+     * */
     const RootLayout = ResolveFeature("RootLayout");
 
+
+    /**
+     * PageLayout is the component returned from /src/pages folder resolved from current route.
+     * */
+
     return (
-        <RootLayout {...pageProps}  key="AppLayout" id="AppLayoutId">
-            <Layout id="PageLayout" {...app._data} key="PageLayout" title={appInfo.title}>
-                <Component {...pageProps} app={app} key="PageComponent" id="PageComponentId" />
+
+        <RootLayout {...pageProps} key={rootKey}>
+            <Layout id="PageLayout" {...app._data} title={appInfo.title}>
+                <PageLayout {...pageProps} app={app} key={pageKey} id="PageComponentId" />
             </Layout>
         </RootLayout>
+
     )
 }
 
 export const MyApp: React.FC<AppProps> = (props) => {
 
+    const ai = useAppInsight();
+
+    ai.log("App Render: AppProps={@AppProps}", props);
 
     return (
         <EAVApp manifest={manifest}>
             <RouterBasedAppContextProvider>
                 <UserProvider authorize={props.pageProps.authorize} >
+
                     <MyAppLayout {...props} />
+
                 </UserProvider>
             </RouterBasedAppContextProvider>
         </EAVApp>

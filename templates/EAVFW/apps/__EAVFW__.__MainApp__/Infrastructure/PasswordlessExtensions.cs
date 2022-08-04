@@ -20,27 +20,6 @@ namespace __EAVFW__.__MainApp__.Infrastructure
     public static class PasswordlessExtensions
     {
 
-        public static IServiceCollection AddEmailClient(this IServiceCollection services,
-            string hostConfigName = "Smtp:Host",
-            string hostPortConfigName = "Smtp:Port",
-            string credentialConfigName = "Smtp:Password",
-            string hostDefaultValue = "smtp.sendgrid.net",
-            int hostPortDefaultValue = 587,
-            string credentialDefaultValue = "",
-            string credentialUserNameDefaultValue = "apikey"
-            )
-        {
-            return services.AddSingleton(sp =>
-            {
-                var config = sp.GetService<IConfiguration>();
-                return new SmtpClient(
-                    config.GetValue<string>(hostConfigName, hostDefaultValue),
-                    config.GetValue<int>(hostPortConfigName, hostPortDefaultValue))
-                {
-                    Credentials = new NetworkCredential(credentialUserNameDefaultValue, config.GetValue<string>(credentialConfigName, credentialDefaultValue))
-                };
-            });
-        }
 
         public static AuthenticatedEAVFrameworkBuilder AddPasswordless(this AuthenticatedEAVFrameworkBuilder auth, string subject = "Login til __EAVFW__ __MainApp__", string senderAppSetting = "SENDGRID_REPLY_ADDRESS")
         {

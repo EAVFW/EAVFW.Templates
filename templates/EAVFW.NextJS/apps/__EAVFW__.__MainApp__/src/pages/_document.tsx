@@ -10,7 +10,7 @@ import { ServerStyleSheet } from 'styled-components';
 
 // Set the config.
 stylesheet.setConfig({
-    injectionMode: InjectionMode.none, 
+    injectionMode: InjectionMode.none,
     namespace: "server",
 });
 

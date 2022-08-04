@@ -40,10 +40,24 @@ namespace __EAVFW__.__MainApp__
         private static IWebHostEnvironment AppEnvironment { get; set; }
         private static IConfiguration Configuration { get; set; }
 
+
+        static Startup()
+        {
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
+                DateParseHandling = Newtonsoft.Json.DateParseHandling.DateTimeOffset,
+            };
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+        }
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
             AppEnvironment = env;
             Configuration = configuration;
+
+         
+
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -115,33 +129,13 @@ namespace __EAVFW__.__MainApp__
                 .WithPermissionBasedAuthorization<DynamicContext, Identity, Permission, SecurityRole, SecurityRolePermission, SecurityRoleAssignment, SecurityGroup, SecurityGroupMember, RecordShare>();
 #endif
 
-            services.AddAuthorization(options =>
+            services.AddOptions<AuthorizationOptions>().Configure<IHostEnvironment>((options, environment) =>
             {
-                options.AddPolicy("EAVAuthorizationPolicy", pb =>
-                {
-                    pb.AddAuthenticationSchemes("eavfw");
-                    pb.RequireAuthenticatedUser();
-                });
-
-                options.AddPolicy("HangfirePolicyName", pb =>
-                {
-                    if (AppEnvironment.IsLocal())
-                    {
-                        pb.RequireAssertion(c => true);
-                    }
-                    else
-                    {
-                        pb.AddAuthenticationSchemes(DotNetDevOps.Extensions.EAVFramework.Constants.DefaultCookieAuthenticationScheme);
-                        pb.RequireAuthenticatedUser();
-                        pb.RequireClaim("role", "System Administrator");
-                    }
-                });
-
-
-                options.FallbackPolicy = new AuthorizationPolicyBuilder()
-                 .AddAuthenticationSchemes("eavfw")
-                 .RequireAuthenticatedUser().Build();
+                ConfigureEAVAuthorizationPolicy(options, environment);
+                ConfigureHangfirePolicy(options, environment);
+                options.FallbackPolicy = CreateFallbackAuthorization(environment);
             });
+            services.AddAuthorization();
 
             services.AddAuthentication();
         }
@@ -192,6 +186,9 @@ namespace __EAVFW__.__MainApp__
                     .WithMetadata(new AllowAnonymousAttribute());
                 config.MapHealthChecks("/.well-known/ready").WithMetadata(new AllowAnonymousAttribute());
                 config.MapEAVFrameworkRoutes();
+
+                MapEndpoints(config);
+
             });
         }
     }
