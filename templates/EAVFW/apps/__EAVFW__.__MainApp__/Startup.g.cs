@@ -74,7 +74,7 @@ namespace __EAVFW__.__MainApp__
                 };
 
 
-                o.PublisherPrefix = "__EAVFW__";
+                o.PublisherPrefix = "__databaseSchema__";
                 o.EnableDynamicMigrations = true;
                 o.Namespace = "__EAVFW__.Models";
                 o.DTOAssembly = typeof(__EAVFW__.Models.Constants).Assembly;
@@ -95,7 +95,7 @@ namespace __EAVFW__.__MainApp__
                 var connStr = config.GetValue<string>("ConnectionStrings:ApplicationDb");
                 var dbSchema = config.GetValue<string>("DBSchema");
                 optionsBuilder.UseSqlServer(connStr ?? "empty",
-                    x => x.MigrationsHistoryTable("__MigrationsHistory", dbSchema ?? "__EAVFW__").EnableRetryOnFailure()
+                    x => x.MigrationsHistoryTable("__MigrationsHistory", dbSchema ?? "__databaseSchema__").EnableRetryOnFailure()
                         .CommandTimeout(180));
 
                 optionsBuilder.UseInternalServiceProvider(sp);
