@@ -38,6 +38,27 @@
       "FileRename": "__databaseName__",
       "isRequired": true
     },
+    "schemaName": {
+      "type": "parameter",
+      "datatype": "text",
+      "isRequired": false
+    },
+    "schemaNameComputed": {
+      "type": "generated",
+      "generator": "coalesce",
+      "replaces": "__databaseSchema__",
+      "FileRename": "__databaseSchema__",
+      "defaultValue": "dbo",
+      "parameters": {
+        "sourceVariableName": "schemaName",
+        "fallbackVariableName": "databaseName"
+      }
+    },
+    "usersecretsid": {
+      "type": "generated",
+      "generator": "guid",
+      "replaces": "__UserSecretsId__"      
+    },
     "DATABASENAME": {
       "type": "generated",
       "generator": "casing",

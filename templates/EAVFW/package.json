@@ -8,7 +8,7 @@
     "gm": "dotnet msbuild ./src/__EAVFW__.Models/__EAVFW__.Models.csproj /target:GenerateManifest",
     "build-portal": "npm run build --prefix apps/__EAVFW__.__MainApp__",
     "buildforrun": "npm run build --prefix apps/__EAVFW__.__MainApp__",
-    "localdev": "npm run start --prefix apps/__EAVFW__.__MainApp__",
+    "localdev": "concurrently --kill-others \"env-cmd -f .env.app.local npm run start --prefix apps/__EAVFW__.__MainApp__\"",
     "linkEAV": "npm link @eavfw/apps @eavfw/next @eavfw/expressions @eavfw/manifest @eavfw/hooks @eavfw/forms @eavfw/utils",
     "blazor": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:CopyWebAssemblyToDist",
     "eav-nextjs": "dotnet new eavfw-nextjs --projectPrefix \"__EAVFW__\" --mainAppReplace \"__MainApp__\" --databaseName \"__databaseName__\"",
@@ -29,33 +29,33 @@
     "db-rm": "npm run db-stop && docker rm __EAVFW__",
     "db-docker": "docker run -v %cd%/obj/dbinit/:/opt/dbinit/ -e \"ACCEPT_EULA=Y\" -e \"SA_PASSWORD=Bigs3cRet\" -e \"MSSQL_PID=Express\" -p 1433:1433 --name __EAVFW__ -d mcr.microsoft.com/mssql/server:2019-latest",
     "db-generate-init-scripts": "dotnet tool run eavfw-manifest sql ./src/__EAVFW__.Models",
-    "db-initialize": "docker exec -it __EAVFW__ /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q \"CREATE DATABASE __databaseName__\"",
+    "db-initialize": "docker exec -it __EAVFW__ /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q \"CREATE DATABASE __databaseName__;ALTER DATABASE __databaseName__ SET RECOVERY SIMPLE;\"",
     "db-run-script": "docker exec -i __EAVFW__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=__databaseName__ -v DBSchema=__EAVFW__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=__userGuid__ -v UserName=\"__userName__\" -v UserEmail=__userEmail__ -v UserPrincipalName=__userPrincipalName__",
     "db-setup": "npm run db-docker && npm run db-generate-init-scripts",
     "db-apply-setup": "npm run db-initialize && npm run db-run-script",
-    "db-create": "npm run db-setup && npm run db-apply-setup"
+    "db-create": "npm run gm && npm run db-setup && npm run db-apply-setup && npm run db-connection-string"
   },
   "dependencies": {
     "next": "^12.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
 
-    "@fluentui/font-icons-mdl2": "8.4.3",
+    "@fluentui/font-icons-mdl2": "8.4.4",
     "@fluentui/merge-styles": "8.5.2",
-    "@fluentui/theme": "2.6.7",
-    "@fluentui/utilities": "8.9.0",
-    "@fluentui/react": "8.80.0",
-    "@fluentui/react-hooks": "8.6.1",
+    "@fluentui/theme": "2.6.8",
+    "@fluentui/utilities": "8.10.0",
+    "@fluentui/react": "8.85.1",
+    "@fluentui/react-hooks": "8.6.3",
 
     "@svgr/webpack": "^6.1.1",
 
-    "@eavfw/manifest": "1.2.0-dev.7",
-    "@eavfw/expressions": "1.0.0",
-    "@eavfw/hooks": "1.0.2-dev.1",
-    "@eavfw/forms": "1.0.2-dev.5",
-    "@eavfw/apps": "1.1.0-dev.19",
-    "@eavfw/next": "1.0.1",
-    "@eavfw/utils": "1.0.1",
+    "@eavfw/manifest": "1.2.0-dev.9",
+    "@eavfw/expressions": "1.0.1-dev.1",
+    "@eavfw/hooks": "1.0.2-dev.2",
+    "@eavfw/forms": "1.0.2-dev.7",
+    "@eavfw/apps": "1.1.0-dev.23",
+    "@eavfw/next": "1.0.2-dev.1",
+    "@eavfw/utils": "1.0.2-dev.1",
 
     "clone-deep": "4.0.1"
   },
@@ -72,6 +72,8 @@
     "react-fast-compare": "3.2.0",
     "typescript": "4.5.4",
     "webpack-preprocessor-loader": "1.1.4",
-    "@types/clone-deep": "4.0.1"
+    "@types/clone-deep": "4.0.1",
+    "concurrently": "7.3.0",
+    "env-cmd": "10.1.0"
   }
 } 
