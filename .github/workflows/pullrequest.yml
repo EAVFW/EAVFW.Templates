@@ -20,6 +20,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
+          
+      - name: Build project with dotnet
+        run: dotnet build
 
       - name: install EAVFW template
         run: dotnet new --install .\templates\EAVFW\
@@ -45,15 +48,6 @@ jobs:
       - name: create test web portal from template
         run: dotnet new eavfw-nextjs --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB"
         working-directory: "./../GithubEAVTestDirectory"
-
-      - name: list files in GithubEAVTestDirectory 
-        run: ls
-        working-directory: "./../GithubEAVTestDirectory"
-
-      - name: list files in GithubEAVTestDirectory web proj
-        run: ls
-        working-directory: "./../GithubEAVTestDirectory/apps/GithubTestOrg.GithubTestApp"
-
 
       - name: run npm install --force
         run: npm install --force

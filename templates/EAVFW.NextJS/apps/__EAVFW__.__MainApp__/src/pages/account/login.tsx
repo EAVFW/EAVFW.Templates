@@ -8,7 +8,7 @@ const styleFunc: ITextFieldProps["styles"] = (props) => ({
 })
 
 const InputOrFinished = (props: any) => {
-    const { isFinished, isLoading, email, setEmail, onClick } = props;
+    const { isFinished, isLoading, email, setEmail, onClick, onKeyPress } = props;
     if (isFinished) {
 
         return <div>Tak, du modtager snart en email med dit login til planlagt arbejdstidsregistrering</div>
@@ -16,7 +16,7 @@ const InputOrFinished = (props: any) => {
 
         return (<>
             <TextField styles={styleFunc} value={email} onChange={(e, v) => setEmail(v)} label="Email"
-                disabled={isLoading} placeholder="Enter email ..." />
+                disabled={isLoading} placeholder="Enter email ..." onKeyPress={onKeyPress} />
             {isLoading && <ProgressIndicator description="Sending email" />}
             <Stack.Item align="end" styles={{ root: { paddingTop: 16 } }}>
                 <PrimaryButton disabled={isLoading} text="Login" onClick={onClick} />
@@ -45,6 +45,13 @@ const Home = (props: any) => {
         toggleLoaded();
     }, [])
 
+    const handleKeyPress = (event: any) => {
+        if (event.key === 'Enter') {
+            console.log('enter press here! ')
+            _onClick();
+        }
+    }
+
     console.log("RENDER LOGIN");
     console.log(props);
 
@@ -63,7 +70,7 @@ const Home = (props: any) => {
             <Stack id="LoginBox" >
                 {!isFinished && <>Indtast den email, du er registreret med i Min side/medlemssystemet.</>}
                 <InputOrFinished isFinished={isFinished} isLoading={isLoading} email={email} setEmail={setEmail}
-                    onClick={_onClick} />
+                    onClick={_onClick} onKeyPress={handleKeyPress} />
             </Stack>
         </div>
     );

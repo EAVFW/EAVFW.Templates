@@ -21,9 +21,9 @@ namespace __EAVFW__.__MainApp__.Infrastructure
     {
 
         public static IServiceCollection AddEmailClient(this IServiceCollection services,
-            string hostConfigName = "SENDGRID_HOST",
-            string hostPortConfigName = "SENDGRID_PORT",
-            string credentialConfigName = "SENDGRID_APIKEY",
+            string hostConfigName = "Smtp:Host",
+            string hostPortConfigName = "Smtp:Port",
+            string credentialConfigName = "Smtp:Password",
             string hostDefaultValue = "smtp.sendgrid.net",
             int hostPortDefaultValue = 587,
             string credentialDefaultValue = "",
