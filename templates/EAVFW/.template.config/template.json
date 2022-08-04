@@ -38,6 +38,27 @@
       "FileRename": "__databaseName__",
       "isRequired": true
     },
+    "schemaName": {
+      "type": "parameter",
+      "datatype": "text",
+      "isRequired": false
+    },
+    "schemaNameComputed": {
+      "type": "generated",
+      "generator": "coalesce",
+      "replaces": "__databaseSchema__",
+      "FileRename": "__databaseSchema__",
+      "defaultValue": "dbo",
+      "parameters": {
+        "sourceVariableName": "schemaName",
+        "fallbackVariableName": "databaseName"
+      }
+    },
+    "usersecretsid": {
+      "type": "generated",
+      "generator": "guid",
+      "replaces": "__UserSecretsId__"      
+    },
     "DATABASENAME": {
       "type": "generated",
       "generator": "casing",
@@ -93,6 +114,41 @@
       "datatype": "bool",
       "defaultValue": "true",
       "isRequired": false
+    },
+    "yourUserName": {
+      "type": "parameter",
+      "description": "The username of the person whose name will be defaulted as initial admin user in DB system",
+      "datatype": "text",
+      "defaultValue": "Poul Kjeldager",
+      "replaces": "__userName__",
+      "FileRename": "__userName__",
+      "isRequired": false
+    },
+    "yourUserEmail": {
+      "type": "parameter",
+      "description": "The email of the person who will be defaulted as initial admin user in DB system, needed to be set to get access to web portal through an email",
+      "datatype": "text",
+      "defaultValue": "pks@delegate.dk",
+      "replaces": "__userEmail__",
+      "FileRename": "__userEmail__",
+      "isRequired": false
+    },
+    "yourUserPrincipalName": {
+      "type": "parameter",
+      "description": "The user principal name of the person who will be defaulted as initial admin user in DB system",
+      "datatype": "text",
+      "defaultValue": "PoulKjeldagerSørensen",
+      "replaces": "__userPrincipalName__",
+      "FileRename": "__userPrincipalName__",
+      "isRequired": false
+    },
+    "userGuid": {
+      "type": "generated",
+      "generator": "guid",
+      "replaces": "__userGuid__",
+      "parameters": {
+        "format": "D"
+      }
     }
   },
   "Forms": {

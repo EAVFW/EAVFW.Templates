@@ -21,8 +21,8 @@ jobs:
         with:
           node-version: '16'
           
-      - name: Build project with dotnet
-        run: dotnet build
+      #- name: Build project with dotnet
+      #  run: dotnet build
 
       - name: install EAVFW template
         run: dotnet new --install .\templates\EAVFW\
@@ -46,7 +46,7 @@ jobs:
         working-directory: "./../GithubEAVTestDirectory"
         
       - name: create test web portal from template
-        run: dotnet new eavfw-nextjs --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB"
+        run: dotnet new eavfw-nextjs --projectPrefix "GithubTestOrg" --mainAppReplace "GithubTestApp" --databaseName "GithubTestDB" --skipNpmInstall "true"
         working-directory: "./../GithubEAVTestDirectory"
 
       - name: run npm install --force
@@ -54,8 +54,8 @@ jobs:
         working-directory: "./../GithubEAVTestDirectory"
 
       - name: build and export web portal
-        run: npm run build
-        working-directory: "./../GithubEAVTestDirectory/apps/GithubTestOrg.GithubTestApp"
+        run: npm run buildforrun
+        working-directory: "./../GithubEAVTestDirectory"
 
 
 

@@ -1,6 +1,8 @@
 
 # EAV Framework MainApp
 
+For a more in-depth guide and additional information see this wiki https://github.com/EAVFW/EAVFW/wiki
+
 ## Quick start - with choker
 
 1. `npm run gm`
@@ -10,13 +12,6 @@
 Run it.
 
 ### Environment variables
-
-```
-# set the configuration for SMTP while we're at it
-dotnet user-secrets set "Smtp:Port" "2500"
-dotnet user-secrets set "Smtp:Host" "127.0.0.1"
-dotnet user-secrets set "Smtp:EnableEmails" "true"
-```
 
 ## Explained
 
@@ -74,7 +69,7 @@ docker run -v ${PWD}/../../scripts/__EAVFW__.HelperScripts/bin/Debug/netcoreapp3
 dotnet user-secrets set "ConnectionString" "Server=127.0.0.1,1444; Initial Catalog=__DATABASENAME__; User ID=sa; Password=Bigs3cRet;TrustServerCertificate=true"
 docker exec -it __databaseName__ /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q "CREATE DATABASE __databaseName__"
 docker exec -i __databaseName__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -i /opt/dbinit/init.sql -v DBSchema=__DATABASENAME__
-docker exec -i __databaseName__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -i /opt/dbinit/init-systemadmin.sql -v DBName=__DATABASENAME__ -v DBSchema=__DATABASENAME__ -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName="Poul Kjeldager" -v UserEmail=pks@delegate.dk
+docker exec -i __databaseName__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -i /opt/dbinit/init-systemadmin.sql -v DBName=__DATABASENAME__ -v DBSchema=__DATABASENAME__ -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName="__userName__" -v UserEmail=__userEmail__
 
 ```
 
@@ -90,7 +85,7 @@ and then repeat the db setup procedure.
 
 As a one-liner: 
 ```
-docker stop __databaseName__; docker rm __databaseName__; docker run -v ${PWD}/../../scripts/__EAVFW__.HelperScripts/bin/Debug/netcoreapp3.1/dbinit/:/opt/dbinit/ -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Bigs3cRet' -e 'MSSQL_PID=Express' -p 1433:1433 --name __databaseName__ -d mcr.microsoft.com/mssql/server:2019-latest; dotnet user-secrets set "ConnectionString" "Server=127.0.0.1; Initial Catalog=DatabaseName; User ID=sa; Password=Bigs3cRet"; dotnet test --filter "ClassName=EAVFW.HelperScripts.DBDevSetup" ../../scripts/EAVFW.HelperScripts/EAVFW.HelperScripts.csproj; docker exec -it databaseName /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q "CREATE DATABASE DatabaseName"; docker exec -i databaseName /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d DatabaseName -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=DATABASENAME -v DBSchema=PHCMS -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName="Poul Kjeldager" -v UserEmail=pks@delegate.dk -v UserPrincipalName=PoulKjeldagerSørensen
+docker stop __databaseName__; docker rm __databaseName__; docker run -v ${PWD}/../../scripts/__EAVFW__.HelperScripts/bin/Debug/netcoreapp3.1/dbinit/:/opt/dbinit/ -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Bigs3cRet' -e 'MSSQL_PID=Express' -p 1433:1433 --name __databaseName__ -d mcr.microsoft.com/mssql/server:2019-latest; dotnet user-secrets set "ConnectionString" "Server=127.0.0.1; Initial Catalog=DatabaseName; User ID=sa; Password=Bigs3cRet"; dotnet test --filter "ClassName=EAVFW.HelperScripts.DBDevSetup" ../../scripts/EAVFW.HelperScripts/EAVFW.HelperScripts.csproj; docker exec -it databaseName /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q "CREATE DATABASE DatabaseName"; docker exec -i databaseName /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d DatabaseName -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=DATABASENAME -v DBSchema=__EAVFW__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName="__userName__" -v UserEmail=__userEmail__ -v UserPrincipalName=__userPrincipalName__
 ```
 
 ### Frontend

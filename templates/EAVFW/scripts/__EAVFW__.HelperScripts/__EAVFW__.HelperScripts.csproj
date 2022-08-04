@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <IsPackable>false</IsPackable>
-        <UserSecretsId>ba510b84-e1b7-4cd3-8225-979f7a9e76ff</UserSecretsId>
+        <UserSecretsId>__UserSecretsId__</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,7 +12,7 @@
         <PackageReference Include="MSTest.TestAdapter" Version="2.1.0" />
         <PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
         <PackageReference Include="coverlet.collector" Version="1.2.0" />
-        <PackageReference Include="semver" Version="2.0.6" />
+        <PackageReference Include="semver" Version="2.2.0" />
     </ItemGroup>
 
     <ItemGroup>
