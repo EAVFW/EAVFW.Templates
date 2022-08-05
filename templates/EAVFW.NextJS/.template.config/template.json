@@ -13,7 +13,8 @@
   "name": "EAV Framework",
   "shortName": "eavfw-nextjs",
   "symbols": {
-    "projectPrefix": {
+    "namespace": {
+      "description": "The namespace used for the solution, projects. Remember to use the same as from dotnet new eavfw",
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "EAVFW",
@@ -21,20 +22,13 @@
       "FileRename": "__EAVFW__",
       "isRequired": true
     },
-    "mainAppReplace": {
+    "appName": {
+      "description": "The App name, like Portal. Namespace.Portal",
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "MainApp",
       "replaces": "__MainApp__",
       "FileRename": "__MainApp__",
-      "isRequired": true
-    },
-    "databaseName": {
-      "type": "parameter",
-      "datatype": "text",
-      "defaultValue": "databaseName",
-      "replaces": "__databaseName__",
-      "FileRename": "__databaseName__",
       "isRequired": true
     },
     "skipNpmInstall": {

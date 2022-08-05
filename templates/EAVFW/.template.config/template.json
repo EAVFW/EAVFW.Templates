@@ -14,7 +14,8 @@
   "shortName": "eavfw",
   "placeholderFilename": ".placeholder",
   "symbols": {
-    "projectPrefix": {
+    "namespace": {
+      "description": "The namespace used for the solution, projects. If long, consider using --schemaName, otherwise its also used for database schema."
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "EAVFW",
@@ -22,7 +23,8 @@
       "FileRename": "__EAVFW__",
       "isRequired": true
     },
-    "mainAppReplace": {
+    "appName": {
+      "description": "The App name, like Portal. Namespace.Portal",
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "MainApp",
@@ -31,6 +33,7 @@
       "isRequired": true
     },
     "databaseName": {
+      "description": "The name of the database to be used, and the scripts generated to work with the database",
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "databaseName",
@@ -51,22 +54,13 @@
       "defaultValue": "dbo",
       "parameters": {
         "sourceVariableName": "schemaName",
-        "fallbackVariableName": "databaseName"
+        "fallbackVariableName": "namespace"
       }
     },
     "usersecretsid": {
       "type": "generated",
       "generator": "guid",
       "replaces": "__UserSecretsId__"      
-    },
-    "DATABASENAME": {
-      "type": "generated",
-      "generator": "casing",
-      "replaces": "__DATABASENAME__",
-      "parameters": {
-        "source": "databaseName",
-        "toLower": false
-      }
     },
     "withSecurityModel": {
       "type": "parameter",

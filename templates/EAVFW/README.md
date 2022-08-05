@@ -66,10 +66,10 @@ dotnet test --filter "FullyQualifiedName=__EAVFW__.HelperScripts.DBDevSetup.Init
 ```
 # db setup
 docker run -v ${PWD}/../../scripts/__EAVFW__.HelperScripts/bin/Debug/netcoreapp3.1/dbinit/:/opt/dbinit/ -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Bigs3cRet' -e 'MSSQL_PID=Express' -p 1433:1433 --name __databaseName__ -d mcr.microsoft.com/mssql/server:2019-latest
-dotnet user-secrets set "ConnectionString" "Server=127.0.0.1,1444; Initial Catalog=__DATABASENAME__; User ID=sa; Password=Bigs3cRet;TrustServerCertificate=true"
+dotnet user-secrets set "ConnectionString" "Server=127.0.0.1,1444; Initial Catalog=__databaseName__; User ID=sa; Password=Bigs3cRet;TrustServerCertificate=true"
 docker exec -it __databaseName__ /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q "CREATE DATABASE __databaseName__"
-docker exec -i __databaseName__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -i /opt/dbinit/init.sql -v DBSchema=__DATABASENAME__
-docker exec -i __databaseName__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -i /opt/dbinit/init-systemadmin.sql -v DBName=__DATABASENAME__ -v DBSchema=__DATABASENAME__ -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName="__userName__" -v UserEmail=__userEmail__
+docker exec -i __databaseName__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -i /opt/dbinit/init.sql -v DBSchema=__databaseSchema__
+docker exec -i __databaseName__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -i /opt/dbinit/init-systemadmin.sql -v DBName=__databaseName__ -v DBSchema=__databaseSchema__ -v UserGuid=1b714972-8d0a-4feb-b166-08d93c6ae329 -v UserName="__userName__" -v UserEmail=__userEmail__
 
 ```
 

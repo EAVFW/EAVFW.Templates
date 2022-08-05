@@ -11,7 +11,7 @@
     "localdev": "concurrently --kill-others \"env-cmd -f .env.app.local npm run start --prefix apps/__EAVFW__.__MainApp__\"",
     "linkEAV": "npm link @eavfw/apps @eavfw/next @eavfw/expressions @eavfw/manifest @eavfw/hooks @eavfw/forms @eavfw/utils",
     "blazor": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:CopyWebAssemblyToDist",
-    "eav-nextjs": "dotnet new eavfw-nextjs --projectPrefix \"__EAVFW__\" --mainAppReplace \"__MainApp__\" --databaseName \"__databaseName__\"",
+    "eav-nextjs": "dotnet new eavfw-nextjs --namespace \"__EAVFW__\" --appName \"__MainApp__\"",
     "open-sln": "start __EAVFW__.sln",
 
 

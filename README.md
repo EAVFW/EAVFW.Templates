@@ -28,7 +28,7 @@ dotnet new eavfw
 or 
 
 ```
-dotnet new eavfw --projectPrefix "<customerAcronym>" --mainAppReplace "<myApp>" --databaseName "<mainDatabase1>"
+dotnet new eavfw --namespace "<customerAcronym>" --appName "<myApp>" --databaseName "<mainDatabase1>"
 ```
 
 where 
@@ -37,7 +37,7 @@ where
 - ```<mainDatabase1>``` could be the desired name for the database schema.
 
 Example:
-dotnet new eavfw --projectPrefix "MyOrg001" --mainAppReplace "MyEAVTestApp001" --databaseName "MyEAVTestAppDatabase001"
+dotnet new eavfw --namespace "MyOrg001" --appName "MyEAVTestApp001" --databaseName "MyEAVTestAppDatabase001"
 
 <br> 
 For information about the parameters, run: 
@@ -53,11 +53,11 @@ https://github.com/EAVFW/EAVFW/wiki
 (*step 1 to 3 is the same as above section _Apply the template in another folder_)
 - Step 1 Make a new directory at the same level as the cloned EAVFW.Templates. This directory will become the root directory for the generated EAV project. (e.g. a new directory called "MyEAV001" located in the "dev" directory)
 - Step 2: Open a CLI in the root of the new directory.
-- Step 3: Start the new project by using ```dotnet new eavfw --projectPrefix "<customerAcronym>" --mainAppReplace "<MyApp>" --databaseName "<DatabaseName>"``` . Where:
+- Step 3: Start the new project by using ```dotnet new eavfw --namespace "<customerAcronym>" --appName "<MyApp>" --databaseName "<DatabaseName>"``` . Where:
     - `<customerAcronym>` represents an acronym or short name for the customer for which the solution will be developed. 
     - `<MyApp>` represents the name of the app project in the solution.
     - `<DatabaseName>` represents the name of the main database schema.
-(e.g. ```dotnet new eavfw --projectPrefix "MyOrg001" --mainAppReplace "MyEAVTestApp001" --databaseName "MyEAVTestAppDatabase001"```)
+(e.g. ```dotnet new eavfw --namespace "MyOrg001" --appName "MyEAVTestApp001" --databaseName "MyEAVTestAppDatabase001"```)
 - Step 4: When applying the framework the CLI output will request confirmation for the usage of different tools and extensions. You most likely want to accept all of them (`y` and hit enter when prompted).
 - Step 5: Open the project in an IDE (can be done simply be opening the .csproj file, from the newly created directory containing the solution, in VS).
 - Step 6: After the project has completed opening. Rebuild the solution twice. Then build the solution twice.
