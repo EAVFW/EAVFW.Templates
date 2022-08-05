@@ -63,6 +63,23 @@
       "condition": "(!skipNpmInstall)",
       "args": {
         "executable": "node",
+        "args": "\"C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" install -g npm@latest",
+        "redirectStandardOutput": false,
+        "redirectStandardError": false
+      },
+      "manualInstructions": [
+        {
+          "text": "Want to install npm latest"
+        }
+      ],
+      "continueOnError": true,
+      "description ": "Want to install npm packages"
+    },
+    {
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "condition": "(!skipNpmInstall)",
+      "args": {
+        "executable": "node",
         "args": "\"C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" install --force",
         "redirectStandardOutput": false,
         "redirectStandardError": false
