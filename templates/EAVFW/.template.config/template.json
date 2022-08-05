@@ -60,7 +60,7 @@
     "usersecretsid": {
       "type": "generated",
       "generator": "guid",
-      "replaces": "__UserSecretsId__"      
+      "replaces": "__UserSecretsId__"
     },
     "withSecurityModel": {
       "type": "parameter",
@@ -107,6 +107,14 @@
       "description": "Wether to install EAVFW.Extensions.Configuration to the project",
       "datatype": "bool",
       "defaultValue": "true",
+      "isRequired": false
+    },
+    "dotnetSDK": {
+      "type": "parameter",
+      "description": "Which sdk version to use",
+      "datatype": "text",
+      "defaultValue": "6.0.302",
+      "replaces": "__DOTNET__SDK__VERSION__",
       "isRequired": false
     },
     "yourUserName": {
