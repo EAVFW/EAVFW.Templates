@@ -62,9 +62,14 @@ jobs:
         run: npm run buildforrun
         working-directory: "./../GithubEAVTestDirectory"
 
+        
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          vs-version: '[16.4,16.5)'
 
       - name: build .Net
-        run: dotnet build
+        run: msbuild
         working-directory: "./../GithubEAVTestDirectory"
 
     
