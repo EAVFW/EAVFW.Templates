@@ -15,7 +15,7 @@
   "placeholderFilename": ".placeholder",
   "symbols": {
     "namespace": {
-      "description": "The namespace used for the solution, projects. If long, consider using --schemaName, otherwise its also used for database schema."
+      "description": "The namespace used for the solution, projects. If long, consider using --schemaName, otherwise its also used for database schema.",
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "EAVFW",
