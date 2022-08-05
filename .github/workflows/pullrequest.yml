@@ -37,13 +37,13 @@ jobs:
         run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --namespace "GithubTestOrg" --appName "GithubTestApp" --databaseName "GithubTestDB" --allow-scripts yes)
         working-directory: "./../GithubEAVTestDirectory"
 
-      - name: dotnet tool restore
-        run: dotnet tool restore
-        working-directory: "./../GithubEAVTestDirectory"
+      #- name: dotnet tool restore
+      #  run: dotnet tool restore
+      #  working-directory: "./../GithubEAVTestDirectory"
 
-      - name: generate manifest
-        run: npm run gm
-        working-directory: "./../GithubEAVTestDirectory"
+      #- name: generate manifest
+      #  run: npm run gm
+      #  working-directory: "./../GithubEAVTestDirectory"
         
 #      - name: create test web portal from template
 #        run: dotnet new eavfw-nextjs --namespace "GithubTestOrg" --appName "GithubTestApp" --skipNpmInstall "true"
@@ -62,6 +62,8 @@ jobs:
         working-directory: "./../GithubEAVTestDirectory"
 
 
-
+      - name: build .Net
+        run: dotnet build
+        working-directory: "./../GithubEAVTestDirectory"
 
     
