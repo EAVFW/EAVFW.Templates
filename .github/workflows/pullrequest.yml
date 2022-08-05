@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - dev
-
+      - main
 jobs:
   test:
     runs-on: windows-latest
@@ -37,13 +37,17 @@ jobs:
         run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --namespace "GithubTestOrg" --appName "GithubTestApp" --databaseName "GithubTestDB" --allow-scripts yes)
         working-directory: "./../GithubEAVTestDirectory"
 
-      - name: dotnet tool restore
-        run: dotnet tool restore
+      - name: dotnet build
+        run: dotnet build
         working-directory: "./../GithubEAVTestDirectory"
 
-      - name: generate manifest
-        run: npm run gm
-        working-directory: "./../GithubEAVTestDirectory"
+      #- name: dotnet tool restore
+      #  run: dotnet tool restore
+      #  working-directory: "./../GithubEAVTestDirectory"
+
+      #- name: generate manifest
+      #  run: npm run gm
+      #  working-directory: "./../GithubEAVTestDirectory"
         
 #      - name: create test web portal from template
 #        run: dotnet new eavfw-nextjs --namespace "GithubTestOrg" --appName "GithubTestApp" --skipNpmInstall "true"
@@ -51,10 +55,6 @@ jobs:
 
       - name: create test web portal from template
         run: npm run eavfw-nextjs
-        working-directory: "./../GithubEAVTestDirectory"
-
-      - name: run npm install --force
-        run: npm install --force
         working-directory: "./../GithubEAVTestDirectory"
 
       - name: build and export web portal
