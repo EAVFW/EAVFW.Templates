@@ -245,3 +245,5 @@ test1.txt
 logs/
 
 **/Generated/**/*
+
+mail-setpassword.cmd

@@ -109,6 +109,20 @@
       "defaultValue": "true",
       "isRequired": false
     },
+    "withUI": {
+      "type": "parameter",
+      "description": "Should UI be installed",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "isRequired": false
+    },
+    "withBuild": {
+      "type": "parameter",
+      "description": "Do initial build",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "isRequired": false
+    },
     "dotnetSDK": {
       "type": "parameter",
       "description": "Which sdk version to use",
@@ -151,6 +165,13 @@
       "parameters": {
         "format": "D"
       }
+    },
+    "sendgrid_api_token": {
+      "type": "parameter",
+      "description": "A sendgrid api token for sending passwordless",
+      "datatype": "text",
+      "replaces": "__sendgrid_api_token__",
+      "isRequired": false
     }
   },
   "Forms": {
@@ -177,7 +198,26 @@
       ]
     }
   ],
+  "primaryOutputs": [
+    { "path": "README.md" }
+  ],
   "postActions": [
+    {
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "cmd",
+        "args": "/c git init && git add . && git commit -m \"thanks for using EAVFW\"",
+        "redirectStandardOutput": "false",
+        "redirectStandardError": "false"
+      },
+      "manualInstructions": [
+        {
+          "text": "git init && git add . && git commit -m \"Your message\""
+        }
+      ],
+      "continueOnError": false,
+      "description ": "Initializing GIT respository"
+    },
     {
       "condition": "(!skipRestore)",
       "description": "Restore NuGet packages required by this project.",
@@ -187,7 +227,7 @@
         }
       ],
       "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
-      "continueOnError": true
+      "continueOnError": false
     },
     {
       "condition": "(!skipRestoreNoCache)",
@@ -195,15 +235,15 @@
       "args": {
         "executable": "dotnet",
         "args": "tool restore --no-cache",
-        "redirectStandardOutput": false,
-        "redirectStandardError": false
+        "redirectStandardOutput": "false",
+        "redirectStandardError": "false"
       },
       "manualInstructions": [
         {
           "text": "Run 'dotnet tool restore --no-cache'"
         }
       ],
-      "continueOnError": true,
+      "continueOnError": false,
       "description ": "Restoring tools"
     },
     {
@@ -212,15 +252,15 @@
       "args": {
         "executable": "dotnet",
         "args": "tool run eavfw-manifest install EAVFW.Extensions.SecurityModel",
-        "redirectStandardOutput": false,
-        "redirectStandardError": false
+        "redirectStandardOutput": "false",
+        "redirectStandardError": "false"
       },
       "manualInstructions": [
         {
           "text": "Should EAVFW.Extensions.SecurityModel be installed?"
         }
       ],
-      "continueOnError": true,
+      "continueOnError": false,
       "description ": "Installing EAVFW.Extensions.SecurityModel"
     },
     {
@@ -229,15 +269,15 @@
       "args": {
         "executable": "dotnet",
         "args": "tool run eavfw-manifest install EAVFW.Extensions.Documents",
-        "redirectStandardOutput": false,
-        "redirectStandardError": false
+        "redirectStandardOutput": "false",
+        "redirectStandardError": "false"
       },
       "manualInstructions": [
         {
           "text": "Should EAVFW.Extensions.Documents be installed?"
         }
       ],
-      "continueOnError": true,
+      "continueOnError": false,
       "description ": "Installing EAVFW.Extensions.Documents"
     },
 
@@ -247,33 +287,113 @@
       "args": {
         "executable": "dotnet",
         "args": "tool run eavfw-manifest install EAVFW.Extensions.Configuration",
-        "redirectStandardOutput": false,
-        "redirectStandardError": false
+        "redirectStandardOutput": "false",
+        "redirectStandardError": "false"
       },
       "manualInstructions": [
         {
           "text": "Should EAVFW.Extensions.Configuration be installed?"
         }
       ],
-      "continueOnError": true,
+      "continueOnError": false,
       "description ": "Installing EAVFW.Extensions.Configuration"
     },
+    //{
+    //  "condition": "(withUI)",
+    //  "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+    //  "args": {
+    //    "executable": "node",
+    //    "args": "\"C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" --version",
+    //    "redirectStandardOutput": "true",
+    //    "redirectStandardError": "true"
+    //  },
+    //  "manualInstructions": [
+    //    {
+    //      "text": "npm install -g npm@latest"
+    //    }
+    //  ],
+    //  "continueOnError": false,
+    //  "description ": "install latest NPM"      
+    //},
+    //{
+    //  "condition": "(withUI)",
+    //  "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+    //  "args": {
+    //    "executable": "node",
+    //    "args": "\"C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" run eavfw-nextjs",
+    //    "redirectStandardOutput": true,
+    //    "redirectStandardError": true
+    //  },
+    //  "manualInstructions": [
+    //    {
+    //      "text": "npm run eavfw-nextjs"
+    //    }
+    //  ],
+    //  "continueOnError": false,
+    //  "description ": "Install the EAVFW UI"
+    //},
+    //{
+    //  "condition": "(withBuild)",
+    //  "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+    //  "args": {
+    //    "executable": "node",
+    //    "args": "\"C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" run build",
+    //    "redirectStandardOutput": "false",
+    //    "redirectStandardError": "false"
+    //  },
+    //  "manualInstructions": [
+    //    {
+    //      "text": "npm run build"
+    //    }
+    //  ],
+    //  "continueOnError": false,
+    //  "description ": "npm run build"
+    //},
     {
-      "condition": "(withManifestGeneration)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
-        "executable": "node",
-        "args": "\"C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" run gm",
-        "redirectStandardOutput": false,
-        "redirectStandardError": false
+        "executable": "cmd",
+        "args": "/c %cd%\\scripts\\mail-setpassword.cmd && del %cd%\\scripts\\mail-setpassword.cmd",
+        "redirectStandardOutput": "true",
+        "redirectStandardError": "true"
       },
       "manualInstructions": [
         {
-          "text": "Want to generate the first manifest?"
+          "text": "Set SMTP Password"
         }
       ],
-      "continueOnError": true,
-      "description ": "Generating the manifest1234"
+      "continueOnError": false,
+      "description ": "Set SMTP Password"
+    },
+    //{
+    //  "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+    //  "args": {
+    //    "executable": "cmd",
+    //    "args": "start ycmd \"/c %cd%\\scripts\\setup.cmd && del %cd%\\scripts\\setup.cmd\"",
+    //    "redirectStandardOutput": "true",
+    //    "redirectStandardError": "true"
+    //  },
+    //  "manualInstructions": [
+    //    {
+    //      "text": "Set SMTP Password"
+    //    }
+    //  ],
+    //  "continueOnError": false,
+    //  "description ": "Set SMTP Password"
+    //},
+    {
+      "description": "Manual actions required",
+      "manualInstructions": [
+        {
+          "text": "\n\nPS: (npm run eavfw-nextjs)  -and (npm install --force) -and (npm run build) -and (npm run db-create) -and (npm run open-sln)\nCMD: npm run eavfw-nextjs && npm install --force && npm run build && npm run db-create && npm run open-sln"
+        }
+      ],
+      "actionId": "AC1156F7-BB77-4DB8-B28F-24EEBCCA1E5C",
+      "args": {
+        "executable": "scripts/setup.cmd",
+        "args": ""
+      },
+      "continueOnError": true
     }
   ]
 }
