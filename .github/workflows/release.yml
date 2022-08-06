@@ -51,7 +51,7 @@ jobs:
       #  working-directory: "./../GithubEAVTestDirectory"
         
       - name: create test web portal from template
-        run: npm run eavfw-next
+        run: npm run eavfw-nextjs
         working-directory: "./../GithubEAVTestDirectory"
 
       #- name: run npm install --force
@@ -60,6 +60,10 @@ jobs:
 
       - name: build and export web portal
         run: npm run buildforrun
+        working-directory: "./../GithubEAVTestDirectory"
+
+      - name: build and export web portal
+        run: npm run db-create
         working-directory: "./../GithubEAVTestDirectory"
 
 
