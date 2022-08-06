@@ -35,28 +35,32 @@ jobs:
         run: mkdir ./../GithubEAVTestDirectory
 
       - name: create test project from template with no extensions
-        run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --namespace "GithubTestOrg" --appName "GithubTestApp" --databaseName "GithubTestDB" --skipExtensions "true" --skipRestore "true" --skipRestoreNoCache "true" --withManifestGeneration "false")
+        run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --namespace "GithubTestOrg" --appName "GithubTestApp" --databaseName "GithubTestDB" --allow-scripts yes)
         working-directory: "./../GithubEAVTestDirectory"
 
-      - name: dotnet tool restore
-        run: dotnet tool restore
+      - name: dotnet build
+        run: C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Bin\MSBuild.exe
         working-directory: "./../GithubEAVTestDirectory"
 
-      - name: generate manifest
-        run: npm run gm
-        working-directory: "./../GithubEAVTestDirectory"
+      #- name: dotnet tool restore
+      #  run: dotnet tool restore
+      #  working-directory: "./../GithubEAVTestDirectory"
+
+      #- name: generate manifest
+      #  run: npm run gm
+      #  working-directory: "./../GithubEAVTestDirectory"
         
       - name: create test web portal from template
-        run: dotnet new eavfw-nextjs --namespace "GithubTestOrg" --appName "GithubTestApp" --skipNpmInstall "true"
+        run: npm run eavfw-next
         working-directory: "./../GithubEAVTestDirectory"
 
-      - name: run npm install --force
-        run: npm install --force
-        working-directory: "./../GithubEAVTestDirectory"
+      #- name: run npm install --force
+      #  run: npm install --force
+      #  working-directory: "./../GithubEAVTestDirectory"
 
       - name: build and export web portal
-        run: npm run build
-        working-directory: "./../GithubEAVTestDirectory/apps/GithubTestOrg.GithubTestApp"
+        run: npm run buildforrun
+        working-directory: "./../GithubEAVTestDirectory"
 
 
   release:
