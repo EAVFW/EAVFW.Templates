@@ -172,6 +172,12 @@
       "datatype": "text",
       "replaces": "__sendgrid_api_token__",
       "isRequired": false
+    },
+    "skipGitCommit": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips initializing git after template generation",
+      "defaultValue": "false"
     }
   },
   "Forms": {
@@ -203,6 +209,7 @@
   ],
   "postActions": [
     {
+      "condition": "(!skipGitCommit)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
         "executable": "cmd",
