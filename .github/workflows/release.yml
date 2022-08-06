@@ -39,7 +39,7 @@ jobs:
         working-directory: "./../GithubEAVTestDirectory"
 
       - name: dotnet build
-        run: '\""C:/Program Files/Microsoft Visual Studio/2022/Enterprice/MSBuild/Current/Bin/MSBuild.exe\"'
+        run: '"C:/Program Files/Microsoft Visual Studio/2022/Enterprice/MSBuild/Current/Bin/MSBuild.exe"'
         working-directory: "./../GithubEAVTestDirectory"
 
       #- name: dotnet tool restore
