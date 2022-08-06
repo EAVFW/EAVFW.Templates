@@ -16,14 +16,14 @@
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
+	  <NoDefaultExcludes>true</NoDefaultExcludes>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**;**\variables.env" />
+    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**;" />
     <Compile Remove="templates\**\*" />
     <None Include="README.md" Pack="true" PackagePath="\" />
-	<None Include="templates\EAVFW.NextJS\apps\__EAVFW__.__MainApp__\variables.env" Pack="true" PackagePath="content/templates\EAVFW.NextJS\apps\__EAVFW__.__MainApp__\.env" />
-  </ItemGroup>
+	</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.TemplateEngine.Abstractions" Version="6.0.201" />
