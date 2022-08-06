@@ -19,9 +19,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="templates\**\*;templates\EAVFW.NextJS\apps\__EAVFW__.__MainApp__\.env" Exclude="templates\**\bin\**;templates\**\obj\**" />
+    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**;**\variables.env" />
     <Compile Remove="templates\**\*" />
     <None Include="README.md" Pack="true" PackagePath="\" />
+	<None Include="templates\EAVFW.NextJS\apps\__EAVFW__.__MainApp__\variables.env" Pack="true" PackagePath="content/templates\EAVFW.NextJS\apps\__EAVFW__.__MainApp__\.env" />
   </ItemGroup>
 
   <ItemGroup>
