@@ -62,10 +62,6 @@ jobs:
         run: npm run buildforrun
         working-directory: "./../GithubEAVTestDirectory"
 
-      - name: build and export web portal
-        run: npm run db-create
-        working-directory: "./../GithubEAVTestDirectory"
-
 
   release:
     name: Releasing
