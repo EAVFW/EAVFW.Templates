@@ -13,7 +13,7 @@
 
     "run": "dotnet run --prefix apps/__EAVFW__.__MainApp__",
     "run-dev": "concurrently --kill-others \"env-cmd -f .env.app.local npm run start --prefix apps/__EAVFW__.__MainApp__\"",
- 
+
     "blazor": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:CopyWebAssemblyToDist",
     "open-sln": "start __EAVFW__.sln",
 
@@ -31,16 +31,17 @@
     "db-stop": "docker stop __EAVFW__",
     "db-rm": "npm run db-stop && docker rm __EAVFW__",
     "db-docker": "docker run -v %cd%/obj/dbinit/:/opt/dbinit/ -e \"ACCEPT_EULA=Y\" -e \"SA_PASSWORD=Bigs3cRet\" -e \"MSSQL_PID=Express\" -p 1433:1433 --name __EAVFW__ -d mcr.microsoft.com/mssql/server:2019-latest",
-    "db-generate-init-scripts": "dotnet tool run eavfw-manifest sql ./src/__EAVFW__.Models",
     "db-initialize": "docker exec -it __EAVFW__ /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q \"CREATE DATABASE __databaseName__;ALTER DATABASE __databaseName__ SET RECOVERY SIMPLE;\"",
-    "db-run-script": "docker exec -i __EAVFW__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=__databaseName__ -v DBSchema=__databaseSchema__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=__userGuid__ -v UserName=\"__userName__\" -v UserEmail=__userEmail__ -v UserPrincipalName=__userPrincipalName__",
-    "db-setup": "npm run db-docker && npm run db-generate-init-scripts",
-    "db-apply-setup": "npm run db-initialize && npm run db-run-script",
+    "db-setup": "npm run db-docker && npm run eavfw-gen-migrations",
+    "db-apply-setup": "npm run db-initialize && npm run eavfw-apply-migrations",
     "db-create": "npm run gm && npm run db-setup && npm run db-apply-setup && npm run db-connection-string",
 
     "eavfw-cleanup": "docker stop __EAVFW__ && docker rm __EAVFW__",
     "eavfw-nextjs": "dotnet new eavfw-nextjs --namespace \"__EAVFW__\" --appName \"__MainApp__\" --allow-scripts yes",
-    "eavfw-link": "npm link @eavfw/apps @eavfw/next @eavfw/expressions @eavfw/manifest @eavfw/hooks @eavfw/forms @eavfw/utils"
+    "eavfw-link": "npm link @eavfw/apps @eavfw/next @eavfw/expressions @eavfw/manifest @eavfw/hooks @eavfw/forms @eavfw/utils",
+    "eavfw-gen-migrations": "dotnet tool run eavfw-manifest sql ./src/__EAVFW__.Models",
+    "eavfw-apply-migrations": "docker exec -i __EAVFW__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=__databaseName__ -v DBSchema=__databaseSchema__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=__userGuid__ -v UserName=\"__userName__\" -v UserEmail=__userEmail__ -v UserPrincipalName=__userPrincipalName__",
+    "eavfw-migrate": "npm run gm && npm run eavfw-gen-migrations && npm run eavfw-apply-migrations"
   },
   "dependencies": {
     "next": "^12.2.0",

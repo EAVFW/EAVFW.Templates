@@ -247,3 +247,5 @@ logs/
 **/Generated/**/*
 
 mail-setpassword.cmd
+
+.next
