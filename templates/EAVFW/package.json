@@ -2,45 +2,45 @@
   "name": "monorepo-typescript-next-the-sane-way",
   "private": true,
   "workspaces": [
-    "apps/__EAVFW__.__MainApp__"
+    "apps/TeamSKP.Portal"
   ],
   "scripts": {
-    "gm": "dotnet msbuild ./src/__EAVFW__.Models/__EAVFW__.Models.csproj /target:GenerateManifest",
+    "gm": "dotnet msbuild ./src/TeamSKP.Models/TeamSKP.Models.csproj /target:GenerateManifest",
 
     "build": "npm run gm && npm run build-app && npm run build-api",
     "build-api": "cmd /S /C \"\"C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/MSBuild.exe\" -v:Quiet -t:restore,build\"",
-    "build-app": "npm run build --prefix apps/__EAVFW__.__MainApp__",
+    "build-app": "npm run build --prefix apps/TeamSKP.Portal",
 
-    "run": "dotnet run --prefix apps/__EAVFW__.__MainApp__",
-    "run-dev": "concurrently --kill-others \"env-cmd -f .env.app.local npm run start --prefix apps/__EAVFW__.__MainApp__\"",
+    "run": "dotnet run --project apps/TeamSKP.Portal",
+    "run-dev": "concurrently --kill-others \"env-cmd -f .env.app.local npm run start --prefix apps/TeamSKP.Portal\"",
 
-    "blazor": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:CopyWebAssemblyToDist",
-    "open-sln": "start __EAVFW__.sln",
+    "blazor": "dotnet msbuild ./apps/TeamSKP.Portal/TeamSKP.Portal.csproj /target:CopyWebAssemblyToDist",
+    "open-sln": "start TeamSKP.sln",
 
-    "mail-server-config": "dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"Smtp:Port\" \"2500\" &&  dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"Smtp:Host\" \"127.0.0.1\" && dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"Smtp:EnableEmails\" \"true\"",
+    "mail-server-config": "dotnet user-secrets set --project ./apps/TeamSKP.Portal \"Smtp:Port\" \"2500\" &&  dotnet user-secrets set --project ./apps/TeamSKP.Portal \"Smtp:Host\" \"127.0.0.1\" && dotnet user-secrets set --project ./apps/TeamSKP.Portal \"Smtp:EnableEmails\" \"true\"",
     "mail-create": "docker run -v %cd%/.config/mailslurper:/mailslurper -p 4436:4436 -p 4437:4437 -p 2500:2500 --name mailslurper -d cycloid/mailslurper:1.14.1",
     "mail-rm": "docker stop mailslurper && docker rm mailslurper",
     "mail-recreate": "npm run mail-rm && npm run mail-create",
-    "mail-setpassword": "dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"SMTP:Password\"",
+    "mail-setpassword": "dotnet user-secrets set --project ./apps/TeamSKP.Portal \"SMTP:Password\"",
 
     "set-user-secrets": "npm run mail-server-config && npm run db-connection-string",
 
-    "db-connection-string": "dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"ConnectionStrings:ApplicationDB\" \"Server=127.0.0.1; Initial Catalog=__databaseName__; User ID=sa; Password=Bigs3cRet; TrustServerCertificate=true\"",
+    "db-connection-string": "dotnet user-secrets set --project ./apps/TeamSKP.Portal \"ConnectionStrings:ApplicationDB\" \"Server=127.0.0.1; Initial Catalog=TeamSKP; User ID=sa; Password=Bigs3cRet; TrustServerCertificate=true\"",
     "db-recreate": "npm run db-rm && npm run db-create",
-    "db-start": "docker start __EAVFW__",
-    "db-stop": "docker stop __EAVFW__",
-    "db-rm": "npm run db-stop && docker rm __EAVFW__",
-    "db-docker": "docker run -v %cd%/obj/dbinit/:/opt/dbinit/ -e \"ACCEPT_EULA=Y\" -e \"SA_PASSWORD=Bigs3cRet\" -e \"MSSQL_PID=Express\" -p 1433:1433 --name __EAVFW__ -d mcr.microsoft.com/mssql/server:2019-latest",
-    "db-initialize": "docker exec -it __EAVFW__ /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q \"CREATE DATABASE __databaseName__;ALTER DATABASE __databaseName__ SET RECOVERY SIMPLE;\"",
+    "db-start": "docker start TeamSKP",
+    "db-stop": "docker stop TeamSKP",
+    "db-rm": "npm run db-stop && docker rm TeamSKP",
+    "db-docker": "docker run -v %cd%/obj/dbinit/:/opt/dbinit/ -e \"ACCEPT_EULA=Y\" -e \"SA_PASSWORD=Bigs3cRet\" -e \"MSSQL_PID=Express\" -p 1433:1433 --name TeamSKP -d mcr.microsoft.com/mssql/server:2019-latest",
+    "db-initialize": "docker exec -it TeamSKP /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q \"CREATE DATABASE TeamSKP;ALTER DATABASE TeamSKP SET RECOVERY SIMPLE;\"",
     "db-setup": "npm run db-docker && npm run eavfw-gen-migrations",
     "db-apply-setup": "npm run db-initialize && npm run eavfw-apply-migrations",
     "db-create": "npm run gm && npm run db-setup && npm run db-apply-setup && npm run db-connection-string",
 
-    "eavfw-cleanup": "docker stop __EAVFW__ && docker rm __EAVFW__",
-    "eavfw-nextjs": "dotnet new eavfw-nextjs --namespace \"__EAVFW__\" --appName \"__MainApp__\" --allow-scripts yes",
+    "eavfw-cleanup": "docker stop TeamSKP && docker rm TeamSKP",
+    "eavfw-nextjs": "dotnet new eavfw-nextjs --namespace \"TeamSKP\" --appName \"Portal\" --allow-scripts yes",
     "eavfw-link": "npm link @eavfw/apps @eavfw/next @eavfw/expressions @eavfw/manifest @eavfw/hooks @eavfw/forms @eavfw/utils",
-    "eavfw-gen-migrations": "dotnet tool run eavfw-manifest sql ./src/__EAVFW__.Models",
-    "eavfw-apply-migrations": "docker exec -i __EAVFW__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=__databaseName__ -v DBSchema=__databaseSchema__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=__userGuid__ -v UserName=\"__userName__\" -v UserEmail=__userEmail__ -v UserPrincipalName=__userPrincipalName__",
+    "eavfw-gen-migrations": "dotnet tool run eavfw-manifest sql ./src/TeamSKP.Models",
+    "eavfw-apply-migrations": "docker exec -i TeamSKP /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d TeamSKP -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=TeamSKP -v DBSchema=dbo -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=E02AB47F-0A27-4942-9D16-20806DE21612 -v UserName=\"Thyge\" -v UserEmail=tst@delegate.dk -v UserPrincipalName=PoulKjeldagerSørensen",
     "eavfw-migrate": "npm run gm && npm run eavfw-gen-migrations && npm run eavfw-apply-migrations"
   },
   "dependencies": {
@@ -48,20 +48,20 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
 
-    "@fluentui/font-icons-mdl2": "8.4.5",
-    "@fluentui/merge-styles": "8.5.2",
-    "@fluentui/theme": "2.6.9",
-    "@fluentui/utilities": "8.10.1",
-    "@fluentui/react": "8.86.4",
-    "@fluentui/react-hooks": "8.6.4",
+    "@fluentui/font-icons-mdl2": "8.4.13",
+    "@fluentui/merge-styles": "8.5.3",
+    "@fluentui/react": "8.94.0",
+    "@fluentui/react-hooks": "8.6.11",
+    "@fluentui/theme": "2.6.16",
+    "@fluentui/utilities": "8.13.1",
 
     "@svgr/webpack": "^6.1.1",
 
-    "@eavfw/manifest": "1.2.0-dev.9",
-    "@eavfw/expressions": "1.0.1-dev.1",
+    "@eavfw/manifest": "1.3.0-dev.12",
+    "@eavfw/expressions": "1.0.2-dev.1",
     "@eavfw/hooks": "1.0.2-dev.2",
-    "@eavfw/forms": "1.0.2-dev.7",
-    "@eavfw/apps": "1.1.0-dev.23",
+    "@eavfw/forms": "1.0.3-dev.2",
+    "@eavfw/apps": "1.2.0-dev.16",
     "@eavfw/next": "1.0.2-dev.1",
     "@eavfw/utils": "1.0.2-dev.1",
 
