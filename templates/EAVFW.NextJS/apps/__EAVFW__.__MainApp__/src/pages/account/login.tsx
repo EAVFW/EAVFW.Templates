@@ -11,7 +11,7 @@ const InputOrFinished = (props: any) => {
     const { isFinished, isLoading, email, setEmail, onClick, onKeyPress } = props;
     if (isFinished) {
 
-        return <div>Tak, du modtager snart en email med dit login til planlagt arbejdstidsregistrering</div>
+        return <div>Tak, du modtager snart en email med dit login til planlagt __EAVFW__</div>
     } else {
 
         return (<>

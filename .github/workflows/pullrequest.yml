@@ -54,10 +54,6 @@ jobs:
         run: npm run eavfw-nextjs
         working-directory: "./../GithubEAVTestDirectory"
 
-      - name: run npm install --force
-        run: npm install --force
-        working-directory: "./../GithubEAVTestDirectory"
-
       - name: build and export web portal
         run: npm run buildforrun
         working-directory: "./../GithubEAVTestDirectory"

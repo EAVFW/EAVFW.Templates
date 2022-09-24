@@ -1,0 +1,1 @@
+npm --version && npm run eavfw-nextjs && npm install --force && npm run build && npm run db-create && npm run open-sln
