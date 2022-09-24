@@ -45,26 +45,26 @@
     "eavfw-migrate": "npm run gm && npm run eavfw-gen-migrations && npm run eavfw-apply-migrations"
   },
   "dependencies": {
-    "next": "^12.2.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
 
-    "@fluentui/font-icons-mdl2": "8.4.5",
-    "@fluentui/merge-styles": "8.5.2",
-    "@fluentui/theme": "2.6.9",
-    "@fluentui/utilities": "8.10.1",
-    "@fluentui/react": "8.86.4",
-    "@fluentui/react-hooks": "8.6.4",
+    "@fluentui/font-icons-mdl2": "8.4.13",
+    "@fluentui/merge-styles": "8.5.3",
+    "@fluentui/theme": "2.6.16",
+    "@fluentui/utilities": "8.13.1",
+    "@fluentui/react": "8.96.1",
+    "@fluentui/react-hooks": "8.6.11",
 
-    "@svgr/webpack": "^6.1.1",
+    "@svgr/webpack": "6.3.1",
 
-    "@eavfw/manifest": "1.2.0-dev.9",
-    "@eavfw/expressions": "1.0.1-dev.1",
-    "@eavfw/hooks": "1.0.2-dev.2",
-    "@eavfw/forms": "1.0.2-dev.7",
-    "@eavfw/apps": "1.1.0-dev.23",
-    "@eavfw/next": "1.0.2-dev.1",
-    "@eavfw/utils": "1.0.2-dev.1",
+    "@eavfw/manifest": "1.3.0",
+    "@eavfw/expressions": "1.0.2",
+    "@eavfw/hooks": "1.0.3",
+    "@eavfw/forms": "1.0.3",
+    "@eavfw/apps": "1.2.0",
+    "@eavfw/next": "1.0.3",
+    "@eavfw/utils": "1.0.2",
 
     "clone-deep": "4.0.1"
   },
