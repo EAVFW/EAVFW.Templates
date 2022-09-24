@@ -8,8 +8,9 @@
     "gm": "dotnet msbuild ./src/__EAVFW__.Models/__EAVFW__.Models.csproj /target:GenerateManifest",
 
     "build": "npm run gm && npm run build-app && npm run build-api",
-    "build-api": "cmd /S /C \"\"C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/MSBuild.exe\" -v:Quiet -t:restore,build\"",
     "build-app": "npm run build --prefix apps/__EAVFW__.__MainApp__",
+    "build-api": "cmd /S /C \"\"C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/MSBuild.exe\" -v:Quiet -t:restore,build\"",
+
 
     "run": "dotnet run --project apps/__EAVFW__.__MainApp__",
     "run-dev": "concurrently --kill-others \"env-cmd -f .env.app.local npm run start --prefix apps/__EAVFW__.__MainApp__\"",
@@ -44,26 +45,27 @@
     "eavfw-migrate": "npm run gm && npm run eavfw-gen-migrations && npm run eavfw-apply-migrations"
   },
   "dependencies": {
-    "next": "^12.2.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
 
     "@fluentui/font-icons-mdl2": "8.4.13",
     "@fluentui/merge-styles": "8.5.3",
-    "@fluentui/react": "8.94.0",
-    "@fluentui/react-hooks": "8.6.11",
     "@fluentui/theme": "2.6.16",
     "@fluentui/utilities": "8.13.1",
+    "@fluentui/react": "8.96.1",
+    "@fluentui/react-hooks": "8.6.11",
 
-    "@svgr/webpack": "^6.1.1",
+    "@svgr/webpack": "6.3.1",
 
-    "@eavfw/manifest": "1.3.0-dev.12",
-    "@eavfw/expressions": "1.0.2-dev.1",
-    "@eavfw/hooks": "1.0.2-dev.2",
-    "@eavfw/forms": "1.0.3-dev.2",
-    "@eavfw/apps": "1.2.0-dev.16",
-    "@eavfw/next": "1.0.2-dev.1",
-    "@eavfw/utils": "1.0.2-dev.1",
+    "@eavfw/manifest": "1.3.0",
+    "@eavfw/expressions": "1.0.2",
+    "@eavfw/hooks": "1.0.3",
+    "@eavfw/forms": "1.0.3",
+    "@eavfw/apps": "1.2.0",
+    "@eavfw/next": "1.0.3",
+    "@eavfw/utils": "1.0.2",
+
 
     "clone-deep": "4.0.1"
   },
