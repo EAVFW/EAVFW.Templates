@@ -8,8 +8,9 @@
     "gm": "dotnet msbuild ./src/__EAVFW__.Models/__EAVFW__.Models.csproj /target:GenerateManifest",
 
     "build": "npm run gm && npm run build-app && npm run build-api",
-    "build-api": "cmd /S /C \"\"C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/MSBuild.exe\" -v:Quiet -t:restore,build\"",
     "build-app": "npm run build --prefix apps/__EAVFW__.__MainApp__",
+    "build-api": "cmd /S /C \"\"C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/MSBuild.exe\" -v:Quiet -t:restore,build\"",
+
 
     "run": "dotnet run --prefix apps/__EAVFW__.__MainApp__",
     "run-dev": "concurrently --kill-others \"env-cmd -f .env.app.local npm run start --prefix apps/__EAVFW__.__MainApp__\"",
