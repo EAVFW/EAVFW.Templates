@@ -50,14 +50,15 @@ jobs:
 #        run: dotnet new eavfw-nextjs --namespace "GithubTestOrg" --appName "GithubTestApp" --skipNpmInstall "true"
 #        working-directory: "./../GithubEAVTestDirectory"
 
+
+      - name: create test web portal from template
+        run: npm run eavfw-nextjs
+        working-directory: "./../GithubEAVTestDirectory"
+ 
       - name: Install NPM
         run: npm install --force
         working-directory: "./../GithubEAVTestDirectory"
         
-      - name: create test web portal from template
-        run: npm run eavfw-nextjs
-        working-directory: "./../GithubEAVTestDirectory"
-
       - name: build and export web portal
         run: npm run build
         working-directory: "./../GithubEAVTestDirectory"
