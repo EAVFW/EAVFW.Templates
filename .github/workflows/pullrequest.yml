@@ -35,7 +35,7 @@ jobs:
         run: mkdir ./../GithubEAVTestDirectory
 
       - name: create test project from template with no extensions
-        run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --namespace "GithubTestOrg" --appName "GithubTestApp" --databaseName "GithubTestDB" --allow-scripts yes)
+        run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --namespace "GithubTestOrg" --appName "GithubTestApp" --databaseName "GithubTestDB" --allow-scripts yes --skipGitCommit yes)
         working-directory: "./../GithubEAVTestDirectory"
 
       #- name: dotnet tool restore
