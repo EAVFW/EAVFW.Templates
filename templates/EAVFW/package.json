@@ -12,7 +12,7 @@
     "build-api": "cmd /S /C \"\"C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/MSBuild.exe\" -v:Quiet -t:restore,build\"",
 
 
-    "run": "dotnet run --prefix apps/__EAVFW__.__MainApp__",
+    "run": "dotnet run --project apps/__EAVFW__.__MainApp__",
     "run-dev": "concurrently --kill-others \"env-cmd -f .env.app.local npm run start --prefix apps/__EAVFW__.__MainApp__\"",
 
     "blazor": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:CopyWebAssemblyToDist",
@@ -65,6 +65,7 @@
     "@eavfw/apps": "1.2.0",
     "@eavfw/next": "1.0.3",
     "@eavfw/utils": "1.0.2",
+
 
     "clone-deep": "4.0.1"
   },
