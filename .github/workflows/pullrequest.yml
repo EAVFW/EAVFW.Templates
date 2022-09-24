@@ -8,4 +8,4 @@ on:
 
 jobs:
   eavfw_job:
-    uses: /.github/workflows/testeavfw.yml
+    uses: ./.github/workflows/testeavfw.yml

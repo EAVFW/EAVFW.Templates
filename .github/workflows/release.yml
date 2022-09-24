@@ -8,7 +8,7 @@ on:
 
 jobs:
   eavfw_test:
-    uses: /.github/workflows/testeavfw.yml
+    uses: ./.github/workflows/testeavfw.yml
 
   release:
     name: Releasing
