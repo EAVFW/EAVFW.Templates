@@ -7,63 +7,14 @@ on:
       - main
 
 jobs:
-  test:
-    runs-on: windows-latest
-    name: Testing
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.302'
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-
-      - name: Build project with dotnet
-        run: dotnet build
-
-      - name: install EAVFW template
-        run: dotnet new --install .\templates\EAVFW\
-
-      - name: install EAVFW NextJS template
-        run: dotnet new --install .\templates\EAVFW.NextJS\
-
-      - name: create directory for test project
-        run: mkdir ./../GithubEAVTestDirectory
-
-      - name: create test project from template with no extensions
-        run: ( dotnet new --debug:rebuildcache) -and (dotnet new eavfw --namespace "GithubTestOrg" --appName "GithubTestApp" --databaseName "GithubTestDB" --allow-scripts yes --skipGitCommit)
-        working-directory: "./../GithubEAVTestDirectory"
-
-      #- name: dotnet tool restore
-      #  run: dotnet tool restore
-      #  working-directory: "./../GithubEAVTestDirectory"
-
-      #- name: generate manifest
-      #  run: npm run gm
-      #  working-directory: "./../GithubEAVTestDirectory"
-        
-      - name: create test web portal from template
-        run: dotnet new eavfw-nextjs --namespace "GithubTestOrg" --appName "GithubTestApp" --skipNpmInstall "true"
-        working-directory: "./../GithubEAVTestDirectory"
-
-      #- name: run npm install --force
-      #  run: npm install --force
-      #  working-directory: "./../GithubEAVTestDirectory"
-
-      #- name: build and export web portal
-      #  run: npm run buildforrun
-      #  working-directory: "./../GithubEAVTestDirectory"
-
+  eavfw_test:
+    uses: /.github/workflows/testeavfw.yml
 
   release:
     name: Releasing
     runs-on: windows-latest
     needs:
-       - test
+       - eavfw_test
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
