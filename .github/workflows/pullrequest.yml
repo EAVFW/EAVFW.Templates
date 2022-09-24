@@ -55,13 +55,13 @@ jobs:
         working-directory: "./../GithubEAVTestDirectory"
 
       - name: build and export web portal
-        run: npm run buildforrun
+        run: npm run build
         working-directory: "./../GithubEAVTestDirectory"
 
        
 
-      - name: build .Net
-        run: dotnet build
-        working-directory: "./../GithubEAVTestDirectory"
+      #- name: build .Net
+      #  run: dotnet build
+      #  working-directory: "./../GithubEAVTestDirectory"
 
     
