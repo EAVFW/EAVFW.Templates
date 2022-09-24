@@ -72,6 +72,16 @@ https://github.com/EAVFW/EAVFW/wiki
 - Step 5: Build the web project with ```npm run build```. This should build and export the files required for the web portal to run.
 
 
+## Guide for creating and applying database migration
+
+- Step 1: `dotnet tool run eavfw-manifest manifest new-migration` before any database changes are done to the manifest(s).
+- Step 2: __Make cahnges tot he manifest__ and bump the version in `manifest.json`
+- Step 3: `npm run gm` to generate the manifest with the changes.
+- Step 4: `npm run eavfw-gen-migrations` to generate the migration script. (They are located in `/obj/dbinit` in the root of the project)
+- Step 5: `npm run eavfw-apply-migrations` to apply the migration.
+
+Step 3 to 5 can be executed running `npm run eavfw-migrate`.
+
 ## When developing
 If changes are made to the template it can be necessary to refresh cache for the cmd window or terminal used to apply the template:
 ```
