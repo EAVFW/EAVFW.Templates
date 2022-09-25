@@ -11,6 +11,7 @@ on:
         required: false
         default: '16'
         type: string
+      
 jobs:
   eavfw_job:
     name: Build and Test EAVFW
