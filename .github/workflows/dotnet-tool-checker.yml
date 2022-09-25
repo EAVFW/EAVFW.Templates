@@ -19,7 +19,7 @@ jobs:
       - name: Get local tools
         id: project
         run: |
-          _tools="$(jq -r '.tools | map_values(.version) | to_entries | map({ "package-name": .key, "package-version": .value })' ./.config/dotnet-tools.json)"
+          _tools="$(jq -r '.tools | map_values(.version) | to_entries | map({ "package-name": .key, "package-version": .value })' ./templates/EAVFW/.config/dotnet-tools.json)"
           _tools="${_tools//'%'/'%25'}"
           _tools="${_tools//$'\n'/'%0A'}"
           _tools="${_tools//$'\r'/'%0D'}"

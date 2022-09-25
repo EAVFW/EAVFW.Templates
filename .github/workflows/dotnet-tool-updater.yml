@@ -34,7 +34,7 @@ jobs:
         id: meta
         shell: bash
         run: |
-          version="$(jq --arg package "${{ github.event.inputs.package-name }}" -r '.tools | map_values(.version) | to_entries[] |select(.key == $package) | .value' .config/dotnet-tools.json)"
+          version="$(jq --arg package "${{ github.event.inputs.package-name }}" -r '.tools | map_values(.version) | to_entries[] |select(.key == $package) | .value' templates/EAVFW/.config/dotnet-tools.json)"
           project_url="https://www.nuget.org/packages/${{ github.event.inputs.package-name }}/$version"
           meta="$(curl --silent https://api.nuget.org/v3-flatcontainer/${{ github.event.inputs.package-name }}/$version/${{ github.event.inputs.package-name }}.nuspec)"
           pattern='<repository.*url="([^"]*)'
@@ -50,7 +50,7 @@ jobs:
 
           echo "::set-output name=project-url::${project_url}"
 
-          if [[ $(git status --porcelain .config/dotnet-tools.json) ]]; then
+          if [[ $(git status --porcelain templates/EAVFW/.config/dotnet-tools.json) ]]; then
               echo "::set-output name=updated::true"
               echo "::set-output name=new-version::${version}"
 
