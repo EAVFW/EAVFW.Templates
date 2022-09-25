@@ -1,6 +1,5 @@
 ﻿branches: 
   - name: main
-    prerelease: main
   - name: dev
     prerelease: dev
 
