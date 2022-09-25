@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-dotnet@v2.1.0        
 
       - name: Check for package update
-        run: dotnet tool update ${{ github.event.inputs.package-name }}
+        run: dotnet tool update --tool-manifest templates/EAVFW/.config/dotnet-tools.json ${{ github.event.inputs.package-name }}
 
       - name: Check for modified file
         id: meta
