@@ -1,1 +1,1 @@
-npm --version && npm run eavfw-nextjs && npm install --force && npm run build && npm run db-create && npm run open-sln
+npm --version && npm run eavfw-nextjs && call scripts/gencert.cmd && npm install --force && npm run build && npm run db-create && npm run open-sln

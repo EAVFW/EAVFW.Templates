@@ -263,3 +263,4 @@ docker-compose up -d
 ```
 
 NB: the database must be running in its own container for now.
+
