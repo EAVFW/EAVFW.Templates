@@ -28,7 +28,7 @@ jobs:
       - name: Dispatch events
         uses: actions/github-script@v6.2.0
         with:
-          github-token: ${{ secrets.DOTNET_UPDATER_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             async function asyncForEach(array, callback) {
               for (let index = 0; index < array.length; index++) {
