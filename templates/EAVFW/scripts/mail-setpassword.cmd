@@ -1,0 +1,1 @@
+npm run mail-setpassword "__sendgrid_api_token__"

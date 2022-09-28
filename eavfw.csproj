@@ -16,13 +16,14 @@
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
+	  <NoDefaultExcludes>true</NoDefaultExcludes>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
+    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**;" />
     <Compile Remove="templates\**\*" />
     <None Include="README.md" Pack="true" PackagePath="\" />
-  </ItemGroup>
+	</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.TemplateEngine.Abstractions" Version="6.0.201" />

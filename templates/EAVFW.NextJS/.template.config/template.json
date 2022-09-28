@@ -13,7 +13,8 @@
   "name": "EAV Framework",
   "shortName": "eavfw-nextjs",
   "symbols": {
-    "projectPrefix": {
+    "namespace": {
+      "description": "The namespace used for the solution, projects. Remember to use the same as from dotnet new eavfw",
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "EAVFW",
@@ -21,20 +22,13 @@
       "FileRename": "__EAVFW__",
       "isRequired": true
     },
-    "mainAppReplace": {
+    "appName": {
+      "description": "The App name, like Portal. Namespace.Portal",
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "MainApp",
       "replaces": "__MainApp__",
       "FileRename": "__MainApp__",
-      "isRequired": true
-    },
-    "databaseName": {
-      "type": "parameter",
-      "datatype": "text",
-      "defaultValue": "databaseName",
-      "replaces": "__databaseName__",
-      "FileRename": "__databaseName__",
       "isRequired": true
     },
     "skipNpmInstall": {
@@ -65,21 +59,35 @@
   ],
   "postActions": [
     {
-      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-      "condition": "(!skipNpmInstall)",
-      "args": {
-        "executable": "node",
-        "args": "\"C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" install --force",
-        "redirectStandardOutput": false,
-        "redirectStandardError": false
-      },
+      "description": "Manual actions required",
       "manualInstructions": [
         {
-          "text": "Want to install npm packages"
+          "text": "scripts/gencert.cmd"
         }
       ],
-      "continueOnError": true,
-      "description ": "Want to install npm packages"
+      "actionId": "AC1156F7-BB77-4DB8-B28F-24EEBCCA1E5C",
+      "args": {
+        "executable": "scripts/gencert.cmd",
+        "args": ""
+      },
+      "continueOnError": true
     }
+    //{
+    //  "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+    //  "condition": "(!skipNpmInstall)",
+    //  "args": {
+    //    "executable": "C:/Program Files/nodejs/npm.cmd",
+    //    "args": "install --force",
+    //    "redirectStandardOutput": true,
+    //    "redirectStandardError": true
+    //  },
+    //  "manualInstructions": [
+    //    {
+    //      "text": "Want to install npm packages"
+    //    }
+    //  ],
+    //  "continueOnError": true,
+    //  "description ": "Want to install npm packages"
+    //}
   ]
 }

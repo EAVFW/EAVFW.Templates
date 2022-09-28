@@ -4,7 +4,7 @@
     "SVG_LOGO_PATH": "/logo.svg"
   },
   "apps": {
-    "EAVFW": {}
+    "DefaultApp": { "title": "__EAVFW__" }
   },
   "errorMessages": {
     

@@ -6,19 +6,23 @@
   ],
   "scripts": {
     "gm": "dotnet msbuild ./src/__EAVFW__.Models/__EAVFW__.Models.csproj /target:GenerateManifest",
-    "build-portal": "npm run build --prefix apps/__EAVFW__.__MainApp__",
-    "buildforrun": "npm run build --prefix apps/__EAVFW__.__MainApp__",
-    "localdev": "concurrently --kill-others \"env-cmd -f .env.app.local npm run start --prefix apps/__EAVFW__.__MainApp__\"",
-    "linkEAV": "npm link @eavfw/apps @eavfw/next @eavfw/expressions @eavfw/manifest @eavfw/hooks @eavfw/forms @eavfw/utils",
-    "blazor": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:CopyWebAssemblyToDist",
-    "eav-nextjs": "dotnet new eavfw-nextjs --projectPrefix \"__EAVFW__\" --mainAppReplace \"__MainApp__\" --databaseName \"__databaseName__\"",
-    "open-sln": "start __EAVFW__.sln",
 
+    "build": "npm run gm && npm run build-app && npm run build-api",
+    "build-app": "npm run build --prefix apps/__EAVFW__.__MainApp__",
+    "build-api": "cmd /S /C \"\"C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/MSBuild.exe\" -v:Quiet -t:restore,build\"",
+
+
+    "run": "dotnet run --project apps/__EAVFW__.__MainApp__",
+    "run-dev": "concurrently --kill-others \"env-cmd -f .env.app.local npm run start --prefix apps/__EAVFW__.__MainApp__\"",
+
+    "blazor": "dotnet msbuild ./apps/__EAVFW__.__MainApp__/__EAVFW__.__MainApp__.csproj /target:CopyWebAssemblyToDist",
+    "open-sln": "start __EAVFW__.sln",
 
     "mail-server-config": "dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"Smtp:Port\" \"2500\" &&  dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"Smtp:Host\" \"127.0.0.1\" && dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"Smtp:EnableEmails\" \"true\"",
     "mail-create": "docker run -v %cd%/.config/mailslurper:/mailslurper -p 4436:4436 -p 4437:4437 -p 2500:2500 --name mailslurper -d cycloid/mailslurper:1.14.1",
     "mail-rm": "docker stop mailslurper && docker rm mailslurper",
     "mail-recreate": "npm run mail-rm && npm run mail-create",
+    "mail-setpassword": "dotnet user-secrets set --project ./apps/__EAVFW__.__MainApp__ \"SMTP:Password\"",
 
     "set-user-secrets": "npm run mail-server-config && npm run db-connection-string",
 
@@ -28,34 +32,40 @@
     "db-stop": "docker stop __EAVFW__",
     "db-rm": "npm run db-stop && docker rm __EAVFW__",
     "db-docker": "docker run -v %cd%/obj/dbinit/:/opt/dbinit/ -e \"ACCEPT_EULA=Y\" -e \"SA_PASSWORD=Bigs3cRet\" -e \"MSSQL_PID=Express\" -p 1433:1433 --name __EAVFW__ -d mcr.microsoft.com/mssql/server:2019-latest",
-    "db-generate-init-scripts": "dotnet tool run eavfw-manifest sql ./src/__EAVFW__.Models",
     "db-initialize": "docker exec -it __EAVFW__ /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q \"CREATE DATABASE __databaseName__;ALTER DATABASE __databaseName__ SET RECOVERY SIMPLE;\"",
-    "db-run-script": "docker exec -i __EAVFW__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=__databaseName__ -v DBSchema=__databaseSchema__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=__userGuid__ -v UserName=\"__userName__\" -v UserEmail=__userEmail__ -v UserPrincipalName=__userPrincipalName__",
-    "db-setup": "npm run db-docker && npm run db-generate-init-scripts",
-    "db-apply-setup": "npm run db-initialize && npm run db-run-script",
-    "db-create": "npm run gm && npm run db-setup && npm run db-apply-setup && npm run db-connection-string"
+    "db-setup": "npm run db-docker && npm run eavfw-gen-migrations",
+    "db-apply-setup": "npm run db-initialize && npm run eavfw-apply-migrations",
+    "db-create": "npm run gm && npm run db-setup && npm run db-apply-setup && npm run db-connection-string",
+
+    "eavfw-cleanup": "docker stop __EAVFW__ && docker rm __EAVFW__",
+    "eavfw-nextjs": "dotnet new eavfw-nextjs --namespace \"__EAVFW__\" --appName \"__MainApp__\" --allow-scripts yes",
+    "eavfw-link": "npm link @eavfw/apps @eavfw/next @eavfw/expressions @eavfw/manifest @eavfw/hooks @eavfw/forms @eavfw/utils",
+    "eavfw-gen-migrations": "dotnet tool run eavfw-manifest sql ./src/__EAVFW__.Models",
+    "eavfw-apply-migrations": "docker exec -i __EAVFW__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=__databaseName__ -v DBSchema=__databaseSchema__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=__userGuid__ -v UserName=\"__userName__\" -v UserEmail=__userEmail__ -v UserPrincipalName=__userPrincipalName__",
+    "eavfw-migrate": "npm run gm && npm run eavfw-gen-migrations && npm run eavfw-apply-migrations"
   },
   "dependencies": {
-    "next": "^12.2.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
 
-    "@fluentui/font-icons-mdl2": "8.4.5",
-    "@fluentui/merge-styles": "8.5.2",
-    "@fluentui/theme": "2.6.9",
-    "@fluentui/utilities": "8.10.1",
-    "@fluentui/react": "8.86.4",
-    "@fluentui/react-hooks": "8.6.4",
+    "@fluentui/font-icons-mdl2": "8.4.13",
+    "@fluentui/merge-styles": "8.5.3",
+    "@fluentui/theme": "2.6.16",
+    "@fluentui/utilities": "8.13.1",
+    "@fluentui/react": "8.96.1",
+    "@fluentui/react-hooks": "8.6.11",
 
-    "@svgr/webpack": "^6.1.1",
+    "@svgr/webpack": "6.3.1",
 
-    "@eavfw/manifest": "1.2.0-dev.9",
-    "@eavfw/expressions": "1.0.1-dev.1",
-    "@eavfw/hooks": "1.0.2-dev.2",
-    "@eavfw/forms": "1.0.2-dev.7",
-    "@eavfw/apps": "1.1.0-dev.23",
-    "@eavfw/next": "1.0.2-dev.1",
-    "@eavfw/utils": "1.0.2-dev.1",
+    "@eavfw/manifest": "1.3.0",
+    "@eavfw/expressions": "1.0.2",
+    "@eavfw/hooks": "1.0.3",
+    "@eavfw/forms": "1.0.3",
+    "@eavfw/apps": "1.2.0",
+    "@eavfw/next": "1.0.3",
+    "@eavfw/utils": "1.0.2",
+
 
     "clone-deep": "4.0.1"
   },
