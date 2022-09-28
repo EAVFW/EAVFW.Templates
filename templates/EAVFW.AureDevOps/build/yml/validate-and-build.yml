@@ -1,0 +1,79 @@
+
+steps: 
+- task: NuGetToolInstaller@0
+  inputs:
+    versionSpec: 5.4.x
+
+- task: Cache@2
+  inputs:
+    key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/apps/__EAVFW__.__MainApp__/packages.lock.json'
+    restoreKeys: |
+       nuget | "$(Agent.OS)"
+    path: $(NUGET_PACKAGES)
+  displayName: Cache NuGet packages
+
+#- task: Cache@2
+#  inputs:
+#    key: 'npm | "$(Agent.OS)" | $(build.sourcesDirectory)/apps/__EAVFW__.__MainApp__/package-lock.json'
+#    restoreKeys: |
+#       npm | "$(Agent.OS)"
+#    path: $(npm_config_cache)
+#  displayName: Cache npm
+
+- task: NuGetCommand@2
+  displayName: 'Restore Nugets'
+  inputs:
+    restoreSolution: '**/*.sln'
+    feedsToUse: config
+    nugetConfigPath: $(build.sourcesDirectory)/build/nuget.config # you should always have a NuGet.config file!
+# .NET Core
+# Restore NuGet packages.
+
+
+
+#- script: npm ci
+#  workingDirectory: $(build.sourcesDirectory)/apps/__EAVFW__.__MainApp__/
+#  env:
+#    npm_config_cache: $(npm_config_cache)
+
+- task: MSBuild@1
+  inputs:
+    solution: $(build.sourcesDirectory)/apps/__EAVFW__.__MainApp__/*.csproj
+    msbuildArguments: /t:GenerateManifest
+  
+- script: npm run build
+  workingDirectory: $(build.sourcesDirectory)/apps/__EAVFW__.__MainApp__/
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: 'apps/**/*.csproj'
+    feedsToUse: config
+    nugetConfigPath: $(build.sourcesDirectory)/build/nuget.config # you should always have a NuGet.config file!
+    #verbosityRestore: 'detailed' # Options: quiet, minimal, normal, detailed, diagnostic
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: build
+    projects: 'apps/**/*.csproj'
+    configuration: '$(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: Publish
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: 'apps/**/*.csproj'
+    configuration: '$(buildConfiguration)'
+    arguments: '--output $(Build.ArtifactStagingDirectory)'
+
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: 'apps'
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishPipelineArtifact@0
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+  inputs:
+      artifactName: 'manifest.g.json'
+      targetPath: 'apps/__EAVFW__.__MainApp__/obj/manifest.g.json'
