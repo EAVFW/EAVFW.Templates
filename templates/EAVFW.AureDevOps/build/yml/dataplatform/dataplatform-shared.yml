@@ -1,0 +1,94 @@
+ 
+stages:
+
+- stage: deploy_shared_pr_infrastucture
+  displayName: "Infrastructure PR Reviews"
+  dependsOn: [build_ci]
+  #Run PR against dev and start with System.PullRequest.SourceBranch
+  condition: and(succeeded(),  eq(variables['Build.Reason'], 'PullRequest'), eq(variables['System.PullRequest.TargetBranch'], 'refs/heads/dev'),startsWith( variables['System.PullRequest.SourceBranch'],'refs/heads/pbis'))
+
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  variables:
+  - template: dataplatform-shared-variables.yml
+  - template: dataplatform-env-dev-variables.yml 
+  
+  jobs:
+  - template: dataplatform-shared-steps.yml
+    parameters:
+      EnvironmentName:  pr$(pullrequestid)
+      AzureConnection:  azure-test 
+
+
+- stage: deploy_shared_dev_infrastucture
+  displayName: "Infrastructure Dev"
+  dependsOn: [build_ci]
+  #Run if dev
+  condition: and(succeeded(),    eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  variables:
+  - template: dataplatform-shared-variables.yml
+  - template: dataplatform-env-dev-variables.yml 
+  
+  jobs:
+  - template: dataplatform-shared-steps.yml
+    parameters:
+      EnvironmentName: "dev"
+      AzureConnection:  azure-test
+
+- stage: deploy_shared_test_infrastucture
+  displayName: "Infrastructure Test"
+  dependsOn: [build_ci]
+  condition: and(succeeded(), and(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['System.PullRequest.TargetBranch'], 'refs/heads/master')))
+
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  variables:
+  - template: dataplatform-shared-variables.yml
+  - template: dataplatform-env-test-variables.yml 
+
+  jobs:
+  - template: dataplatform-shared-steps.yml
+    parameters:
+      EnvironmentName: "test"
+      AzureConnection:  azure-test
+
+- stage: deploy_shared_uat_infrastucture
+  displayName: "Infrastructure UAT"
+  dependsOn: [build_ci]
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  variables:
+  - template: dataplatform-shared-variables.yml
+  - template: dataplatform-env-uat-variables.yml 
+
+  jobs:
+  - template: dataplatform-shared-steps.yml
+    parameters:
+      EnvironmentName: "uat"
+      AzureConnection:  azure-test
+
+- stage: deploy_shared_prod_infrastucture
+  displayName: "Infrastructure Prod"
+  dependsOn: [deploy_uat_infrastucture,deploy_shared_uat_infrastucture]
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  variables:
+  - template: dataplatform-shared-variables.yml
+  - template: dataplatform-env-prod-variables.yml 
+  
+  jobs:
+  - template: dataplatform-shared-steps.yml
+    parameters:
+      EnvironmentName: "prod"
+      AzureConnection:  azure-prod

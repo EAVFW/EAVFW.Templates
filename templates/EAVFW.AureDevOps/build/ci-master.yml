@@ -1,0 +1,81 @@
+
+name: '$(date:yyyyMMdd)$(rev:-rr)'
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - master
+    - dev
+
+
+variables:
+- group: __EAVFW__-__MainApp__-shared
+- name: major
+  value: 1
+- name: minor
+  value: 0
+- name: patch
+  value: $[counter(format('{0}.{1}',variables['major'],variables['minor']),0)]
+- name: pullrequestid
+  value: $[variables['System.PullRequest.PullRequestId']]
+stages:
+- stage: build_ci
+  displayName: "Building __EAVFW__ __MainApp__"
+  dependsOn: []
+  jobs:
+  - job: Build
+    pool:
+      vmImage: 'windows-latest'
+
+    variables:
+      buildConfiguration: 'Release'
+      npm_config_cache: $(Pipeline.Workspace)/.npm
+      NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
+
+    steps:
+
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk'
+      inputs:
+        useGlobalJson: true
+
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '14.x'
+        displayName: 'Install Node.js'
+
+    - script: npm install --global npm@7.21.1
+      displayName: NPM Install v7
+      workingDirectory: $(build.sourcesDirectory)
+
+    - script: npm ci --ignore-scripts
+      displayName: NPM Install
+      workingDirectory: $(build.sourcesDirectory)
+
+    #- task: UseDotNet@2
+    #  displayName: 'Use .NET Core sdk'
+    #  inputs:
+    #    packageType: sdk
+    #    useGlobalJson: true
+    #    version: 6.x
+    #    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    #- script: dotnet --version
+    #  displayName: dotnet version
+    #  workingDirectory: $(build.sourcesDirectory)/src/DLF.Arbejdstidsregistrering.ExpressionEngine.Blazor
+
+    #- script: dotnet restore /property:Configuration=Release /p:TargetFramework=net6.0
+    #  displayName: dotnet restore
+    #  workingDirectory: $(build.sourcesDirectory)/src/DLF.Arbejdstidsregistrering.ExpressionEngine.Blazor
+
+    #- script: dotnet msbuild /property:Configuration=Release /p:BlazorTargetFramework=net6.0 /target:CopyWebAssemblyToDist /p:ShouldPublish=true ../../apps/DLF.ArbejdstidsRegistrering.App
+    #  displayName: Build ExpressionParser For management Portal
+    #  workingDirectory: $(build.sourcesDirectory)/src/DLF.Arbejdstidsregistrering.ExpressionEngine.Blazor
+ 
+
+    - template: yml/validate-and-build.yml
+    - template: yml/dataplatform/dataplatform-artifacts.yml
+
+- template: yml/dataplatform/dataplatform-shared.yml
+- template: yml/dataplatform/dataplatform-env.yml

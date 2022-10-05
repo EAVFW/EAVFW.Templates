@@ -1,0 +1,340 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"collation": {
+			"defaultValue": "SQL_Latin1_General_CP1_CI_AS",
+			"type": "string"
+		},
+		"databaseName": {
+			"type": "string"
+		},
+		"serverName": {
+			"type": "string"
+		},
+		"elasticPoolId": {
+			"type": "string"
+		},
+		"location": {
+			"type": "string"
+		},
+		"sampleName": {
+			"defaultValue": "",
+			"type": "string"
+		},
+		"databaseTags": {
+			"defaultValue": {},
+			"type": "object"
+		},
+		"enableADS": {
+			"defaultValue": true,
+			"type": "bool"
+		},
+		"enableVA": {
+			"defaultValue": true,
+			"type": "bool"
+		},
+		"enablePrivateEndpoint": {
+			"defaultValue": false,
+			"type": "bool"
+		},
+		"privateEndpointNestedTemplateId": {
+			"defaultValue": "",
+			"type": "string"
+		},
+		"privateEndpointSubscriptionId": {
+			"defaultValue": "",
+			"type": "string"
+		},
+		"privateEndpointResourceGroup": {
+			"defaultValue": "",
+			"type": "string"
+		},
+		"privateEndpointName": {
+			"defaultValue": "",
+			"type": "string"
+		},
+		"privateEndpointLocation": {
+			"defaultValue": "",
+			"type": "string"
+		},
+		"privateEndpointSubnetId": {
+			"defaultValue": "",
+			"type": "string"
+		},
+		"privateLinkServiceName": {
+			"defaultValue": "",
+			"type": "string"
+		},
+		"privateLinkServiceServiceId": {
+			"defaultValue": "",
+			"type": "string"
+		},
+		"privateEndpointVnetSubscriptionId": {
+			"defaultValue": "",
+			"type": "string"
+		},
+		"privateEndpointVnetResourceGroup": {
+			"defaultValue": "",
+			"type": "string"
+		},
+		"privateEndpointVnetName": {
+			"defaultValue": "",
+			"type": "string"
+		},
+		"privateEndpointSubnetName": {
+			"defaultValue": "",
+			"type": "string"
+		},
+		"enablePrivateDnsZone": {
+			"defaultValue": true,
+			"type": "bool"
+		},
+		"privateEndpointTemplateLink": {
+			"defaultValue": "https://sqlazureextension.hosting.portal.azure.net/sqlazureextension/Content/2.1.0118727/DeploymentTemplates/PrivateEndpoint.json",
+			"type": "string"
+		},
+		"privateDnsForPrivateEndpointTemplateLink": {
+			"defaultValue": "https://sqlazureextension.hosting.portal.azure.net/sqlazureextension/Content/2.1.0118727/DeploymentTemplates/PrivateDnsForPrivateEndpoint.json",
+			"type": "string"
+		},
+		"privateDnsForPrivateEndpointNicTemplateLink": {
+			"defaultValue": "https://sqlazureextension.hosting.portal.azure.net/sqlazureextension/Content/2.1.0118727/DeploymentTemplates/PrivateDnsForPrivateEndpointNic.json",
+			"type": "string"
+		},
+		"privateDnsForPrivateEndpointIpConfigTemplateLink": {
+			"defaultValue": "https://sqlazureextension.hosting.portal.azure.net/sqlazureextension/Content/2.1.0118727/DeploymentTemplates/PrivateDnsForPrivateEndpointIpConfig.json",
+			"type": "string"
+		}
+	},
+	"variables": {
+		"subscriptionId": "[subscription().subscriptionId]",
+		"resourceGroupName": "[resourceGroup().name]",
+		"uniqueStorage": "[uniqueString(variables('subscriptionId'), variables('resourceGroupName'), parameters('location'))]",
+		"storageName": "[tolower(concat('sqlva', variables('uniqueStorage')))]",
+		"subnetPoliciesTemplateName": "[concat('SubnetPolicies-', if(parameters('enablePrivateEndpoint'), parameters('privateEndpointNestedTemplateId'), ''))]",
+		"privateEndpointTemplateName": "[concat('PrivateEndpoint-', if(parameters('enablePrivateEndpoint'), parameters('privateEndpointNestedTemplateId'), ''))]",
+		"deploymentTemplateApi": "2018-05-01",
+		"privateEndpointApi": "2019-04-01",
+		"privateEndpointId": "[if(parameters('enablePrivateEndpoint'), resourceId(parameters('privateEndpointSubscriptionId'), parameters('privateEndpointResourceGroup'), 'Microsoft.Network/privateEndpoints', parameters('privateEndpointName')), '')]",
+		"privateEndpointVnetId": "[if(parameters('enablePrivateEndpoint'), resourceId(parameters('privateEndpointVnetSubscriptionId'), parameters('privateEndpointVnetResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('privateEndpointVnetName')), '')]",
+		"privateEndpointSubnetResourceId": "[if(parameters('enablePrivateEndpoint'), resourceId(parameters('privateEndpointVnetSubscriptionId'), parameters('privateEndpointVnetResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', parameters('privateEndpointVnetName'), parameters('privateEndpointSubnetName')), '')]",
+		"privateEndpointDnsRecordUniqueId": "[guid(parameters('databaseName'))]"
+	},
+	"resources": [
+		{
+			"type": "Microsoft.Storage/storageAccounts",
+			"apiVersion": "2019-04-01",
+			"name": "[variables('storageName')]",
+			"location": "[parameters('location')]",
+			"sku": {
+				"name": "Standard_LRS"
+			},
+			"kind": "StorageV2",
+			"properties": {},
+			"condition": "[parameters('enableVA')]"
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases",
+			"apiVersion": "2017-10-01-preview",
+			"name": "[concat(parameters('serverName'), '/', parameters('databaseName'))]",
+			"location": "[parameters('location')]",
+			"tags": "[parameters('databaseTags')]",
+			"properties": {
+				"collation": "[parameters('collation')]",
+				"elasticPoolId": "[parameters('elasticPoolId')]",
+				"sampleName": "[parameters('sampleName')]"
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/securityAlertPolicies",
+			"apiVersion": "2017-03-01-preview",
+			"name": "[concat(parameters('serverName'), '/Default')]",
+			"dependsOn": [
+				"[concat('Microsoft.Sql/servers/', parameters('serverName'), '/databases/', parameters('databaseName'))]"
+			],
+			"properties": {
+				"state": "Enabled",
+				"disabledAlerts": [],
+				"emailAddresses": [],
+				"emailAccountAdmins": true
+			},
+			"condition": "[parameters('enableADS')]"
+		},
+		{
+			"type": "Microsoft.Sql/servers/vulnerabilityAssessments",
+			"apiVersion": "2018-06-01-preview",
+			"name": "[concat(parameters('serverName'), '/Default')]",
+			"dependsOn": [
+				"[concat('Microsoft.Sql/servers/', parameters('serverName'), '/databases/', parameters('databaseName'))]",
+				"[concat('Microsoft.Storage/storageAccounts/', variables('storageName'))]",
+				"[concat('Microsoft.Sql/servers/', parameters('serverName'), '/securityAlertPolicies/Default')]"
+			],
+			"properties": {
+				"storageContainerPath": "[if(parameters('enableVA'), concat(reference(variables('storageName'), '2018-02-01').primaryEndpoints.blob, 'vulnerability-assessment'), '')]",
+				"storageAccountAccessKey": "[if(parameters('enableVA'), listKeys(variables('storageName'), '2018-02-01').keys[0].value, '')]",
+				"recurringScans": {
+					"isEnabled": true,
+					"emailSubscriptionAdmins": true,
+					"emails": []
+				}
+			},
+			"condition": "[parameters('enableVA')]"
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "[variables('deploymentTemplateApi')]",
+			"name": "[variables('subnetPoliciesTemplateName')]",
+			"properties": {
+				"mode": "Incremental",
+				"template": {
+					"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+					"contentVersion": "1.0.0.0",
+					"resources": [
+						{
+							"apiVersion": "[variables('privateEndpointApi')]",
+							"name": "[concat(parameters('privateEndpointVnetName'), '/', parameters('privateEndpointSubnetName'))]",
+							"location": "[parameters('privateEndpointLocation')]",
+							"properties": {
+								"privateEndpointNetworkPolicies": "Disabled"
+							},
+							"type": "Microsoft.Network/virtualNetworks/subnets"
+						}
+					]
+				}
+			},
+			"subscriptionId": "[if(parameters('enablePrivateEndpoint'), parameters('privateEndpointVnetSubscriptionId'), variables('subscriptionId'))]",
+			"resourceGroup": "[if(parameters('enablePrivateEndpoint'), parameters('privateEndpointVnetResourceGroup'), variables('resourceGroupName'))]",
+			"condition": "[parameters('enablePrivateEndpoint')]"
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "[variables('deploymentTemplateApi')]",
+			"name": "[variables('privateEndpointTemplateName')]",
+			"dependsOn": [
+				"[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.Sql/servers/databases/', parameters('serverName'), parameters('databaseName'))]",
+				"[variables('subnetPoliciesTemplateName')]"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"parameters": {
+					"privateEndpointName": {
+						"value": "[parameters('privateEndpointName')]"
+					},
+					"privateEndpointConnectionId": {
+						"value": ""
+					},
+					"privateEndpointConnectionName": {
+						"value": "[parameters('privateLinkServiceName')]"
+					},
+					"privateEndpointId": {
+						"value": "[variables('privateEndpointId')]"
+					},
+					"privateEndpointApiVersion": {
+						"value": "[variables('privateEndpointApi')]"
+					},
+					"privateLinkServiceId": {
+						"value": "[parameters('privateLinkServiceServiceId')]"
+					},
+					"groupId": {
+						"value": "SqlServer"
+					},
+					"subnetId": {
+						"value": "[variables('privateEndpointSubnetResourceId')]"
+					},
+					"location": {
+						"value": "[parameters('privateEndpointLocation')]"
+					},
+					"tags": {
+						"value": {}
+					}
+				},
+				"templatelink": {
+					"contentVersion": "1.0.0.0",
+					"uri": "[parameters('privateEndpointTemplateLink')]"
+				}
+			},
+			"subscriptionId": "[if(parameters('enablePrivateEndpoint'), parameters('privateEndpointSubscriptionId'), variables('subscriptionId'))]",
+			"resourceGroup": "[if(parameters('enablePrivateEndpoint'), parameters('privateEndpointResourceGroup'), variables('resourceGroupName'))]",
+			"condition": "[parameters('enablePrivateEndpoint')]"
+		},
+		{
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "[variables('deploymentTemplateApi')]",
+			"name": "[concat('PrivateDns-', parameters('privateEndpointNestedTemplateId'))]",
+			"dependsOn": [
+				"[variables('privateEndpointTemplateName')]"
+			],
+			"properties": {
+				"mode": "Incremental",
+				"template": {
+					"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+					"contentVersion": "1.0.0.0",
+					"resources": [
+						{
+							"type": "Microsoft.Network/privateDnsZones",
+							"apiVersion": "2018-09-01",
+							"name": "[string('privatelink.database.windows.net')]",
+							"location": "global",
+							"tags": {},
+							"properties": {}
+						},
+						{
+							"type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+							"apiVersion": "2018-09-01",
+							"name": "[concat(string('privatelink.database.windows.net'), '/', uniqueString(variables('privateEndpointVnetId')))]",
+							"location": "global",
+							"dependsOn": [
+								"[string('privatelink.database.windows.net')]"
+							],
+							"properties": {
+								"virtualNetwork": {
+									"id": "[variables('privateEndpointVnetId')]"
+								},
+								"registrationEnabled": false
+							}
+						},
+						{
+							"apiVersion": "[variables('deploymentTemplateApi')]",
+							"name": "[concat('EndpointDnsRecords-', variables('privateEndpointDnsRecordUniqueId'))]",
+							"type": "Microsoft.Resources/deployments",
+							"dependsOn": [
+								"[string('privatelink.database.windows.net')]"
+							],
+							"properties": {
+								"mode": "Incremental",
+								"templatelink": {
+									"contentVersion": "1.0.0.0",
+									"uri": "[parameters('privateDnsForPrivateEndpointTemplateLink')]"
+								},
+								"parameters": {
+									"privateDnsName": {
+										"value": "[string('privatelink.database.windows.net')]"
+									},
+									"privateEndpointNicResourceId": {
+										"value": "[if(parameters('enablePrivateEndpoint'), reference(concat('Microsoft.Resources/deployments/', variables('privateEndpointTemplateName'))).outputs.networkInterfaceId.value, '')]"
+									},
+									"nicRecordsTemplateUri": {
+										"value": "[parameters('privateDnsForPrivateEndpointNicTemplateLink')]"
+									},
+									"ipConfigRecordsTemplateUri": {
+										"value": "[parameters('privateDnsForPrivateEndpointIpConfigTemplateLink')]"
+									},
+									"uniqueId": {
+										"value": "[variables('privateEndpointDnsRecordUniqueId')]"
+									},
+									"existingRecords": {
+										"value": {}
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			"subscriptionId": "[if(parameters('enablePrivateEndpoint'), parameters('privateEndpointVnetSubscriptionId'), variables('subscriptionId'))]",
+			"resourceGroup": "[if(parameters('enablePrivateEndpoint'), parameters('privateEndpointVnetResourceGroup'), variables('resourceGroupName'))]",
+			"condition": "[and(parameters('enablePrivateEndpoint'), parameters('enablePrivateDnsZone'))]"
+		}
+	]
+}

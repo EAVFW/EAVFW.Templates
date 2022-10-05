@@ -1,0 +1,41 @@
+parameters:
+- name: EnvironmentName
+- name: AzureConnection
+ 
+jobs:
+- deployment: deployment
+  displayName: Deploy
+
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  environment: 
+    name: __EAVFW__-__MainApp__-Platform-${{ parameters['EnvironmentName'] }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: DownloadPipelineArtifact@2
+        - script: |
+            sudo apt-get update -y
+            sudo apt-get install -y dos2unix
+            dos2unix $(Pipeline.Workspace)/azure/*.sh
+            chmod +x $(Pipeline.Workspace)/azure/*.sh
+          displayName: 'Command Line Script'
+        
+
+        - task: AzureCLI@1 
+          displayName: 'Azure CLI $(Pipeline.Workspace)/azure/env-inf-pipeline.sh'
+          env:
+            RGName: $(RGName)
+            prefix: $(PublisherPrefix)
+            projectName: $(ProjectName)
+            projectEnv: ${{ parameters['EnvironmentName'] }}
+            location: $(ProjectLocation)
+            locationShort: $(ProjectLocationShort)
+            publishFolder: $(Pipeline.Workspace)/apps
+           
+          inputs:
+            azureSubscription: ${{ parameters['AzureConnection'] }}
+            scriptPath: '$(Pipeline.Workspace)/azure/env-inf-pipeline.sh'
+

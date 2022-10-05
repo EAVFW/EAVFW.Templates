@@ -1,0 +1,82 @@
+parameters:
+- name: EnvironmentName
+- name: AzureConnection
+
+jobs:
+#- job: intervention
+#  pool: server
+#  steps:
+#  - task: ManualIntervention@8
+#    displayName: "Manual Intervention"
+#    inputs:
+#      instructions: "Deploy to $(EnvironmentName)"
+#      emailRecipients: '["cd5f232a-2948-662c-be39-3f7578cfad1b"]'
+
+- job: CheckChanges
+  displayName: 'Check changes'
+  steps:
+    - bash: |
+        PATH_FILTER="build/"
+        CHANGED_FILES=$(git diff HEAD HEAD~ --name-only)
+        MATCH_COUNT=0
+
+        echo "Checking for file changes..."
+        for FILE in $CHANGED_FILES
+        do
+        if [[ $FILE == *$PATH_FILTER* ]]; then
+            echo "MATCH:  ${FILE} changed"
+            MATCH_FOUND=true
+            MATCH_COUNT=$(($MATCH_COUNT+1))
+        else
+            echo "IGNORE: ${FILE} changed"
+        fi
+        done
+
+        echo "$MATCH_COUNT match(es) for filter '$PATH_FILTER' found."
+        if [[ $MATCH_COUNT -gt 0 ]]; then
+        echo "##vso[task.setvariable variable=SOURCE_CODE_CHANGED;isOutput=true]true"
+        else
+        echo "##vso[task.setvariable variable=SOURCE_CODE_CHANGED;isOutput=true]false"
+        fi
+      name: check_changes
+      displayName: 'Check changed files'
+
+- deployment: deployment
+  displayName: Deploy
+  dependsOn: CheckChanges # <- Important: Mark previous job as dependency        
+  condition: or(eq(dependencies.CheckChanges.outputs['check_changes.SOURCE_CODE_CHANGED'], 'true'),and(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['System.PullRequest.TargetBranch'], 'refs/heads/dev')))
+  pool:
+    vmImage: 'ubuntu-latest'
+  environment: 
+    name: __EAVFW__-__MainApp__-Platform-${{ parameters['EnvironmentName'] }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: DownloadPipelineArtifact@2
+        - script: |
+            sudo apt-get update -y
+            sudo apt-get install -y dos2unix
+            dos2unix $(Pipeline.Workspace)/azure/*.sh
+            dos2unix $(Pipeline.Workspace)/azure/*.sql
+            chmod +x $(Pipeline.Workspace)/azure/*.sh
+          displayName: 'Command Line Script'
+        - task: AzureCLI@1
+          displayName: 'Azure CLI $(Pipeline.Workspace)/azure/shared-inf-pipeline.sh'
+          name: azure_inf
+          env:
+            RGName: $(RGName)
+            projectName: $(ProjectName)
+            projectEnv: ${{ parameters['EnvironmentName'] }}
+            location: $(ProjectLocation)
+            prefix: $(PublisherPrefix)
+            locationShort: $(ProjectLocationShort)
+            sqladminusername: __EAVFW__-adminuser
+            dbinituser: $(dbinituser)
+            dbinitpassword: $(dbinitpassword)
+            dbinituserid: $(dbinituserid)
+            SENDGRID_APIKEY: $(SENDGRID_APIKEY)
+            SENDGRID_REPLY_ADDRESS: $(SENDGRID_REPLY_ADDRESS)
+          inputs:
+            azureSubscription: ${{ parameters['AzureConnection'] }}
+            scriptPath: '$(Pipeline.Workspace)/azure/shared-inf-pipeline.sh'

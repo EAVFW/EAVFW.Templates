@@ -4,8 +4,8 @@ using System.Linq;
 using System.Net;
 using __EAVFW__.Common;
 using __EAVFW__.Models;
-using DotNetDevOps.Extensions.EAVFramework;
-using DotNetDevOps.Extensions.EAVFramework.Hosting;
+using EAVFramework;
+using EAVFramework.Hosting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -21,7 +21,7 @@ using Newtonsoft.Json.Linq;
 using EAVFW.Extensions.Infrastructure;
 using Microsoft.Extensions.Hosting;
 using EAVFW.Extensions.Infrastructure.TypeHelpers;
-using DotNetDevOps.Extensions.EAVFramework.Configuration;
+using EAVFramework.Configuration;
 using __EAVFW__.BusinessLogic;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
@@ -185,7 +185,7 @@ namespace __EAVFW__.__MainApp__
                 config.MapHealthChecks("/.well-known/live", new HealthCheckOptions { Predicate = _ => false })
                     .WithMetadata(new AllowAnonymousAttribute());
                 config.MapHealthChecks("/.well-known/ready").WithMetadata(new AllowAnonymousAttribute());
-                config.MapEAVFrameworkRoutes();
+                config.MapEAVFrameworkRoutes<DynamicContext>();
 
                 MapEndpoints(config);
 

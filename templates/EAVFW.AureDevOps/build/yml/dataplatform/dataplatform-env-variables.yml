@@ -1,0 +1,6 @@
+variables:
+  ProjectName: "__MainApp__"
+  ProjectLocation: WestEurope
+  ProjectLocationShort: weu
+  PublisherPrefix: "__EAVFW__"
+  
