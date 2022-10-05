@@ -12,11 +12,11 @@
     </ItemGroup>
 
 <!--    <ItemGroup Condition="$(RemoteEAVFramework) == 'false'">-->
-<!--        <ProjectReference Include="$(LocalEAVFrameworkPath)\src\DotNetDevOps.Extensions.EAVFramework.csproj" />-->
+<!--        <ProjectReference Include="$(LocalEAVFrameworkPath)\src\EAVFramework.csproj" />-->
 <!--    </ItemGroup>-->
 
 <!--    <ItemGroup Condition="$(RemoteEAVFramework) != 'false'">-->
-<!--        <PackageReference Include="DotNetDevOps.Extensions.EAVFramework" Version="$(EAVFrameworkVersion)" />-->
+<!--        <PackageReference Include="EAVFramework" Version="$(EAVFrameworkVersion)" />-->
 <!--    </ItemGroup>-->
 
 </Project>

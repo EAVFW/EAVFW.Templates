@@ -1,5 +1,5 @@
-using DotNetDevOps.Extensions.EAVFramework;
-using DotNetDevOps.Extensions.EAVFramework.Configuration;
+using EAVFramework;
+using EAVFramework.Configuration;
 
 
 using __EAVFW__.Common;
@@ -70,7 +70,7 @@ namespace __EAVFW__.__MainApp__
                 }
                 else
                 {
-                    pb.AddAuthenticationSchemes(DotNetDevOps.Extensions.EAVFramework.Constants.DefaultCookieAuthenticationScheme);
+                    pb.AddAuthenticationSchemes(EAVFramework.Constants.DefaultCookieAuthenticationScheme);
                     pb.RequireAuthenticatedUser();
                     pb.RequireClaim("role", "System Administrator");
                 }

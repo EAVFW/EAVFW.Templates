@@ -1,7 +1,7 @@
-using DotNetDevOps.Extensions.EAVFramework;
-using DotNetDevOps.Extensions.EAVFramework.Authentication.Passwordless;
-using DotNetDevOps.Extensions.EAVFramework.Configuration;
-using DotNetDevOps.Extensions.EAVFramework.Endpoints;
+using EAVFramework;
+using EAVFramework.Authentication.Passwordless;
+using EAVFramework.Configuration;
+using EAVFramework.Endpoints;
 using __EAVFW__.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
