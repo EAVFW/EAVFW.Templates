@@ -185,7 +185,7 @@ namespace __EAVFW__.__MainApp__
                 config.MapHealthChecks("/.well-known/live", new HealthCheckOptions { Predicate = _ => false })
                     .WithMetadata(new AllowAnonymousAttribute());
                 config.MapHealthChecks("/.well-known/ready").WithMetadata(new AllowAnonymousAttribute());
-                config.MapEAVFrameworkRoutes();
+                config.MapEAVFrameworkRoutes<DynamicContext>();
 
                 MapEndpoints(config);
 
