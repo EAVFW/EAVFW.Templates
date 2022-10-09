@@ -119,7 +119,11 @@ namespace __EAVFW__.__MainApp__
 
 
             var eav = ConfigureEAVFW(services.AddEAVFramework<DynamicContext>(o => {
-                o.RoutePrefix = "/api"; 
+                o.RoutePrefix = "/api";
+
+                o.Authentication.OnAuthenticatedAsync = OnAuthenticatedAsync;
+                o.Authentication.PopulateAuthenticationClaimsAsync = PopulateAuthenticationClaimsAsync;
+
             }) 
                 .WithPluginsDiscovery<PluginConfiguration>()
                 .WithDatabaseHealthCheck<DynamicContext>());
