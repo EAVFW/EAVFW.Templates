@@ -3,7 +3,7 @@
   "isRoot": true,
   "tools": {
     "eavfw.extensions.manifest.manifestenrichertool": {
-      "version": "1.5.2",
+      "version": "2.1.0",
       "commands": [
         "eavfw-manifest"
       ]
