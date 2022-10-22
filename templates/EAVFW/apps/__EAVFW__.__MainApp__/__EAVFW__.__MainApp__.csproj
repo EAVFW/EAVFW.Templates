@@ -31,7 +31,7 @@
         <Content Include="..\..\src\__EAVFW__.Models\obj\manifest.g.json" Link="manifest.g.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include=".next\routes-manifest.json" Condition="Exists('.next\routes-manifest.json')">
+        <Content Include=".next\routes-manifest.json" Condition="Exists('.next\routes-manifest.json')"  Link="routes-manifest.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
          
