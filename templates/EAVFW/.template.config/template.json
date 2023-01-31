@@ -131,6 +131,14 @@
       "replaces": "__DOTNET__SDK__VERSION__",
       "isRequired": false
     },
+    "targetFramework": {
+      "type": "parameter",
+      "description": "Which target framework to use",
+      "datatype": "text",
+      "defaultValue": "net6.0",
+      "replaces": "__TARGET_FRAMEWORK__",
+      "isRequired": false
+    },
     "yourUserName": {
       "type": "parameter",
       "description": "The username of the person whose name will be defaulted as initial admin user in DB system",

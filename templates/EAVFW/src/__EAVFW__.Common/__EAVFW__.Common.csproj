@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>__TARGET_FRAMEWORK__</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
@@ -10,17 +10,21 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.6.2" />
-        <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-        <PackageReference Include="Serilog" Version="2.10.0" />
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="4.2.0" />
-        <PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
-        <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
-        <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
-        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.28" />
-        <PackageReference Include="Hangfire.Core" Version="1.7.28" />
-        <PackageReference Include="Hangfire.SqlServer" Version="1.7.28" />
-        <PackageReference Include="MailKit" Version="3.1.1" />
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+        <PackageReference Include="Serilog" Version="2.12.0" />
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="5.0.1" />
+        <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.33" />
+        <PackageReference Include="Hangfire.Core" Version="1.7.33" />
+        <PackageReference Include="Hangfire.SqlServer" Version="1.7.33" />
+        <PackageReference Include="MailKit" Version="3.5.0" />
+        <PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
+        <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
+        <PackageReference Include="Serilog.Sinks.Mssqlserver" Version="6.2.0" />
+        <PackageReference Include="EAVFW.Extensions.Infrastructure" Version="2.0.0" />
     </ItemGroup>
 
     <ItemGroup Condition="$(RemoteEAVFramework) == 'false'">

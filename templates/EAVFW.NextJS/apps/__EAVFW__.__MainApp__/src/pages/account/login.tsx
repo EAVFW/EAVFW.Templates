@@ -11,7 +11,7 @@ const InputOrFinished = (props: any) => {
     const { isFinished, isLoading, email, setEmail, onClick, onKeyPress } = props;
     if (isFinished) {
 
-        return <div>Tak, du modtager snart en email med dit login til planlagt __EAVFW__</div>
+        return <div>Tak, du modtager snart en email med dit login til __EAVFW__ __MainApp__.</div>
     } else {
 
         return (<>
@@ -68,7 +68,7 @@ const Home = (props: any) => {
             flexDirection: 'column'
         }}>
             <Stack id="LoginBox" >
-                {!isFinished && <>Indtast den email, du er registreret med i Min side/medlemssystemet.</>}
+                {!isFinished && <>Indtast den email, du er registreret med i __EAVFW__ __MainApp__.</>}
                 <InputOrFinished isFinished={isFinished} isLoading={isLoading} email={email} setEmail={setEmail}
                     onClick={_onClick} onKeyPress={handleKeyPress} />
             </Stack>

@@ -2,7 +2,7 @@
     <Import Project="build\eavframework.targets" Condition="Exists('build\eavframework.targets')" />
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>__TARGET_FRAMEWORK__</TargetFramework>
         <UserSecretsId>__UserSecretsId__</UserSecretsId>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
         <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>        
@@ -12,11 +12,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="EAVFW.Extensions.Infrastructure" Version="2.0.0" />
-        <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
-        <PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
-        <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
-        <PackageReference Include="Serilog.Sinks.Mssqlserver" Version="5.6.1" />
+        
     </ItemGroup>
  
 
