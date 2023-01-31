@@ -37,6 +37,12 @@
       "datatype": "bool",
       "defaultValue": "false",
       "isRequired": false
+    },
+    "skipGitCommit": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips initializing git after template generation",
+      "defaultValue": "false"
     }
   },
   "sources": [
@@ -58,20 +64,20 @@
     }
   ],
   "postActions": [
-    {
-      "description": "Manual actions required",
-      "manualInstructions": [
-        {
-          "text": "scripts/gencert.cmd"
-        }
-      ],
-      "actionId": "AC1156F7-BB77-4DB8-B28F-24EEBCCA1E5C",
-      "args": {
-        "executable": "scripts/gencert.cmd",
-        "args": ""
-      },
-      "continueOnError": true
-    }
+    //{
+    //  "description": "Manual actions required",
+    //  "manualInstructions": [
+    //    {
+    //      "text": "scripts/gencert.cmd"
+    //    }
+    //  ],
+    //  "actionId": "AC1156F7-BB77-4DB8-B28F-24EEBCCA1E5C",
+    //  "args": {
+    //    "executable": "scripts/gencert.cmd",
+    //    "args": ""
+    //  },
+    //  "continueOnError": true
+    //}
     //{
     //  "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
     //  "condition": "(!skipNpmInstall)",

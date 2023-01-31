@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>__TARGET_FRAMEWORK__</TargetFramework>
         <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
         <CustomizationPrefix>__EAVFW__</CustomizationPrefix>
         <RemoteEAVFramework>$(UseEAVFromNuget)</RemoteEAVFramework>
@@ -48,10 +48,7 @@
         <CompilerVisibleProperty Include="RootNamespace" />
         <CompilerVisibleProperty Include="EAVFrameworkSourceGenerator" />
 
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
+       
     </ItemGroup>
 
 

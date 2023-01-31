@@ -1,24 +1,24 @@
 using EAVFramework;
 using EAVFramework.Configuration;
-
-
-using __EAVFW__.Common;
-using __EAVFW__.Models;
-
+using EAVFramework.Endpoints;
+using EAVFramework.Extensions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-
-using __EAVFW__.__MainApp__.Infrastructure;
 using System.Linq;
 using System.Security.Claims;
-using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+
+using __EAVFW__.__MainApp__.Infrastructure;
+using __EAVFW__.Common;
+using __EAVFW__.Models;
+
 //using EAVFW.Extensions.WorkflowEngine;
 //using Hangfire;
 //using Hangfire.Dashboard;
@@ -103,7 +103,7 @@ namespace __EAVFW__.__MainApp__
 
                 }
 
-                await ctx.SaveChangesAsync(Constants.SystemAdministratorGroup);
+                await ctx.SaveChangesAsync(__EAVFW__.Common.Constants.SystemAdministratorGroup);
 
             }
 #endif
@@ -131,18 +131,18 @@ namespace __EAVFW__.__MainApp__
                                               select role.Name;
 
                 var isActive = true;
+                //TODO Do some logic for active users. User==Contact. Need a general model for "Is Active" and "UserEmail" interfaces
+                //if (identity is User user)
+                //{
+                //    if (!string.IsNullOrEmpty(user.Email))
+                //    {
+                //        claims.Add(new Claim("email", user.Email));
+                //    }
 
-                if (identity is User user)
-                {
-                    if (!string.IsNullOrEmpty(user.Email))
-                    {
-                        claims.Add(new Claim("email", user.Email));
-                    }
+                //    isActive = user.Status == UserStatuses.Active;
 
-                    isActive = user.Status == UserStatuses.Active;
-
-                    claims.Add(new Claim("status", ((int) (user.Status ?? UserStatuses.Inactive)).ToString()));
-                }
+                //    claims.Add(new Claim("status", ((int) (user.Status ?? UserStatuses.Inactive)).ToString()));
+                //}
 
                 if (isActive)
                 {
