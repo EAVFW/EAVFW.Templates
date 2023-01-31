@@ -88,7 +88,7 @@ namespace __EAVFW__.__MainApp__
                 };
 
 
-                o.PublisherPrefix = "__databaseSchema__";
+                o.Schema = "__databaseSchema__";
                 o.EnableDynamicMigrations = true;
                 o.Namespace = "__EAVFW__.Models";
                 o.DTOAssembly = typeof(__EAVFW__.Models.Constants).Assembly;

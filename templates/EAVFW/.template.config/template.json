@@ -127,7 +127,7 @@
       "type": "parameter",
       "description": "Which sdk version to use",
       "datatype": "text",
-      "defaultValue": "6.0.302",
+      "defaultValue": "6.0.308",
       "replaces": "__DOTNET__SDK__VERSION__",
       "isRequired": false
     },
@@ -235,7 +235,7 @@
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
         "executable": "cmd",
-        "args": "/c git init && git add . && git commit -m \"thanks for using EAVFW\"",
+        "args": "/c git init --initial-branch=main && git add . && git commit -m \"thanks for using EAVFW\"",
         "redirectStandardOutput": "false",
         "redirectStandardError": "false"
       },
@@ -256,7 +256,10 @@
         }
       ],
       "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
-      "continueOnError": false
+      "continueOnError": false,
+      "args": {
+        "files": [ "*.sln" ]
+      }
     },
     {
       "condition": "(!skipRestoreNoCache)",

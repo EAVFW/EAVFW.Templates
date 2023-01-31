@@ -71,6 +71,23 @@
         "args": ""
       },
       "continueOnError": true
+    },
+    {
+      "condition": "(!skipGitCommit)",
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "cmd",
+        "args": "/c git add . && git commit -m \"feat: Added Frontend Portal\"",
+        "redirectStandardOutput": "false",
+        "redirectStandardError": "false"
+      },
+      "manualInstructions": [
+        {
+          "text": "git init && git add . && git commit -m \"Your message\""
+        }
+      ],
+      "continueOnError": false,
+      "description ": "Initializing GIT respository"
     }
     //{
     //  "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
