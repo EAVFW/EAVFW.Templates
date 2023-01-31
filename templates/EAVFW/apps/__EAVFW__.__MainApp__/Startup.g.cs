@@ -32,8 +32,6 @@ using System.Globalization;
 using System.Threading;
 using EAVFW.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
-using System.Globalization;
-using System.Threading;
 #if (withSecurityModel)
 using EAVFW.Extensions.SecurityModel;
 #endif
