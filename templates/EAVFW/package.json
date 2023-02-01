@@ -58,12 +58,12 @@
 
     "@svgr/webpack": "6.5.1",
 
-    "@eavfw/manifest": "1.4.0-dev.2",
-    "@eavfw/expressions": "1.0.2",
-    "@eavfw/hooks": "1.0.4-dev.2",
-    "@eavfw/forms": "1.1.0-dev.1",
-    "@eavfw/apps": "1.3.0-dev.6",
-    "@eavfw/next": "1.1.0-dev.2",
+    "@eavfw/manifest": "1.4.0",
+    "@eavfw/expressions": "1.1.0",
+    "@eavfw/hooks": "1.0.4",
+    "@eavfw/forms": "1.1.0",
+    "@eavfw/apps": "1.3.0",
+    "@eavfw/next": "1.1.0",
     "@eavfw/utils": "1.0.2",
 
 
