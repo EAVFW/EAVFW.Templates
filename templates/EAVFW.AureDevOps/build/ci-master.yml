@@ -54,7 +54,7 @@ stages:
 
 
     - template: yml/validate-and-build.yml
-    - template: yml/dataplatform/dataplatform-artifacts.yml
+    - template: yml/dataplatform/__MainApp__-artifacts.yml
 
-- template: yml/dataplatform/dataplatform-shared.yml
-- template: yml/dataplatform/dataplatform-env.yml
+- template: yml/dataplatform/__MainApp__-shared.yml
+- template: yml/dataplatform/__MainApp__-env.yml
