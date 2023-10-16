@@ -44,7 +44,7 @@ stages:
         versionSpec: '18.x'
         displayName: 'Install Node.js'
 
-    - script: npm ci --ignore-scripts
+    - script: npm ci --ignore-scripts --force
       displayName: NPM Install
       workingDirectory: $(build.sourcesDirectory)
 
