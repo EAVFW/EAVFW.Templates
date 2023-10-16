@@ -11,11 +11,11 @@ stages:
     vmImage: 'ubuntu-latest'
 
   variables:
-  - template: dataplatform-env-variables.yml
-  - template: dataplatform-env-dev-variables.yml 
+  - template: __MainApp__-env-variables.yml
+  - template: __MainApp__-env-dev-variables.yml 
 
   jobs:
-  - template: dataplatform-env-steps.yml
+  - template: __MainApp__-env-steps.yml
     parameters:
       EnvironmentName: pr$(pullrequestid)
       AzureConnection: azure-test
@@ -30,11 +30,11 @@ stages:
     vmImage: 'ubuntu-latest'
 
   variables:
-  - template: dataplatform-env-variables.yml
-  - template: dataplatform-env-dev-variables.yml 
+  - template: __MainApp__-env-variables.yml
+  - template: __MainApp__-env-dev-variables.yml 
 
   jobs:
-  - template: dataplatform-env-steps.yml
+  - template: __MainApp__-env-steps.yml
     parameters:
       EnvironmentName: "dev"
       AzureConnection:  azure-test
@@ -48,11 +48,11 @@ stages:
     vmImage: 'ubuntu-latest'
 
   variables:
-  - template: dataplatform-env-variables.yml
-  - template: dataplatform-env-test-variables.yml  
+  - template: __MainApp__-env-variables.yml
+  - template: __MainApp__-env-test-variables.yml  
 
   jobs:
-  - template: dataplatform-env-steps.yml
+  - template: __MainApp__-env-steps.yml
     parameters:
       EnvironmentName: "test"
       AzureConnection:  azure-test
@@ -66,11 +66,11 @@ stages:
     vmImage: 'ubuntu-latest'
 
   variables:
-  - template: dataplatform-env-variables.yml
-  - template: dataplatform-env-uat-variables.yml  
+  - template: __MainApp__-env-variables.yml
+  - template: __MainApp__-env-uat-variables.yml  
 
   jobs:
-  - template: dataplatform-env-steps.yml
+  - template: __MainApp__-env-steps.yml
     parameters:
       EnvironmentName: "uat"
       AzureConnection:  azure-test
@@ -84,11 +84,11 @@ stages:
     vmImage: 'ubuntu-latest'
 
   variables:
-  - template: dataplatform-env-variables.yml
-  - template: dataplatform-env-prod-variables.yml  
+  - template: __MainApp__-env-variables.yml
+  - template: __MainApp__-env-prod-variables.yml  
 
   jobs:
-  - template: dataplatform-env-steps.yml
+  - template: __MainApp__-env-steps.yml
     parameters:
       EnvironmentName: "prod"
       AzureConnection:  azure-prod
