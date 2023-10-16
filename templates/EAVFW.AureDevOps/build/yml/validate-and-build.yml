@@ -17,7 +17,7 @@ steps:
   workingDirectory: ${{ parameters['ProjectPath'] }}
 
 - script: npm run build
-  workingDirectory: $(build.sourcesDirectory)/apps/__EAVFW__.__MainApp__/
+  workingDirectory: $(build.sourcesDirectory)
 
 - task: DotNetCoreCLI@2
   displayName: Publish
