@@ -39,6 +39,9 @@
 
     "eavfw-cleanup": "docker stop __EAVFW__ && docker rm __EAVFW__",
     "eavfw-nextjs": "dotnet new eavfw-nextjs --namespace \"__EAVFW__\" --appName \"__MainApp__\" --allow-scripts yes",
+    "eavfw-ado": "dotnet new eavfw-ado --namespace \"__EAVFW__\" --appName \"__MainApp__\" --allow-scripts yes",
+    "eavfw-add-ado-to-solution": "dotnet sln __EAVFW__.sln add ./build/ContinueIntegration.csproj",
+    "eavfw-add-ado": "npm run eavfw-ado && npm run eavfw-add-ado-to-solution",
     "eavfw-link": "npm link @eavfw/apps @eavfw/next @eavfw/expressions @eavfw/manifest @eavfw/hooks @eavfw/forms @eavfw/utils",
     "eavfw-gen-migrations": "dotnet tool run eavfw-manifest sql ./src/__EAVFW__.Models",
     "eavfw-apply-migrations": "docker exec -i __EAVFW__ /opt/mssql-tools/bin/sqlcmd -s localhost -U sa -P Bigs3cRet -d __databaseName__ -I -i /opt/dbinit/init.sql -i /opt/dbinit/init-systemadmin.sql -v DBName=__databaseName__ -v DBSchema=__databaseSchema__ -v SystemAdminSecurityGroupId=1b714972-8d0a-4feb-b166-08d93c6ae328 -v UserGuid=__userGuid__ -v UserName=\"__userName__\" -v UserEmail=__userEmail__ -v UserPrincipalName=__userPrincipalName__",
