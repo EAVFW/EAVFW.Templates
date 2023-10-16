@@ -9,7 +9,7 @@
 
     "build": "npm run gm && npm run build-app && npm run build-api",
     "build-app": "npm run build --prefix apps/__EAVFW__.__MainApp__",
-    "build-api": "cmd /S /C \"\"C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/MSBuild.exe\" -v:Quiet -t:restore,build\"",
+    "build-api": "cmd /S /C \"\"C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/MSBuild.exe\" /property:Configuration=Release -v:Quiet -t:restore,build\"",
 
 
     "run": "dotnet run --project apps/__EAVFW__.__MainApp__",
