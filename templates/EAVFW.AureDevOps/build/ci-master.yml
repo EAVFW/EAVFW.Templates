@@ -41,7 +41,7 @@ stages:
 
     - task: NodeTool@0
       inputs:
-        versionSpec: '18.x'
+        versionSpec: '20.x'
         displayName: 'Install Node.js'
 
     - script: npm ci --ignore-scripts --force
@@ -54,7 +54,7 @@ stages:
 
 
     - template: yml/validate-and-build.yml
-    - template: yml/dataplatform/__MainApp__-artifacts.yml
+    - template: yml/__EAVFW__/__MainApp__-artifacts.yml
 
-- template: yml/dataplatform/__MainApp__-shared.yml
-- template: yml/dataplatform/__MainApp__-env.yml
+- template: yml/__EAVFW__/__MainApp__-shared.yml
+- template: yml/__EAVFW__/__MainApp__-env.yml
