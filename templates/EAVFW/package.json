@@ -31,7 +31,7 @@
     "db-start": "docker start __EAVFW__",
     "db-stop": "docker stop __EAVFW__",
     "db-rm": "npm run db-stop && docker rm __EAVFW__",
-    "db-docker": "docker run -v %cd%/obj/dbinit/:/opt/dbinit/ -e \"ACCEPT_EULA=Y\" -e \"SA_PASSWORD=Bigs3cRet\" -e \"MSSQL_PID=Express\" -p 1433:1433 --name __EAVFW__ -d mcr.microsoft.com/mssql/server:2019-latest",
+    "db-docker": "docker run -v %cd%/obj/dbinit/:/opt/dbinit/ -e \"ACCEPT_EULA=Y\" -e \"SA_PASSWORD=Bigs3cRet\" -e \"MSSQL_PID=Express\" -p 1433:1433 --name __EAVFW__ -d mcr.microsoft.com/mssql/server:2022-latest",
     "db-initialize": "docker exec -it __EAVFW__ /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Bigs3cRet -Q \"CREATE DATABASE __databaseName__;ALTER DATABASE __databaseName__ SET RECOVERY SIMPLE;\"",
     "db-setup": "npm run db-docker && npm run eavfw-gen-migrations",
     "db-apply-setup": "npm run db-initialize && npm run eavfw-apply-migrations",
