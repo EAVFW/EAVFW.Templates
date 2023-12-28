@@ -28,7 +28,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.OData;
 using Microsoft.Extensions.Options;
 using Microsoft.OData.UriParser;
-
+using System.Globalization;
+using System.Threading;
+using EAVFW.Extensions.Configuration;
+using System.IdentityModel.Tokens.Jwt;
 #if (withSecurityModel)
 using EAVFW.Extensions.SecurityModel;
 #endif
@@ -49,7 +52,12 @@ namespace __EAVFW__.__MainApp__
                 DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
                 DateParseHandling = Newtonsoft.Json.DateParseHandling.DateTimeOffset,
             };
-          //  JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+           
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            var cultureInfo = CultureInfo.GetCultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
         }
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
@@ -88,7 +96,7 @@ namespace __EAVFW__.__MainApp__
                 };
 
 
-                o.PublisherPrefix = "__databaseSchema__";
+                o.Schema = "__databaseSchema__";
                 o.EnableDynamicMigrations = true;
                 o.Namespace = "__EAVFW__.Models";
                 o.DTOAssembly = typeof(__EAVFW__.Models.Constants).Assembly;
@@ -142,6 +150,9 @@ namespace __EAVFW__.__MainApp__
             services.AddAuthorization();
 
             services.AddAuthentication();
+#if (withConfiguration)
+            services.AddServerWatchDog<DynamicContext, Server>(Common.Constants.SystemAdministratorGroup);
+#endif
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)

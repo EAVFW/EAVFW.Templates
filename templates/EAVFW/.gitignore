@@ -249,3 +249,6 @@ logs/
 mail-setpassword.cmd
 
 .next
+/apps/__EAVFW__.__MainApp__/wwwroot
+
+Directory.Build.Local.props

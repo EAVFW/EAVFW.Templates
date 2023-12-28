@@ -66,7 +66,7 @@ namespace __EAVFW__.__MainApp__.Infrastructure
                 };
                 options.Subject = subject;
                 options.Sender = config.GetValue<string>(senderAppSetting, "info@eavfw.com");
-                options.TemplateMailMessageContents = url => $"<html><div>Klik på nedenstående link, for at komme ind på selve support portalen.</div><br/><a href=\"{url}\">Support Portal/a><br/><br/>Venlig hilsen<br/><br/><b>EAVFW Teamet</b></br><a href=\"https://www.eavfw.com/\">https://www.eavfw.com/</a></html>";
+                options.TemplateMailMessageContents = url => $"<html><div>Klik på nedenstående link, for at komme ind i __EAVFW__ __MainApp__.</div><br/><a href=\"{url}\">__MainApp__</a><br/><br/>Venlig hilsen<br/><br/><b>EAVFW Teamet</b></br><a href=\"https://www.eavfw.com/\">https://www.eavfw.com/</a></html>";
                 options.FetchUserIdByEmailAsync = async (ctx, sp, s) =>
                 {
                     return await sp.GetRequiredService<DynamicContext>().Set<SystemUser>().Where(e => e.Email == s).Select(c => c.Id.ToString()).FirstOrDefaultAsync();
