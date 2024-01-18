@@ -49,12 +49,12 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
 
-    "@fluentui/font-icons-mdl2": "8.5.28",
-    "@fluentui/merge-styles": "8.5.14",
-    "@fluentui/theme": "2.6.39",
-    "@fluentui/utilities": "8.13.22",
-    "@fluentui/react": "8.114.0",
-    "@fluentui/react-hooks": "8.6.34",
+    "@fluentui/font-icons-mdl2": "8.5.30",
+    "@fluentui/merge-styles": "8.5.15",
+    "@fluentui/theme": "2.6.40",
+    "@fluentui/utilities": "8.13.23",
+    "@fluentui/react": "8.114.3",
+    "@fluentui/react-hooks": "8.6.35",
 
     "@svgr/webpack": "8.1.0",
 
