@@ -9,7 +9,7 @@ on:
         type: string
       nodeversion:
         required: false
-        default: '18'
+        default: '20'
         type: string
       
 jobs:
