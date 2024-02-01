@@ -187,6 +187,13 @@
       "description": "If specified, skips initializing git after template generation",
       "defaultValue": "false"
     },
+    "reactTypesVersion": {
+      "type": "parameter",
+      "datatype": "text",
+      "description": "the npm version of react/types, this should be equal to the version of eavfw package",
+      "defaultValue": "17.0.38",
+      "replaces": "__REACT_TYPES_VERSION__"
+    },
     "HttpsPort": {
       "type": "parameter",
       "datatype": "integer",
