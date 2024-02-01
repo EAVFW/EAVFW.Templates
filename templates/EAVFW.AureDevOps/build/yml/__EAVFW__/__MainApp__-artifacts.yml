@@ -1,0 +1,26 @@
+steps:
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: 'apps'
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishPipelineArtifact@0
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+  inputs:
+    artifactName: 'manifest.g.json'
+    targetPath: 'src/__EAVFW__.Models/obj/manifest.g.json'
+
+- script: dotnet tool run eavfw-manifest sql ./src/__EAVFW__.Models/
+  displayName: Create DB Scripts
+  workingDirectory: $(build.sourcesDirectory)
+
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: '$(build.sourcesDirectory)/obj/dbinit/'
+    contents: '**'
+    targetFolder: $(build.sourcesDirectory)/build/azure/
+
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: 'azure'
+    targetPath: '$(build.sourcesDirectory)/build/azure'
