@@ -48,16 +48,19 @@
     "eavfw-migrate": "npm run gm && npm run eavfw-gen-migrations && npm run eavfw-apply-migrations"
   },
   "dependencies": {
-    "next": "12.3.4",
+    "next": "14.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
 
-    "@fluentui/font-icons-mdl2": "8.5.25",
-    "@fluentui/merge-styles": "8.5.12",
-    "@fluentui/theme": "2.6.36",
-    "@fluentui/utilities": "8.13.19",
-    "@fluentui/react": "8.112.0",
-    "@fluentui/react-hooks": "8.6.30",
+    "@fluentui/font-icons-mdl2": "8.5.38",
+    "@fluentui/merge-styles": "8.6.4",
+    "@fluentui/react": "8.117.7",
+    "@fluentui/react-components": "9.49.0",
+    "@fluentui/react-hooks": "8.8.1",
+    "@fluentui/react-migration-v0-v9": "9.1.27",
+    "@fluentui/react-migration-v8-v9": "9.6.8",
+    "@fluentui/theme": "2.6.47",
+    "@fluentui/utilities": "8.15.4",
 
     "@svgr/webpack": "6.5.1",
 
