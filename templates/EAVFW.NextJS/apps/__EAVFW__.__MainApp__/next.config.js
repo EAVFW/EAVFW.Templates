@@ -7,7 +7,8 @@ const withTM = require('next-transpile-modules')((env.NEXT_TRANSPILE_MODULES||''
 
 //console.log(env);
 module.exports = withTM({
-
+    output: env.NODE_ENV === "production" ? 'export' : undefined,
+    distDir: env.NODE_ENV === "production" ? 'wwwroot' : undefined,
     trailingSlash: true,
     webpack: (config, { defaultLoaders }) => {
         console.log(env.NODE_ENV === "production" ? 'SSG' : 'SSR');

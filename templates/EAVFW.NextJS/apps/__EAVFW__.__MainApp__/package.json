@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "dev": "next",
-    "build": "next build && next export -o wwwroot",
+    "build": "next build",
     "start": "node server.js",
     "type-check": "tsc",
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
