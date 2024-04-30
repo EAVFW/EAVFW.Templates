@@ -194,6 +194,13 @@
       "defaultValue": "17.0.38",
       "replaces": "__REACT_TYPES_VERSION__"
     },
+    "reactDomTypesVersion": {
+      "type": "parameter",
+      "datatype": "text",
+      "description": "the npm version of react-dom/types, this should be equal to the version of eavfw package",
+      "defaultValue": "17.0.11",
+      "replaces": "__REACT_DOM_TYPES_VERSION__"
+    },
     "HttpsPort": {
       "type": "parameter",
       "datatype": "integer",

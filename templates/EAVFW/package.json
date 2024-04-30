@@ -80,7 +80,7 @@
     "@types/blazor__javascript-interop": "3.1.2",
     "@types/node": "17.0.5",
     "@types/react": "__REACT_TYPES_VERSION__",
-    "@types/react-dom": "17.0.11",
+    "@types/react-dom": "__REACT_DOM_TYPES_VERSION__",
     "@typescript-eslint/eslint-plugin": "4.30.0",
     "@typescript-eslint/parser": "4.30.0",
     "next-transpile-modules": "10.0.1",
