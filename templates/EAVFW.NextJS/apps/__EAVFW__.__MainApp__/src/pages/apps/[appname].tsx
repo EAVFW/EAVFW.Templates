@@ -11,12 +11,12 @@ export default function Home() {
     const [selectedArea, setselectedArea] = useState<string>();
     const user = useUserProfile();
 
-  
-   
+
+
     const sitemap = app.sitemap;
     useEffect(() => {
         try {
-         
+
             const areas = Object.keys(sitemap.areas).filter(area => {
                 console.log("area to filter");
                 console.log(sitemap.areas[area]);
@@ -43,7 +43,7 @@ export default function Home() {
 
                 return noRoleInfoDefined;
             }).map(area => ({ key: area, text: area, id: area } as IDropdownOption));
-             
+
 
             setselectedArea(router.query.area as string ?? areas[0]?.key);
         } finally {
@@ -52,21 +52,15 @@ export default function Home() {
 
     }, [router.query.area, user]);
 
-    const dashboard = Object.values(sitemap.dashboards[selectedArea!] ?? {})[0];
 
-    if (!dashboard?.url)
-        return <div>No Dashboard Configured</div>
-
-    return (
-        <iframe style={{ width:'100%', height:'100%' }} src={dashboard.url} />
-    );
+    return <div>No Dashboard Configured</div>
 }
 
 
 
 const props = {
     layout: "PageLayout",
-    authorize:true
+    authorize: true
 };
 
 // #!if EXPORTS_FOR_BUILD === 'SSG'
