@@ -64,13 +64,13 @@
 
     "@svgr/webpack": "8.1.0",
 
-    "@eavfw/manifest": "1.5.0-dev.3",
-    "@eavfw/expressions": "1.1.1-dev.4",
-    "@eavfw/hooks": "1.0.4",
-    "@eavfw/forms": "1.2.0-dev.3",
-    "@eavfw/apps": "1.4.0-dev.17",
-    "@eavfw/next": "1.1.0",
-    "@eavfw/utils": "1.0.2",
+    "@eavfw/manifest": "1.5.0--vnext.10",
+    "@eavfw/expressions": "1.2.0-vnext.1",
+    "@eavfw/hooks": "1.1.0-vnext.1",
+    "@eavfw/forms": "1.2.0-vnext.8",
+    "@eavfw/apps": "1.4.0-vnext.27",
+    "@eavfw/next": "1.1.1-vnext.3",
+    "@eavfw/utils": "1.1.0-vnext.1",
 
 
     "clone-deep": "4.0.1"
