@@ -64,11 +64,11 @@
 
     "@svgr/webpack": "8.1.0",
 
-    "@eavfw/manifest": "1.5.0-vnext.10",
+    "@eavfw/manifest": "1.5.0-vnext.14",
     "@eavfw/expressions": "1.2.0-vnext.1",
     "@eavfw/hooks": "1.1.0-vnext.1",
     "@eavfw/forms": "1.2.0-vnext.8",
-    "@eavfw/apps": "1.4.0-vnext.27",
+    "@eavfw/apps": "1.4.0-vnext.32",
     "@eavfw/next": "1.1.1-vnext.3",
     "@eavfw/utils": "1.1.0-vnext.1",
 
