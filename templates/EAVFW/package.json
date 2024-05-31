@@ -64,7 +64,7 @@
 
     "@svgr/webpack": "8.1.0",
 
-    "@eavfw/manifest": "1.5.0--vnext.10",
+    "@eavfw/manifest": "1.5.0-vnext.10",
     "@eavfw/expressions": "1.2.0-vnext.1",
     "@eavfw/hooks": "1.1.0-vnext.1",
     "@eavfw/forms": "1.2.0-vnext.8",
