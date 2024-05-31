@@ -61,6 +61,7 @@
     "@fluentui/react-migration-v8-v9": "9.6.15",
     "@fluentui/theme": "2.6.51",
     "@fluentui/utilities": "8.15.8",
+    
 
     "@svgr/webpack": "8.1.0",
 
