@@ -43,7 +43,7 @@ export default function Home(props: IndexPageProps) {
                             boxShadow: DefaultEffects.elevation4
                         }}>
                             <Link href={`/apps/${appKey}`} >
-                                {appKey}
+                                {appv.title ?? appKey}
                             </Link>
                         </div>
                     ))}
