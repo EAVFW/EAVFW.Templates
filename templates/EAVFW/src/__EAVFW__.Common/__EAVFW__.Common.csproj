@@ -24,15 +24,15 @@
         <PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
         <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
         <PackageReference Include="Serilog.Sinks.Mssqlserver" Version="6.2.0" />
-        <PackageReference Include="EAVFW.Extensions.Infrastructure" Version="2.0.0" />
     </ItemGroup>
 
     <ItemGroup Condition="$(RemoteEAVFramework) == 'false'">
         <ProjectReference Include="$(LocalEAVFrameworkPath)\src\EAVFramework.csproj" />
-
+        <ProjectReference Include="$(LocalExternalpath)/EAVFW.Extensions.Infrastructure/src/EAVFW.Extensions.Infrastructure/EAVFW.Extensions.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup Condition="$(RemoteEAVFramework) != 'false'">
         <PackageReference Include="EAVFramework" Version="$(EAVFrameworkVersion)" />
+        <PackageReference Include="EAVFW.Extensions.Infrastructure" Version="2.4.0" />
     </ItemGroup>
 </Project>

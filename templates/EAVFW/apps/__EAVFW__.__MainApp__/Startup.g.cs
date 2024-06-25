@@ -177,21 +177,12 @@ namespace __EAVFW__.__MainApp__
 
             app.UseRouting();
 
-            // Allow unauthaccess to /_next folder.
-            // Because it is located before .UseAuthorization() 
-            // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/static-files?view=aspnetcore-5.0#static-file-authorization
-            if (Directory.Exists(env.WebRootPath + "/_next"))
-                app.Map("/_next",
-                    nested => nested.UseStaticFiles(new StaticFileOptions
-                    { FileProvider = new PhysicalFileProvider(env.WebRootPath + "/_next") }));
+            app.UseNextJS();
 
             //The remaining is behind auth
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // app.UseMiddleware<RequestLoggingMiddleware>();
-
-            app.UseMiddleware<NextJSMiddleware>();
             app.UseDefaultFiles();
             app.UseStaticFiles();
 

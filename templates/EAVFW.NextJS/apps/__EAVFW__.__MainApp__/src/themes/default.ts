@@ -65,9 +65,5 @@ export default defaultTheme;
 
 RegisterFeature("defaultTheme", defaultTheme);
 RegisterFeature("topBarTheme", topBarTheme);
-
-let v9T = createV9Theme(goorange_default);
-
-
-RegisterFeature("defaultV2Theme", v9T);
+RegisterFeature("defaultV2Theme", createV9Theme(defaultTheme));
 RegisterFeature("topBarV2Theme", createV9Theme(topBarTheme));
