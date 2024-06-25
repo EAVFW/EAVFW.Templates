@@ -127,7 +127,7 @@
       "type": "parameter",
       "description": "Which sdk version to use",
       "datatype": "text",
-      "defaultValue": "6.0.308",
+      "defaultValue": "8.0.301",
       "replaces": "__DOTNET__SDK__VERSION__",
       "isRequired": false
     },
@@ -135,7 +135,7 @@
       "type": "parameter",
       "description": "Which target framework to use",
       "datatype": "text",
-      "defaultValue": "net6.0",
+      "defaultValue": "net8.0",
       "replaces": "__TARGET_FRAMEWORK__",
       "isRequired": false
     },
@@ -191,14 +191,14 @@
       "type": "parameter",
       "datatype": "text",
       "description": "the npm version of react/types, this should be equal to the version of eavfw package",
-      "defaultValue": "17.0.38",
+      "defaultValue": "18.2.0",
       "replaces": "__REACT_TYPES_VERSION__"
     },
     "reactDomTypesVersion": {
       "type": "parameter",
       "datatype": "text",
       "description": "the npm version of react-dom/types, this should be equal to the version of eavfw package",
-      "defaultValue": "17.0.11",
+      "defaultValue": "18.2.0",
       "replaces": "__REACT_DOM_TYPES_VERSION__"
     },
     "HttpsPort": {

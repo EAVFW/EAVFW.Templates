@@ -10,7 +10,6 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.6.2" />
-        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />
         <PackageReference Include="Hangfire.AspNetCore" Version="1.7.33" />
         <PackageReference Include="Hangfire.Core" Version="1.7.33" />
         <PackageReference Include="Hangfire.SqlServer" Version="1.7.33" />
