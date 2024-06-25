@@ -47,7 +47,7 @@ jobs:
         working-directory: "./../GithubEAVTestDirectory"
  
       - name: Install NPM
-        run: npm install --force
+        run: npm ci --force
         working-directory: "./../GithubEAVTestDirectory"
         
       - name: build and export web portal

@@ -416,7 +416,7 @@
           "text": "Set SMTP Password"
         }
       ],
-      "continueOnError": false,
+      "continueOnError": true,
       "description ": "Set SMTP Password"
     },
     //{
