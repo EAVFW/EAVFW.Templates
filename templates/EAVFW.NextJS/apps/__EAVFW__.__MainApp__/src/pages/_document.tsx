@@ -53,18 +53,20 @@ class MyDocument extends Document<DocumentType> {
 
         return (
             <Html>
-                <base href="/" />
+                <base href={`${process.env.NEXT_PUBLIC_BASE_PATH ?? '/'}`} />
                 <Head>
+                    <script type="text/javascript" src={`${process.env['NEXT_PUBLIC_BASE_URL']??'/'}config/config.js`}></script>
                     <style
                         type="text/css"
                         dangerouslySetInnerHTML={{ __html: this.props.styleTags }}
                     />
                     {(this.props as any).styleTags2}
 
-
+                   
+                    
                 </Head>
-                <body className="">
-
+                <body >
+                   
                     <Main />
 
                     {useBlazor &&
