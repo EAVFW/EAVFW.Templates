@@ -1,5 +1,6 @@
 import { createTheme } from "@fluentui/react";
 import { RegisterFeature } from "@eavfw/apps";
+import { createV9Theme } from "@fluentui/react-migration-v8-v9";
 
 const defaultTheme = createTheme({
     semanticColors: {
@@ -64,3 +65,9 @@ export default defaultTheme;
 
 RegisterFeature("defaultTheme", defaultTheme);
 RegisterFeature("topBarTheme", topBarTheme);
+
+let v9T = createV9Theme(goorange_default);
+
+
+RegisterFeature("defaultV2Theme", v9T);
+RegisterFeature("topBarV2Theme", createV9Theme(topBarTheme));
