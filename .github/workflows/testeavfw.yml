@@ -5,7 +5,7 @@ on:
     inputs:
       dotnetversion:
         required: false
-        default: '6.0.308'
+        default: '8.0.301'
         type: string
       nodeversion:
         required: false
@@ -19,10 +19,11 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-
-      - uses: actions/setup-dotnet@v1
+      
+      - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ inputs.dotnetversion }}
+          global-json-file: ./global.json
 
       - uses: actions/setup-node@v2
         with:
