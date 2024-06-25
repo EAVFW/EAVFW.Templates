@@ -6,34 +6,45 @@ const withTM = require('next-transpile-modules')((env.NEXT_TRANSPILE_MODULES||''
 //console.log(withTM);
 
 //console.log(env);
-module.exports = withTM({
+module.exports = {
+    basePath: env.BUILD_BASE_PATH === '/' ? '' : env.BUILD_BASE_PATH,
     output: env.NODE_ENV === "production" ? 'export' : undefined,
     distDir: env.NODE_ENV === "production" ? 'wwwroot' : undefined,
     trailingSlash: true,
+    env: {
+        APPLICATION_INSIGHTS_NO_STATSBEAT: "1",
+        ENV_DISABLE_STATSBEAT: "1",
+        NEXT_PUBLIC_BASE_PATH: env.BUILD_BASE_PATH
+    },
+    compress: false,
+    productionBrowserSourceMaps: true,
     webpack: (config, { defaultLoaders }) => {
         console.log(env.NODE_ENV === "production" ? 'SSG' : 'SSR');
 
         config.resolve.alias.react = path.resolve(__dirname, '../../node_modules/react');
         config.resolve.alias['react-dom'] = path.resolve(__dirname, '../../node_modules/react-dom');
-       // config.resolve.alias['@fluentui/react'] = path.resolve(__dirname, '../../node_modules/@fluentui/react');
+
+
+        config.resolve.alias['@fluentui/react'] = path.resolve(__dirname, '../../node_modules/@fluentui/react');
+        config.resolve.alias['@fluentui/react-components'] = path.resolve(__dirname, '../../node_modules/@fluentui/react-components');
         config.resolve.alias['@fluentui/merge-styles'] = path.resolve(__dirname, '../../node_modules/@fluentui/merge-styles');
+        config.resolve.alias['@rjsf/fluentui-rc'] = path.resolve(__dirname, '../../node_modules/@rjsf/fluentui-rc');
 
- 
 
-        //config.module.rules.push({
-        //    test: /\.(ts)x?$/, // Just `tsx?` file only
-        //    use: [
-        //        // options.defaultLoaders.babel, I don't think it's necessary to have this loader too
-        //        {
-        //            loader: "ts-loader",
-        //            options: {
-        //                transpileOnly: true,
-        //                experimentalWatchApi: true,
-        //                onlyCompileBundledFiles: true,
-        //            },
-        //        },
-        //    ],
-        //});
+        config.resolve.alias['@eavfw/forms'] = path.resolve(__dirname, '../../node_modules/@eavfw/forms');
+        config.resolve.alias['@eavfw/manifest'] = path.resolve(__dirname, '../../node_modules/@eavfw/manifest');
+        config.resolve.alias['@eavfw/apps'] = path.resolve(__dirname, '../../node_modules/@eavfw/apps');
+        config.resolve.alias['@eavfw/hooks'] = path.resolve(__dirname, '../../node_modules/@eavfw/hooks');
+        config.resolve.alias['@eavfw/expressions'] = path.resolve(__dirname, '../../node_modules/@eavfw/expressions');
+        config.resolve.alias['@eavfw/designer'] = path.resolve(__dirname, '../../node_modules/@eavfw/designer');
+        config.resolve.alias['@eavfw/designer-nodes'] = path.resolve(__dirname, '../../node_modules/@eavfw/designer-nodes');
+        config.resolve.alias['@eavfw/designer-core'] = path.resolve(__dirname, '../../node_modules/@eavfw/designer-core');
+        config.resolve.alias['@eavfw/utils'] = path.resolve(__dirname, '../../node_modules/@eavfw/utils');
+
+
+        config.resolve.alias['@craftjs/core'] = path.resolve(__dirname, '../../node_modules/@craftjs/core');
+        config.resolve.alias['@rjsf/core'] = path.resolve(__dirname, '../../node_modules/@rjsf/core');
+        config.resolve.alias['@rjsf/utils'] = path.resolve(__dirname, '../../node_modules/@rjsf/utils');
 
         config.module.rules.push({
             test: /\.svg$/,
@@ -93,4 +104,4 @@ module.exports = withTM({
 
         return config;
     },
-})
+}
