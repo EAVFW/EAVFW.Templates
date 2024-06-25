@@ -11,6 +11,7 @@ module.exports = {
     output: env.NODE_ENV === "production" ? 'export' : undefined,
     distDir: env.NODE_ENV === "production" ? 'wwwroot' : undefined,
     trailingSlash: true,
+    transpilePackages: (env.NEXT_TRANSPILE_MODULES || '').split(' '),
     env: {
         APPLICATION_INSIGHTS_NO_STATSBEAT: "1",
         ENV_DISABLE_STATSBEAT: "1",
