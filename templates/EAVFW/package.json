@@ -66,6 +66,7 @@
     "@fluentui/react-motion":"9.2.0",
     "@fluentui/react-dialog":"9.11.2",
     "@fluentui/react-toast":"9.3.47",
+    "@fluentui/react-drawer": "9.5.2",
     
 
     "@svgr/webpack": "8.1.0",
