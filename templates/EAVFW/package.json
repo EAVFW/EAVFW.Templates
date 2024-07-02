@@ -74,7 +74,7 @@
     "@eavfw/query": "1.0.0-vnext.2",
     "@eavfw/manifest": "1.5.0-vnext.15",
     "@eavfw/next": "1.1.1-vnext.3",
-    "@eavfw/utils": "1.1.0-vnext.1",
+    "@eavfw/utils": "1.1.0-vnext.2",
 
     "@rjsf/core": "5.18.4",
     "@rjsf/utils": "5.18.4",
