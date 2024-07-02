@@ -64,6 +64,7 @@
     "@fluentui/react-nav-preview": "0.4.1",
     "@fluentui/react-portal-compat": "9.0.150",
     "@fluentui/react-motion":"9.2.0",
+    "@fluentui/react-dialog":"9.11.2",
     
 
     "@svgr/webpack": "8.1.0",
