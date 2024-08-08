@@ -48,18 +48,33 @@ namespace __EAVFW__.__MainApp__
 
         private IEAVFrameworkBuilder ConfigureEAVFW(IEAVFrameworkBuilder builder)
         {
-            builder.AddAuthentication()
-                .AddPasswordless();
+            builder.AddAuthentication(options =>
+            {
+                options.FindIdentity = async (request) =>
+                {
+                    return await request.ServiceProvider.GetRequiredService<EAVDBContext<DynamicContext>>()
+                        .Set<SystemUser>().Where(e => e.Email == request.Email).Select(c =>  c.Id).FirstOrDefaultAsync();
+                };
+                options.FindEmailFromIdentity = async (request) =>
+                {
+                    return await request.ServiceProvider.GetRequiredService<EAVDBContext<DynamicContext>>()
+                          .Set<SystemUser>().Where(e => e.Id == request.IdentityId).Select(c => c.Email).FirstOrDefaultAsync();
+                };
+               
+            })
+#if (withSecurityModel)
+            .WithSigninStore<DynamicContext,Signin>()
+#else
+         // .WithSigninStore<DynamicContext,Signin>() //Required EAVFW.Extensions.SecurityModel, dotnet eavfw-manifest install EAVFW.Extensions.SecurityModel
+#endif
+            .AddPasswordless();
+
+            builder.WithMetrics();
+            builder.AddDocumentHashPlugins<DynamicContext, Document>();
 
 
-
-            //Workflow extension
-            // builder.AddWorkFlowEngine<DynamicContext, WorkflowRun>("1b714972-8d0a-4feb-b166-08d93c6ae328");
-            //builder.Services.AddOptions<EAVFWOutputsRepositoryOptions>()
-            //    .Configure(c =>
-            //    {
-            //        c.IdenttyId = "1b714972-8d0a-4feb-b166-08d93c6ae328";
-            //    });
+            //builder.AddWorkFlowEngine<DynamicContext, WorkflowRun>("1b714972-8d0a-4feb-b166-08d93c6ae328",
+            //    (sp, c) => c, !(Configuration.GetValue<bool>("EAVFW_JOBSERVER_ENABLED", false)));
 
 
             return builder;
