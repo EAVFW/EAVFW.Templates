@@ -1,19 +1,9 @@
-using EAVFramework;
 using EAVFramework.Authentication.Passwordless;
 using EAVFramework.Configuration;
-using EAVFramework.Endpoints;
-using __EAVFW__.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
 
 namespace __EAVFW__.__MainApp__.Infrastructure
 {
