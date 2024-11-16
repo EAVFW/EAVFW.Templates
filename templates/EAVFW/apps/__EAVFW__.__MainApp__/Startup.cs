@@ -64,9 +64,9 @@ namespace __EAVFW__.__MainApp__
                
             })
 #if (withSecurityModel)
-            .WithSigninStore<DynamicContext,Signin>()
+            .WithEAVSigninTicketStore<DynamicContext,Signin>()
 #else
-         // .WithSigninStore<DynamicContext,Signin>() //Required EAVFW.Extensions.SecurityModel, dotnet eavfw-manifest install EAVFW.Extensions.SecurityModel
+         // .WithEAVSigninTicketStore<DynamicContext,Signin>() //Required EAVFW.Extensions.SecurityModel, dotnet eavfw-manifest install EAVFW.Extensions.SecurityModel
 #endif
             .AddPasswordless();
 
