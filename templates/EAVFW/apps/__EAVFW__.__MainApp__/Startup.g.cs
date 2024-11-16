@@ -192,9 +192,9 @@ namespace __EAVFW__.__MainApp__
                     .WithMetadata(new AllowAnonymousAttribute());
                 config.MapHealthChecks("/.well-known/ready").WithMetadata(new AllowAnonymousAttribute());
 #if (withSecurityModel)                
-                config.MapEAVFrameworkRoutes<DynamicContext,Identity>();
-#else
                 config.MapEAVFrameworkRoutes<DynamicContext>();
+#else
+                config.MapEAVFrameworkRoutes<DynamicContext>(false);
 #endif
                 MapEndpoints(config);
 
