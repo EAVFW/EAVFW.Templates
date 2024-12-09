@@ -1,7 +1,6 @@
 <Project>
  <PropertyGroup>
    <LangVersion>12</LangVersion>
-   
    <EAVFrameworkVersion>5.0.0-dev.7</EAVFrameworkVersion>
    <UseEAVFromNuget>true</UseEAVFromNuget>
    <LocalEAVFrameworkPath>..\..\..\EAVFramework</LocalEAVFrameworkPath>

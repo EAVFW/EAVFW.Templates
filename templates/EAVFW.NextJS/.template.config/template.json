@@ -36,6 +36,12 @@
       "datatype": "bool",
       "description": "If specified, skips initializing git after template generation",
       "defaultValue": "false"
+    },
+    "skipCertGen": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips generating certificates",
+      "defaultValue": "false"
     }
   },
   "sources": [
@@ -58,6 +64,7 @@
   ],
   "postActions": [
     {
+      "condition": "(!skipCertGen)",
       "description": "Manual actions required",
       "manualInstructions": [
         {
@@ -77,8 +84,8 @@
       "args": {
         "executable": "cmd",
         "args": "/c git add . && git commit -m \"feat: Added NextJS\"",
-        "redirectStandardOutput": "false",
-        "redirectStandardError": "false"
+        "redirectStandardOutput": false,
+        "redirectStandardError": false
       },
       "manualInstructions": [
         {
@@ -87,23 +94,6 @@
       ],
       "continueOnError": false,
       "description ": "Initializing GIT respository"
-    },
-    //{
-    //  "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-    //  "condition": "(!skipNpmInstall)",
-    //  "args": {
-    //    "executable": "C:/Program Files/nodejs/npm.cmd",
-    //    "args": "install --force",
-    //    "redirectStandardOutput": true,
-    //    "redirectStandardError": true
-    //  },
-    //  "manualInstructions": [
-    //    {
-    //      "text": "Want to install npm packages"
-    //    }
-    //  ],
-    //  "continueOnError": true,
-    //  "description ": "Want to install npm packages"
-    //}
+    }
   ]
 }
