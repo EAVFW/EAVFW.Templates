@@ -1,5 +1,6 @@
 {
   "sdk": {
-    "version": "__DOTNET__SDK__VERSION__"
+    "version": "__DOTNET__SDK__VERSION__",
+    "rollForward": "latestFeature"
   }
 }

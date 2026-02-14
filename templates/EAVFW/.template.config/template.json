@@ -127,7 +127,7 @@
       "type": "parameter",
       "description": "Which sdk version to use",
       "datatype": "text",
-      "defaultValue": "8.0.301",
+      "defaultValue": "10.0.100",
       "replaces": "__DOTNET__SDK__VERSION__",
       "isRequired": false
     },
@@ -135,7 +135,7 @@
       "type": "parameter",
       "description": "Which target framework to use",
       "datatype": "text",
-      "defaultValue": "net8.0",
+      "defaultValue": "net10.0",
       "replaces": "__TARGET_FRAMEWORK__",
       "isRequired": false
     },
@@ -186,6 +186,25 @@
       "datatype": "bool",
       "description": "If specified, skips initializing git after template generation",
       "defaultValue": "false"
+    },
+    "useLocalReferences": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Use local project references instead of NuGet packages. Sets UseEAVFromNuget=false and configures paths for scaffolding into sandbox/ within the EAVFW repo.",
+      "defaultValue": "false"
+    },
+    "useNpmLink": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Enable npm link to use local @eavfw/* packages instead of registry versions.",
+      "defaultValue": "false"
+    },
+    "npmLinkPath": {
+      "type": "parameter",
+      "datatype": "text",
+      "description": "Path to the EAVFW monorepo root for npm linking (relative to AppHost project).",
+      "defaultValue": "../../../..",
+      "replaces": "__npmLinkPath__"
     },
     "reactTypesVersion": {
       "type": "parameter",
@@ -256,18 +275,69 @@
       "condition": "(!skipGitCommit)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
-        "executable": "cmd",
-        "args": "/c git init && git checkout -b main && git add . && git commit -m \"thanks for using EAVFW\"",
+        "executable": "git",
+        "args": "init",
         "redirectStandardOutput": "false",
         "redirectStandardError": "false"
       },
       "manualInstructions": [
         {
-          "text": "git init && git add . && git commit -m \"Your message\""
+          "text": "git init"
         }
       ],
       "continueOnError": false,
-      "description ": "Initializing GIT respository"
+      "description ": "Initializing GIT repository"
+    },
+    {
+      "condition": "(!skipGitCommit)",
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "git",
+        "args": "checkout -b main",
+        "redirectStandardOutput": "false",
+        "redirectStandardError": "false"
+      },
+      "manualInstructions": [
+        {
+          "text": "git checkout -b main"
+        }
+      ],
+      "continueOnError": false,
+      "description ": "Creating main branch"
+    },
+    {
+      "condition": "(!skipGitCommit)",
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "git",
+        "args": "add .",
+        "redirectStandardOutput": "false",
+        "redirectStandardError": "false"
+      },
+      "manualInstructions": [
+        {
+          "text": "git add ."
+        }
+      ],
+      "continueOnError": false,
+      "description ": "Staging files"
+    },
+    {
+      "condition": "(!skipGitCommit)",
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "git",
+        "args": "commit -m \"thanks for using EAVFW\"",
+        "redirectStandardOutput": "false",
+        "redirectStandardError": "false"
+      },
+      "manualInstructions": [
+        {
+          "text": "git commit -m \"thanks for using EAVFW\""
+        }
+      ],
+      "continueOnError": false,
+      "description ": "Initial commit"
     },
     {
       "condition": "(!skipRestore)",
@@ -334,7 +404,6 @@
       "continueOnError": false,
       "description ": "Installing EAVFW.Extensions.Documents"
     },
-
     {
       "condition": "(withConfiguration && !skipExtensions)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
@@ -352,102 +421,50 @@
       "continueOnError": false,
       "description ": "Installing EAVFW.Extensions.Configuration"
     },
-    //{
-    //  "condition": "(withUI)",
-    //  "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-    //  "args": {
-    //    "executable": "node",
-    //    "args": "\"C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" --version",
-    //    "redirectStandardOutput": "true",
-    //    "redirectStandardError": "true"
-    //  },
-    //  "manualInstructions": [
-    //    {
-    //      "text": "npm install -g npm@latest"
-    //    }
-    //  ],
-    //  "continueOnError": false,
-    //  "description ": "install latest NPM"      
-    //},
-    //{
-    //  "condition": "(withUI)",
-    //  "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-    //  "args": {
-    //    "executable": "node",
-    //    "args": "\"C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" run eavfw-nextjs",
-    //    "redirectStandardOutput": true,
-    //    "redirectStandardError": true
-    //  },
-    //  "manualInstructions": [
-    //    {
-    //      "text": "npm run eavfw-nextjs"
-    //    }
-    //  ],
-    //  "continueOnError": false,
-    //  "description ": "Install the EAVFW UI"
-    //},
-    //{
-    //  "condition": "(withBuild)",
-    //  "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-    //  "args": {
-    //    "executable": "node",
-    //    "args": "\"C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js\" run build",
-    //    "redirectStandardOutput": "false",
-    //    "redirectStandardError": "false"
-    //  },
-    //  "manualInstructions": [
-    //    {
-    //      "text": "npm run build"
-    //    }
-    //  ],
-    //  "continueOnError": false,
-    //  "description ": "npm run build"
-    //},
     {
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
-        "executable": "cmd",
-        "args": "/c %cd%\\scripts\\mail-setpassword.cmd && del %cd%\\scripts\\mail-setpassword.cmd",
+        "executable": "dotnet",
+        "args": "user-secrets set --project ./apps/__EAVFW__.__MainApp__ SMTP:Password __sendgrid_api_token__",
         "redirectStandardOutput": "true",
         "redirectStandardError": "true"
       },
       "manualInstructions": [
         {
-          "text": "Set SMTP Password"
+          "text": "dotnet user-secrets set --project ./apps/<Namespace>.<AppName> SMTP:Password <your-sendgrid-token>"
         }
       ],
       "continueOnError": true,
       "description ": "Set SMTP Password"
     },
-    //{
-    //  "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-    //  "args": {
-    //    "executable": "cmd",
-    //    "args": "start ycmd \"/c %cd%\\scripts\\setup.cmd && del %cd%\\scripts\\setup.cmd\"",
-    //    "redirectStandardOutput": "true",
-    //    "redirectStandardError": "true"
-    //  },
-    //  "manualInstructions": [
-    //    {
-    //      "text": "Set SMTP Password"
-    //    }
-    //  ],
-    //  "continueOnError": false,
-    //  "description ": "Set SMTP Password"
-    //},
-
+    {
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "node",
+        "args": "scripts/cleanup-secrets.js",
+        "redirectStandardOutput": "true",
+        "redirectStandardError": "true"
+      },
+      "manualInstructions": [
+        {
+          "text": "Remove scripts/mail-setpassword.cmd and scripts/mail-setpassword.sh (contain secrets)"
+        }
+      ],
+      "continueOnError": true,
+      "description ": "Clean up secret-containing scripts"
+    },
     {
       "condition": "(!skipPortal)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
-        "executable": "cmd",
-        "args": "/c %cd%\\scripts\\setup.cmd",
+        "executable": "node",
+        "args": "scripts/setup.js",
         "redirectStandardOutput": "false",
         "redirectStandardError": "false"
       },
       "manualInstructions": [
         {
-          "text": "./scripts/setup.cmd"
+          "text": "node scripts/setup.js (or: bash scripts/setup.sh on Linux/Mac, scripts/setup.cmd on Windows)"
         }
       ],
       "continueOnError": false,
@@ -455,35 +472,48 @@
     },
     {
       "condition": "(skipPortal)",
-      "description": "Manual actions required",
+      "description": "Portal skipped - no frontend will be scaffolded",
       "manualInstructions": [
         {
-          "text": "\n\nPS: (npm run eavfw-nextjs)  -and (npm install --force) -and (npm run build) -and (npm run db-create) -and (npm run open-sln)\nCMD: npm run eavfw-nextjs && npm install --force && npm run build && npm run db-create && npm run open-sln"
+          "text": "Portal was skipped. To add it later, run: npm run eavfw-nextjs"
         }
       ],
       "actionId": "AC1156F7-BB77-4DB8-B28F-24EEBCCA1E5C",
-      "args": {
-        "executable": "scripts/setup.cmd",
-        "args": ""
-      },
       "continueOnError": true
     },
     {
       "condition": "(!skipGitCommit)",
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
-        "executable": "cmd",
-        "args": "/c git add . && git commit -m \"feat: Added Frontend Portal\"",
+        "executable": "git",
+        "args": "add .",
         "redirectStandardOutput": "false",
         "redirectStandardError": "false"
       },
       "manualInstructions": [
         {
-          "text": "git init && git add . && git commit -m \"Your message\""
+          "text": "git add ."
         }
       ],
       "continueOnError": false,
-      "description ": "Initializing GIT respository"
+      "description ": "Staging portal files"
+    },
+    {
+      "condition": "(!skipGitCommit)",
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "git",
+        "args": "commit -m \"feat: Added Frontend Portal\"",
+        "redirectStandardOutput": "false",
+        "redirectStandardError": "false"
+      },
+      "manualInstructions": [
+        {
+          "text": "git add . && git commit -m \"feat: Added Frontend Portal\""
+        }
+      ],
+      "continueOnError": false,
+      "description ": "Commit portal setup"
     }
   ]
 }

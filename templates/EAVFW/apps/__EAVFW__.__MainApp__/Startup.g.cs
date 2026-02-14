@@ -80,7 +80,7 @@ namespace __EAVFW__.__MainApp__
 
             services.AddScoped(sp =>
             {
-                var o = new ODataOptions();
+                var o = new Microsoft.AspNetCore.OData.ODataOptions();
                 o.AddRouteComponents("/api/", sp.GetRequiredService<IMigrationManager>().Model, services => services.AddSingleton<ODataUriResolver>());
                 return Options.Create(o);
             });
@@ -128,6 +128,7 @@ namespace __EAVFW__.__MainApp__
 
             var eav = ConfigureEAVFW(services.AddEAVFramework<DynamicContext>(o => {
                 o.RoutePrefix = "/api";
+                o.SystemAdministratorIdentity = Common.Constants.SystemAdministratorGroup;
 
                 o.Authentication.OnAuthenticatedAsync = OnAuthenticatedAsync;
                 o.Authentication.PopulateAuthenticationClaimsAsync = PopulateAuthenticationClaimsAsync;
@@ -161,8 +162,10 @@ namespace __EAVFW__.__MainApp__
 
             if (env.IsLocalOrDevelopment())
             {
+                var corsOrigins = (Configuration.GetValue<string>("EAVFW_CORS_ORIGINS") ?? "https://localhost:3000")
+                    .Split(';', StringSplitOptions.RemoveEmptyEntries);
                 app.UseCors(o =>
-                    o.WithOrigins("https://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+                    o.WithOrigins(corsOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
                 app.UseForwardedHeaders();
                 app.UseDeveloperExceptionPage();
             }

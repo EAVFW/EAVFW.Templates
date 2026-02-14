@@ -1,9 +1,16 @@
 <Project>
  <PropertyGroup>
    <LangVersion>12</LangVersion>
-   <EAVFrameworkVersion>5.0.0-dev.14</EAVFrameworkVersion>
+   <EAVFrameworkVersion>5.0.0</EAVFrameworkVersion>
+<!--#if (useLocalReferences) -->
+   <UseEAVFromNuget>false</UseEAVFromNuget>
+   <LocalEAVFrameworkPath>$(MSBuildThisFileDirectory)..\..\external\eavframework</LocalEAVFrameworkPath>
+   <LocalExternalpath>$(MSBuildThisFileDirectory)..\..\external\</LocalExternalpath>
+<!--#else -->
    <UseEAVFromNuget>true</UseEAVFromNuget>
    <LocalEAVFrameworkPath>..\..\..\EAVFramework</LocalEAVFrameworkPath>
+   <LocalExternalpath>$(MSBuildThisFileDirectory)..\..\..\</LocalExternalpath>
+<!--#endif -->
    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
  </PropertyGroup>
 </Project>

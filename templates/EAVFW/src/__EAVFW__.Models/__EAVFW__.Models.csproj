@@ -5,7 +5,6 @@
         <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
         <CustomizationPrefix>__EAVFW__</CustomizationPrefix>
         <RemoteEAVFramework>$(UseEAVFromNuget)</RemoteEAVFramework>
-        <LocalEAVFrameworkPath>..\..\..\EAVFramework</LocalEAVFrameworkPath>
         <EAVFrameworkSourceGenerator>True</EAVFrameworkSourceGenerator>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
         <RootNamespace>__EAVFW__.Models</RootNamespace>

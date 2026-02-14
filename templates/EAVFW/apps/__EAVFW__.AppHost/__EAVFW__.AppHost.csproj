@@ -1,0 +1,32 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.1.0">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>__TARGET_FRAMEWORK__</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>__UserSecretsId__-apphost</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.SqlServer" Version="13.1.0" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.SqlServer.Extensions" Version="13.1.1" />
+    <PackageReference Include="Microsoft.SqlServer.DacFx" Version="170.2.70" />
+  </ItemGroup>
+
+  <!--USE EAVFramework.Extensions.Aspire.Hosting from NuGet or Locally-->
+  <ItemGroup Condition="$(UseEAVFromNuget) != 'true'">
+    <ProjectReference IsAspireProjectResource="False" Include="$(LocalEAVFrameworkPath)\aspire\EAVFramework.Extensions.Aspire.Hosting\EAVFramework.Extensions.Aspire.Hosting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(UseEAVFromNuget) == 'true'">
+    <PackageReference Include="EAVFramework.Extensions.Aspire.Hosting" Version="$(EAVFrameworkVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference IsAspireProjectResource="false" Include="..\..\src\__EAVFW__.Models\__EAVFW__.Models.csproj" />
+    <ProjectReference Include="..\..\src\__EAVFW__.Models\__EAVFW__.Models.csproj" />
+    <ProjectReference Include="..\__EAVFW__.__MainApp__\__EAVFW__.__MainApp__.csproj" />
+  </ItemGroup>
+
+</Project>

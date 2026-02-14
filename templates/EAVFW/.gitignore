@@ -252,3 +252,5 @@ mail-setpassword.cmd
 /apps/__EAVFW__.__MainApp__/wwwroot
 
 Directory.Build.Local.props
+
+videos/
