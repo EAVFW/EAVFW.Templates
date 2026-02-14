@@ -69,7 +69,8 @@
     "@rjsf/validator-ajv8": "5.18.4",
 
 
-    "clone-deep": "4.0.1"
+    "clone-deep": "4.0.1",
+    "swr": "2.2.5"
   },
   "devDependencies": {
     "@types/pako": "2.0.3",

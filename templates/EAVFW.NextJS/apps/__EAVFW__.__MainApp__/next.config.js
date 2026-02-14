@@ -46,6 +46,7 @@ module.exports = {
         config.resolve.alias['@craftjs/core'] = path.resolve(__dirname, '../../node_modules/@craftjs/core');
         config.resolve.alias['@rjsf/core'] = path.resolve(__dirname, '../../node_modules/@rjsf/core');
         config.resolve.alias['@rjsf/utils'] = path.resolve(__dirname, '../../node_modules/@rjsf/utils');
+        config.resolve.alias['swr'] = path.resolve(__dirname, '../../node_modules/swr');
 
         config.module.rules.push({
             test: /\.svg$/,
